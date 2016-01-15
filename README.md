@@ -17,5 +17,8 @@ How to run
 
 
 2. Run from command line
+- Start Appium. Show simulator log on console.
+appium --show-sim-log
+
 *Info will be added soon*
 

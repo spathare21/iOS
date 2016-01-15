@@ -12,8 +12,8 @@ import java.io.IOException;
 public class logging {
 
 
-    public boolean getLog(String text, int lastlinenumber) throws IOException {
-        String filePath = "/Users/dulari/Library/Logs/CoreSimulator/0479400F-8D43-4716-B93D-058060EC7A3D/system.log";
+    public boolean getLog(String logfilename, String text, int lastlinenumber) throws IOException {
+        String filePath = logfilename;
         // iPad Air 8.1 : 0479400F-8D43-4716-B93D-058060EC7A3D
         // iPhone 6 8.1 : 34E644BB-B258-45B4-9320-E667AE62B5C2
         String textToMatch = text;

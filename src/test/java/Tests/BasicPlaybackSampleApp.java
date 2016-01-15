@@ -4,6 +4,7 @@ package Tests;
  * Created by dulari on 1/14/16.
  */
 
+import org.testng.annotations.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import io.appium.java_client.AppiumDriver;
@@ -60,21 +61,27 @@ public class BasicPlaybackSampleApp {
 
     public WebDriverWait wait;
 
+    String LogFilePath;
+
     logging _utils = new logging();
     boolean found=false;
 
     // This variable is used in checking the latest entry in the log.
     private static int lastlinenumber;
 
+    @Parameters({"appFilePath","appName","platformVersion", "deviceName", "logFilePath" })
     @Before // Will be executed before any of the test run.
-    public void setUp() throws Exception {
+    public void beforeTest(@Optional String appFilePath, @Optional String appName, @Optional String platformVersion, @Optional String deviceName,@Optional String logFilePath) throws Exception {
+
+        System.out.println("In Before test");
         // set up appium
+        LogFilePath = logFilePath;
         File classpathRoot = new File(System.getProperty("user.dir"));
-        File appDir = new File("", "/Users/dulari/Library/Developer/Xcode/DerivedData/BasicPlaybackSampleApp-dtfvalcbrzeeqtbyjqgniyzepltg/Build/Products/Release-iphonesimulator");
-        File app = new File(appDir, "BasicPlaybackSampleApp.app");
+        File appDir = new File("", appFilePath);
+        File app = new File(appDir, appName);
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("platformVersion", "8.1"); // Device Id: 34E644BB-B258-45B4-9320-E667AE62B5C2
-        capabilities.setCapability("deviceName", "iPad Air");
+        capabilities.setCapability("platformVersion", platformVersion); // Device Id: 34E644BB-B258-45B4-9320-E667AE62B5C2
+        capabilities.setCapability("deviceName", deviceName);
         capabilities.setCapability("app", app.getAbsolutePath());
         driver = new IOSDriver(new URL("http://0.0.0.0:4723/wd/hub"), capabilities);
     }
@@ -87,45 +94,61 @@ public class BasicPlaybackSampleApp {
     @Test
     public  void testPlay() throws Exception {
 
-        //wd.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIAStaticText[1]")).click();
-        //wd.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAToolbar[1]/UIAButton[1]")).click();
-        //wd.findElement(By.xpath("//UIAApplication[1]")).click();
-
-        System.out.println("testing 123");
-        // captureLog(driver,"testing123");
-        //driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAStaticText[1]")).click();
         driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIAStaticText[1]")).click();
         Thread.sleep(3000);
-        found=_utils.getLog("Ooyala SDK version",lastlinenumber);
+        found=_utils.getLog(LogFilePath,"Ooyala SDK version",lastlinenumber);
         if(!found)
             Assert.assertTrue(found);
 
         Thread.sleep(3000);
-        found=_utils.getLog("playStarted",lastlinenumber);
+        found=_utils.getLog(LogFilePath,"playStarted",lastlinenumber);
         if(!found)
             Assert.assertTrue(found);
 
         driver.findElement(By.xpath("//UIAApplication[1]")).click();
         driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAToolbar[1]/UIAButton[1]")).click();
         // pause for 5 second
-        Thread.sleep(2000);
-        found=_utils.getLog("state: paused",lastlinenumber);
+        Thread.sleep(4000);
+        found=_utils.getLog(LogFilePath,"state: paused",lastlinenumber);
         if(!found)
             Assert.assertTrue(found);
 
         driver.findElement(By.xpath("//UIAApplication[1]")).click();
         driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAToolbar[1]/UIAButton[1]")).click();
         driver.findElement(By.xpath("//UIAApplication[1]")).click();
-        found=_utils.getLog("state: playing",lastlinenumber);
+        found=_utils.getLog(LogFilePath,"state: playing",lastlinenumber);
         if(!found)
             Assert.assertTrue(found);
         //Thread.sleep(2000);
         boolean end=true;
         while(end)
         {
-            end=!_utils.getLog("playCompleted",lastlinenumber);
+            end=!_utils.getLog(LogFilePath,"playCompleted",lastlinenumber);
             Thread.sleep(1000);
         }
+        Thread.sleep(2000);
+        //Click master button
+        driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[1]")).click();
+        Thread.sleep(2000);
+
+    }
+
+    @Test
+    public  void closeAndRelaunchApp() throws Exception {
+
+        //click Mp4 video
+        driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIAStaticText[1]")).click();
+        Thread.sleep(3000);
+
+        //Closing the app
+        System.out.println("Closing the app");
+        driver.closeApp();
+        Thread.sleep(2000);
+
+        // relaunching the app
+        System.out.println("Relaunching the app");
+        driver.launchApp();
+        Thread.sleep(6000);
     }
 
 }
