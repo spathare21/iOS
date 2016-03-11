@@ -1,23 +1,37 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Selenium Grid Tests" parallel="tests" thread-count="2">
+<suite name="Selenium Grid Tests" >
 
-    <test name="iPhone 6">
+  <!--  <test name="BasicPlaybackSampleApp iPhone 6">
         <parameter name="appFilePath" value="/Users/dulari/Library/Developer/Xcode/DerivedData/BasicPlaybackSampleApp-dtfvalcbrzeeqtbyjqgniyzepltg/Build/Products/Release-iphonesimulator" />
         <parameter name="appName" value="BasicPlaybackSampleApp.app" />
         <parameter name="platformVersion" value="8.1" />
         <parameter name="deviceName" value="iPhone 6" />
         <parameter name="logFilePath" value="/Users/dulari/Library/Logs/CoreSimulator/34E644BB-B258-45B4-9320-E667AE62B5C2/system.log" />
+        <parameter name="udid" value="" />
         <classes>
             <class name="Tests.BasicPlaybackSampleApp" />
         </classes>
     </test>
 
-    <test name="iPad Air">
+    <test name="BasicPlaybackSampleApp iPad Air">
         <parameter name="appFilePath" value="/Users/dulari/Library/Developer/Xcode/DerivedData/BasicPlaybackSampleApp-dtfvalcbrzeeqtbyjqgniyzepltg/Build/Products/Release-iphonesimulator" />
         <parameter name="appName" value="BasicPlaybackSampleApp.app" />
-        <parameter name="platformVersion" value="8.1" />
+            <parameter name="platformVersion" value="8.1" />
         <parameter name="deviceName" value="iPad Air" />
         <parameter name="logFilePath" value="/Users/dulari/Library/Logs/CoreSimulator/0479400F-8D43-4716-B93D-058060EC7A3D/system.log" />
+        <parameter name="udid" value="" />
+        <classes>
+            <class name="Tests.BasicPlaybackSampleApp" />
+        </classes>
+    </test> -->
+
+    <test name="BasicPlaybackSampleApp iPad Air">
+        <parameter name="appFilePath" value="/Users/dulari/Library/Developer/Xcode/DerivedData/BasicPlaybackSampleApp-dtfvalcbrzeeqtbyjqgniyzepltg/Build/Products/Release-iphonesimulator" />
+        <parameter name="appName" value="BasicPlaybackSampleApp.app" />
+        <parameter name="platformVersion" value="9.2" />
+        <parameter name="deviceName" value="iPhone 6S G" />
+        <parameter name="logFilePath" value="/Users/dulari/Library/Logs/CoreSimulator/158d9edd63613eed4a2005775b8c5a586a334136/system.log" />
+        <parameter name="udid" value="158d9edd63613eed4a2005775b8c5a586a334136" />
         <classes>
             <class name="Tests.BasicPlaybackSampleApp" />
         </classes>
