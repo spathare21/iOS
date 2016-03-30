@@ -4,14 +4,12 @@ package Tests;
  * Created by dulari on 1/14/16.
  */
 
+import org.testng.Assert;
 import org.testng.annotations.*;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.*;
 import io.appium.java_client.ios.IOSDriver;
-import static org.junit.Assert.*;
 
 import java.io.*;
 import java.net.URL;
@@ -31,10 +29,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 //import org.json.simple.JSONObject;
 //import org.json.simple.parser.JSONParser;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.logging.LogEntry;
@@ -69,31 +63,45 @@ public class BasicPlaybackSampleApp {
     // This variable is used in checking the latest entry in the log.
     private static int lastlinenumber;
 
-    @Parameters({"appFilePath","appName","platformVersion", "deviceName", "logFilePath" })
-    @Before // Will be executed before any of the test run.
-    public void beforeTest(@Optional String appFilePath, @Optional String appName, @Optional String platformVersion, @Optional String deviceName,@Optional String logFilePath) throws Exception {
+    @Parameters({"appFilePath","appName","platformVersion", "deviceName", "logFilePath","udid" })
+    @BeforeTest // Will be executed before any of the test run.
+    public void beforeTest(@Optional String appFilePath, @Optional String appName, @Optional String platformVersion, @Optional String deviceName,@Optional String logFilePath, @Optional String udid) throws Exception {
 
-        System.out.println("In Before test");
         // set up appium
         LogFilePath = logFilePath;
         File classpathRoot = new File(System.getProperty("user.dir"));
+        System.out.println(appFilePath);
+
         File appDir = new File("", appFilePath);
+
         File app = new File(appDir, appName);
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformVersion", platformVersion); // Device Id: 34E644BB-B258-45B4-9320-E667AE62B5C2
         capabilities.setCapability("deviceName", deviceName);
         capabilities.setCapability("app", app.getAbsolutePath());
+       // capabilities.setCapability("app", appName);
+        capabilities.setCapability("udid", udid);
         driver = new IOSDriver(new URL("http://0.0.0.0:4723/wd/hub"), capabilities);
+
+       /* File classpathRoot = new File(System.getProperty("user.dir"));
+        File appDir = new File("", "/Users/dulari/Library/Developer/Xcode/DerivedData/BasicPlaybackSampleApp-dtfvalcbrzeeqtbyjqgniyzepltg/Build/Products/Release-iphonesimulator");
+        File app = new File(appDir, "BasicPlaybackSampleApp.app");
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("platformVersion", "8.1"); // Device Id: 34E644BB-B258-45B4-9320-E667AE62B5C2
+        capabilities.setCapability("deviceName", "iPad Air");
+        capabilities.setCapability("app", app.getAbsolutePath());
+        driver = new IOSDriver(new URL("http://0.0.0.0:4723/wd/hub"), capabilities); */
     }
 
-    @After // Will be executed once all the tests are completed.
+    @AfterTest // Will be executed once all the tests are completed.
     public void tearDown() throws Exception {
         driver.quit();
     }
 
     @Test
-    public  void testPlay() throws Exception {
+    public  void testPlayPause() throws Exception {
 
+        System.out.println("In test testPlay");
         driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIAStaticText[1]")).click();
         Thread.sleep(3000);
         found=_utils.getLog(LogFilePath,"Ooyala SDK version",lastlinenumber);
