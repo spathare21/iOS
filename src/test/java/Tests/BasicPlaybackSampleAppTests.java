@@ -47,7 +47,7 @@ import java.util.logging.Level;
 
 import Utils.*;
 
-public class BasicPlaybackSampleApp {
+public class BasicPlaybackSampleAppTests {
 
     private AppiumDriver driver;
 
@@ -64,6 +64,7 @@ public class BasicPlaybackSampleApp {
     private static int lastlinenumber;
 
     @Parameters({"appFilePath","appName","platformVersion", "deviceName", "logFilePath","udid" })
+
     @BeforeTest // Will be executed before any of the test run.
     public void beforeTest(@Optional String appFilePath, @Optional String appName, @Optional String platformVersion, @Optional String deviceName,@Optional String logFilePath, @Optional String udid) throws Exception {
 
@@ -77,15 +78,30 @@ public class BasicPlaybackSampleApp {
         File app = new File(appDir, appName);
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformVersion", platformVersion); // Device Id: 34E644BB-B258-45B4-9320-E667AE62B5C2
+        System.out.println(platformVersion);
         capabilities.setCapability("deviceName", deviceName);
+        System.out.println(deviceName);
         capabilities.setCapability("app", app.getAbsolutePath());
+        System.out.println(app.getAbsolutePath());
+
+
+        getLog.getlog(udid);
        // capabilities.setCapability("app", appName);
         capabilities.setCapability("udid", udid);
-        driver = new IOSDriver(new URL("http://0.0.0.0:4723/wd/hub"), capabilities);
+        System.out.println(udid);
+        System.out.println("Goignt to start server");
+        //driver = new IOSDriver(new URL("http://0.0.0.0:4723/wd/hub"), capabilities);
+        driver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+
+
+        System.out.println("server started");
+
+        System.out.println("Now log file should create");
+       // getLog.getlog(udid);
 
        /* File classpathRoot = new File(System.getProperty("user.dir"));
-        File appDir = new File("", "/Users/dulari/Library/Developer/Xcode/DerivedData/BasicPlaybackSampleApp-dtfvalcbrzeeqtbyjqgniyzepltg/Build/Products/Release-iphonesimulator");
-        File app = new File(appDir, "BasicPlaybackSampleApp.app");
+        File appDir = new File("", "/Users/dulari/Library/Developer/Xcode/DerivedData/BasicPlaybackSampleAppTests-dtfvalcbrzeeqtbyjqgniyzepltg/Build/Products/Release-iphonesimulator");
+        File app = new File(appDir, "BasicPlaybackSampleAppTests.app");
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformVersion", "8.1"); // Device Id: 34E644BB-B258-45B4-9320-E667AE62B5C2
         capabilities.setCapability("deviceName", "iPad Air");
@@ -95,68 +111,41 @@ public class BasicPlaybackSampleApp {
 
     @AfterTest // Will be executed once all the tests are completed.
     public void tearDown() throws Exception {
-        driver.quit();
+        getLog.delete("system.log");
+         driver.quit();
+
+
     }
 
     @Test
-    public  void testPlayPause() throws Exception {
+    public  void MP4() throws Exception {
 
         System.out.println("In test testPlay");
-        driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[1]/UIAStaticText[1]")).click();
-        Thread.sleep(3000);
+        Thread.sleep(5000);
+        driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[2]/UIATableView[1]/UIATableCell[2]/UIAStaticText[1]")).click();
+        Thread.sleep(5000);
+        System.out.println("file path opf log file is >>"+ LogFilePath);
         found=_utils.getLog(LogFilePath,"Ooyala SDK version",lastlinenumber);
         if(!found)
             Assert.assertTrue(found);
 
-        Thread.sleep(3000);
+        Thread.sleep(10000);
         found=_utils.getLog(LogFilePath,"playStarted",lastlinenumber);
         if(!found)
             Assert.assertTrue(found);
 
-        driver.findElement(By.xpath("//UIAApplication[1]")).click();
-        driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAToolbar[1]/UIAButton[1]")).click();
-        // pause for 5 second
-        Thread.sleep(4000);
-        found=_utils.getLog(LogFilePath,"state: paused",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        Thread.sleep(45000);
 
-        driver.findElement(By.xpath("//UIAApplication[1]")).click();
-        driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIAToolbar[1]/UIAButton[1]")).click();
-        driver.findElement(By.xpath("//UIAApplication[1]")).click();
-        found=_utils.getLog(LogFilePath,"state: playing",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
-        //Thread.sleep(2000);
         boolean end=true;
         while(end)
         {
             end=!_utils.getLog(LogFilePath,"playCompleted",lastlinenumber);
             Thread.sleep(1000);
         }
-        Thread.sleep(2000);
-        //Click master button
-        driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIANavigationBar[1]/UIAButton[1]")).click();
-        Thread.sleep(2000);
+        Thread.sleep(10000);
+
 
     }
 
-    @Test
-    public  void closeAndRelaunchApp() throws Exception {
-
-        //click Mp4 video
-        driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]/UIAStaticText[1]")).click();
-        Thread.sleep(3000);
-
-        //Closing the app
-        System.out.println("Closing the app");
-        driver.closeApp();
-        Thread.sleep(2000);
-
-        // relaunching the app
-        System.out.println("Relaunching the app");
-        driver.launchApp();
-        Thread.sleep(6000);
-    }
 
 }
