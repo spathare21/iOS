@@ -1,0 +1,42 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Selenium Grid Tests" >
+
+    <!--  <test name="BasicPlaybackSampleApp iPhone 6">
+          <parameter name="appFilePath" value="/Users/dulari/Library/Developer/Xcode/DerivedData/BasicPlaybackSampleApp-dtfvalcbrzeeqtbyjqgniyzepltg/Build/Products/Release-iphonesimulator" />
+          <parameter name="appName" value="BasicPlaybackSampleApp.app" />
+          <parameter name="platformVersion" value="8.1" />
+          <parameter name="deviceName" value="iPhone 6" />
+          <parameter name="logFilePath" value="/Users/dulari/Library/Logs/CoreSimulator/34E644BB-B258-45B4-9320-E667AE62B5C2/system.log" />
+          <parameter name="udid" value="" />
+          <classes>
+              <class name="Tests.BasicPlaybackSampleAppTests" />
+          </classes>
+      </test>
+
+      <test name="BasicPlaybackSampleApp iPad Air">
+          <parameter name="appFilePath" value="/Users/dulari/Library/Developer/Xcode/DerivedData/BasicPlaybackSampleApp-dtfvalcbrzeeqtbyjqgniyzepltg/Build/Products/Release-iphonesimulator" />
+          <parameter name="appName" value="BasicPlaybackSampleApp.app" />
+              <parameter name="platformVersion" value="8.1" />
+          <parameter name="deviceName" value="iPad Air" />
+          <parameter name="logFilePath" value="/Users/dulari/Library/Logs/CoreSimulator/0479400F-8D43-4716-B93D-058060EC7A3D/system.log" />
+          <parameter name="udid" value="" />
+          <classes>
+              <class name="Tests.BasicPlaybackSampleAppTests" />
+          </classes>
+          /Users/dulari/Documents/ios-automation
+          /Users/dulari/Desktop/ios/ios-automation
+      </test> -->
+
+    <test name="BasicPlaybackSampleApp iPad Air">
+        <parameter name="appFilePath" value="/Users/dulari/Library/Developer/Xcode/DerivedData/BasicPlaybackSampleApp-dtfvalcbrzeeqtbyjqgniyzepltg/Build/Products/Debug-iphoneos" />
+        <parameter name="appName" value="BasicPlaybackSampleApp.app" />
+        <parameter name="platformVersion" value="7.1.2" />
+        <parameter name="deviceName" value="Playback iTouch9" />
+        <parameter name="logFilePath" value="/Users/dulari/Documents/ios-automation/system.log" />
+        <parameter name="udid" value="dcb1950c7f0eb51e54107628b9d22d18b01a7804" />
+        <classes>
+            <class name="Tests.BasicPlaybackSampleAppTests" />
+        </classes>
+    </test>
+
+</suite>
