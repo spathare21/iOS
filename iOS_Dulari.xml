@@ -27,7 +27,30 @@
           /Users/dulari/Desktop/ios/ios-automation
       </test> -->
 
-    <test name="BasicPlaybackSampleApp iPad Air">
+     <test name="BasicPlaybackSampleApp iPad Air">
+        <parameter name="platformVersion" value="7.1.2" />
+        <parameter name="deviceName" value="Playback iTouch9" />
+        <parameter name="logFilePath" value="system.log" />
+        <parameter name="udid" value="dcb1950c7f0eb51e54107628b9d22d18b01a7804" />
+        <classes>
+            <class name="Tests.BasicPlaybackSampleAppTests" />
+        </classes>
+    </test>
+
+    <!--
+           <test name="BasicPlaybackSampleApp iPad Air">
+               <parameter name="platformVersion" value="9.2.1" />
+               <parameter name="deviceName" value="iPhone 5s iOS9" />
+               <parameter name="logFilePath" value="system.log" />
+               <parameter name="udid" value="fd47df579d59752e17ee746a1d96522d8cdab722" />
+               <classes>
+                   <class name="Tests.BasicPlaybackSampleAppTests" />
+               </classes>
+           </test>  -->
+
+
+    <!--
+      <test name="BasicPlaybackSampleApp iPad Air">
         <parameter name="appFilePath" value="/Users/dulari/Library/Developer/Xcode/DerivedData/BasicPlaybackSampleApp-dtfvalcbrzeeqtbyjqgniyzepltg/Build/Products/Debug-iphoneos" />
         <parameter name="appName" value="BasicPlaybackSampleApp.app" />
         <parameter name="platformVersion" value="7.1.2" />
@@ -38,5 +61,7 @@
             <class name="Tests.BasicPlaybackSampleAppTests" />
         </classes>
     </test>
+
+    -->
 
 </suite>
