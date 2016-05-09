@@ -52,12 +52,21 @@
 
         }
 
+        @Parameters({"OS"})
         @Test
-        public  void MP4() throws Exception {
+        public  void MP4(int OS) throws Exception {
 
             System.out.println("In test testPlay");
-            Thread.sleep(5000);
-            driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[2]/UIATableView[1]/UIATableCell[2]/UIAStaticText[1]")).click();
+            Thread.sleep(2000);
+            if(OS >= 8)
+            {
+            driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]")).click();
+            }
+            if( OS <8)
+            {
+                driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[2]/UIATableView[1]/UIATableCell[2]/UIAStaticText[1]")).click();
+
+            }
             Thread.sleep(5000);
             System.out.println("file path opf log file is >>"+ LogFilePath);
             found=_utils.getLog(LogFilePath,"Ooyala SDK version",lastlinenumber);
