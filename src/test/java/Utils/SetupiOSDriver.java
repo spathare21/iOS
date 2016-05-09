@@ -27,13 +27,8 @@ public class SetupiOSDriver {
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformVersion", platformVersion);
-        //which mobile OS to use: Android, iOS or FirefoxOS
         capabilities.setCapability("deviceName", deviceName);
         capabilities.setCapability("app", app.getAbsolutePath());
-        //capabilities.setCapability(CapabilityType.VERSION, platformVersion);
-        //capabilities.setCapability(CapabilityType.BROWSER_NAME, "ios");
-        //capabilities.setCapability(CapabilityType.PLATFORM, "MAC");
-
         capabilities.setCapability("udid", udid);
         capabilities.setCapability("platformName", "iOS");
         capabilities.setCapability("newCommandTimeout", 50000);
@@ -50,19 +45,14 @@ public class SetupiOSDriver {
         File app = new File(appFilePath, appName);
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
-
         capabilities.setCapability("platformVersion", platformVersion);
-        //which mobile OS to use: Android, iOS or FirefoxOS
         capabilities.setCapability("deviceName", deviceName);
-
         capabilities.setCapability("app", app.getAbsolutePath());
-
         capabilities.setCapability("udid", udid);
         capabilities.setCapability("newCommandTimeout", 50000);
         capabilities.setCapability("platformName", "iOS");
 
         driver = new IOSDriver(new URL("http://127.0.0.1:" + portNumber + "/wd/hub"), capabilities);
-        //driver.manage().timeouts().implicitlyWait(3000,TimeUnit.SECONDS);
         return driver;
     }
 

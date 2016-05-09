@@ -7,12 +7,7 @@
     import org.testng.Assert;
     import org.testng.annotations.*;
     import io.appium.java_client.AppiumDriver;
-
     import java.util.*;
-
-    //import org.apache.commons.lang.RandomStringUtils;
-    //import org.json.simple.JSONObject;
-    //import org.json.simple.parser.JSONParser;
     import org.openqa.selenium.*;
     import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -41,25 +36,13 @@
             LoadPropertyValues prop = new LoadPropertyValues();
             Properties p=prop.loadProperty("BasicPlaybackSampleApp.properties");
 
+            System.out.println("Now log file should create");
             getLog.getlog(udid);
 
             SetupiOSDriver setUpdriver = new SetupiOSDriver();
             driver = setUpdriver.setUpandReturniOSDriver( p.getProperty("appFilePath"),  p.getProperty("appName"),platformVersion, deviceName, udid);
             Thread.sleep(2000);
 
-            System.out.println("server started");
-
-            System.out.println("Now log file should create");
-           // getLog.getlog(udid);
-
-           /* File classpathRoot = new File(System.getProperty("user.dir"));
-            File appDir = new File("", "/Users/dulari/Library/Developer/Xcode/DerivedData/BasicPlaybackSampleAppTests-dtfvalcbrzeeqtbyjqgniyzepltg/Build/Products/Release-iphonesimulator");
-            File app = new File(appDir, "BasicPlaybackSampleAppTests.app");
-            DesiredCapabilities capabilities = new DesiredCapabilities();
-            capabilities.setCapability("platformVersion", "8.1"); // Device Id: 34E644BB-B258-45B4-9320-E667AE62B5C2
-            capabilities.setCapability("deviceName", "iPad Air");
-            capabilities.setCapability("app", app.getAbsolutePath());
-            driver = new IOSDriver(new URL("http://0.0.0.0:4723/wd/hub"), capabilities); */
         }
 
         @AfterTest // Will be executed once all the tests are completed.
