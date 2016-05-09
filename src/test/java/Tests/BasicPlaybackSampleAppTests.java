@@ -57,7 +57,7 @@
         public  void MP4(int OS) throws Exception {
 
             System.out.println("In test testPlay");
-            Thread.sleep(5000);
+            Thread.sleep(2000);
             if(OS >= 8)
             {
             driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]")).click();
