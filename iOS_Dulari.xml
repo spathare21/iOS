@@ -2,7 +2,7 @@
 <suite name="Selenium Grid Tests" >
 
 
-    <test name="BasicPlaybackSampleApp iPod Touch">
+    <!--<test name="BasicPlaybackSampleApp iPod Touch">
         <parameter name="platformVersion" value="7.1.2" />
         <parameter name="deviceName" value="Playback iTouch9" />
         <parameter name="logFilePath" value="system.log" />
@@ -12,13 +12,13 @@
             <class name="Tests.BasicPlaybackSampleAppTests" />
         </classes>
     </test>
+-->
 
-
-    <test name="BasicPlaybackSampleApp iPhone 5S">
-        <parameter name="platformVersion" value="9.2.1" />
-        <parameter name="deviceName" value="iPhone 5s iOS9" />
+    <test name="BasicPlaybackSampleApp iPhone 6">
+        <parameter name="platformVersion" value="9.1" />
+        <parameter name="deviceName" value="iPhone 6 iOS 9.1" />
         <parameter name="logFilePath" value="system.log" />
-        <parameter name="udid" value="fd47df579d59752e17ee746a1d96522d8cdab722" />
+        <parameter name="udid" value="e7d3e1759e5cb6724a473320209139f217436d8c" />
         <parameter name="OS" value="9" />
         <classes>
             <class name="Tests.BasicPlaybackSampleAppTests" />
