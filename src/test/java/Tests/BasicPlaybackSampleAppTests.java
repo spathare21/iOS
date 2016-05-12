@@ -54,19 +54,13 @@
 
         @Parameters({"OS"})
         @Test
-        public  void MP4(int OS) throws Exception {
+        public  void HLS(int OS) throws Exception {
 
             System.out.println("In test testPlay");
             Thread.sleep(2000);
-            if(OS >= 8)
-            {
-            driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[1]/UIATableView[1]/UIATableCell[2]")).click();
-            }
-            if( OS <8)
-            {
-                driver.findElement(By.xpath("//UIAApplication[1]/UIAWindow[2]/UIATableView[1]/UIATableCell[2]/UIAStaticText[1]")).click();
+             List<WebElement> l = driver.findElementsByClassName("UIATableCell");
+            l.get(0).click();
 
-            }
             Thread.sleep(5000);
             System.out.println("file path opf log file is >>"+ LogFilePath);
             found=_utils.getLog(LogFilePath,"Ooyala SDK version",lastlinenumber);
@@ -88,8 +82,44 @@
             }
             Thread.sleep(10000);
 
+            List<WebElement> nav = driver.findElementsByClassName("UIAWindow");
+            nav.get(2).click();
 
         }
 
 
+        @Parameters({"OS"})
+        @Test
+        public  void MP4(int OS) throws Exception {
+
+            System.out.println("In test testPlay");
+            Thread.sleep(2000);
+            List<WebElement> l = driver.findElementsByClassName("UIATableCell");
+            l.get(1).click();
+
+            Thread.sleep(5000);
+            System.out.println("file path opf log file is >>"+ LogFilePath);
+            found=_utils.getLog(LogFilePath,"Ooyala SDK version",lastlinenumber);
+            if(!found)
+                Assert.assertTrue(found);
+
+            Thread.sleep(10000);
+            found=_utils.getLog(LogFilePath,"playStarted",lastlinenumber);
+            if(!found)
+                Assert.assertTrue(found);
+
+            Thread.sleep(45000);
+
+            boolean end=true;
+            while(end)
+            {
+                end=!_utils.getLog(LogFilePath,"playCompleted",lastlinenumber);
+                Thread.sleep(1000);
+            }
+            Thread.sleep(10000);
+
+            List<WebElement> nav = driver.findElementsByClassName("UIAWindow");
+            nav.get(2);
+
+        }
     }
