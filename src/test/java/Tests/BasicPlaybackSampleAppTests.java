@@ -11,9 +11,13 @@
     import org.openqa.selenium.*;
     import org.openqa.selenium.support.ui.WebDriverWait;
 
+
     import Utils.*;
 
     public class BasicPlaybackSampleAppTests {
+
+
+        public static String ud;
 
         private AppiumDriver driver;
 
@@ -22,13 +26,14 @@
         logging _utils = new logging();
         boolean found=false;
 
+
         // This variable is used in checking the latest entry in the log.
         private static int lastlinenumber;
 
-        @Parameters({"platformVersion", "deviceName", "logFilePath","udid" })
+        @Parameters({"platformVersion", "deviceName", "logFilePath" })
 
         @BeforeTest // Will be executed before any of the test run.
-        public void beforeTest( String platformVersion,  String deviceName, String logFilePath,  String udid) throws Exception {
+        public void beforeTest( String platformVersion,  String deviceName, String logFilePath) throws Exception {
 
             // set up appium
             LogFilePath = logFilePath;
@@ -37,10 +42,13 @@
             Properties p=prop.loadProperty("BasicPlaybackSampleApp.properties");
 
             System.out.println("Now log file should create");
-            getLog.getlog(udid);
+
+            ud = getLog.getUdid();
+            getLog.getlog(ud);
+            System.out.println("valued of ud is " +ud);
 
             SetupiOSDriver setUpdriver = new SetupiOSDriver();
-            driver = setUpdriver.setUpandReturniOSDriver( p.getProperty("appFilePath"),  p.getProperty("appName"),platformVersion, deviceName, udid);
+            driver = setUpdriver.setUpandReturniOSDriver( p.getProperty("appFilePath"),  p.getProperty("appName"),platformVersion, deviceName, ud);
             Thread.sleep(2000);
 
         }
@@ -119,7 +127,7 @@
             Thread.sleep(10000);
 
             List<WebElement> nav = driver.findElementsByClassName("UIAWindow");
-            nav.get(2);
+            nav.get(2).click();
 
         }
     }
