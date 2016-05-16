@@ -7,6 +7,8 @@
     import org.testng.Assert;
     import org.testng.annotations.*;
     import io.appium.java_client.AppiumDriver;
+
+    import java.io.IOException;
     import java.util.*;
     import org.openqa.selenium.*;
     import org.openqa.selenium.support.ui.WebDriverWait;
@@ -32,7 +34,7 @@
 
         @Parameters({"platformVersion", "deviceName", "logFilePath" })
 
-        @BeforeTest // Will be executed before any of the test run.
+        @BeforeClass // Will be executed before any of the test run.
         public void beforeTest( String platformVersion,  String deviceName, String logFilePath) throws Exception {
 
             // set up appium
@@ -41,10 +43,10 @@
             LoadPropertyValues prop = new LoadPropertyValues();
             Properties p=prop.loadProperty("BasicPlaybackSampleApp.properties");
 
-            System.out.println("Now log file should create");
+
 
             ud = getLog.getUdid();
-            getLog.getlog(ud);
+
             System.out.println("valued of ud is " +ud);
 
             SetupiOSDriver setUpdriver = new SetupiOSDriver();
@@ -53,16 +55,35 @@
 
         }
 
-        @AfterTest // Will be executed once all the tests are completed.
+        @AfterClass // Will be executed once all the tests are completed.
         public void tearDown() throws Exception {
+
+            driver.closeApp();
+            System.out.println("closing app ");
             getLog.delete("system.log");
+            System.out.println("log file deleted");
              driver.quit();
 
         }
 
-        @Parameters({"OS"})
+        @BeforeMethod
+        public void  beforeMethod() throws IOException {
+
+            System.out.println("in before method ");
+            getLog.getlog(ud);
+            System.out.println("log file created");
+
+        }
+
+        @AfterMethod
+        public void afterMethod() throws IOException {
+            System.out.println("in after method");
+
+        }
+
+
         @Test
-        public  void HLS(int OS) throws Exception {
+        public  void HLS() throws Exception {
 
             System.out.println("In test testPlay");
             Thread.sleep(2000);
@@ -96,9 +117,9 @@
         }
 
 
-        @Parameters({"OS"})
+
         @Test
-        public  void MP4(int OS) throws Exception {
+        public  void MP4() throws Exception {
 
             System.out.println("In test testPlay");
             Thread.sleep(2000);
