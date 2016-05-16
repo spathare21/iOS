@@ -46,9 +46,9 @@ public class BasicPlayBackSampleApp {
     // Click on Pay OR Pause button in normal screen
     public static void play_pauseBtn(AppiumDriver driver) throws InterruptedException {
         driver.tap(1, 200, 300, 3);
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         List<WebElement> button = driver.findElementsByClassName("UIAButton");
-        button.get(2).click();
+        button.get(1).click();
     }
 
     // Click on fullscreen button
