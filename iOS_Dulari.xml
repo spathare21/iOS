@@ -14,12 +14,12 @@
     </test>
 -->
 
-    <test name="BasicPlaybackSampleApp iPhone 6">
+    <test name="BasicPlaybackSampleApp iPhone 6+">
         <parameter name="platformVersion" value="9.1" />
         <parameter name="deviceName" value="iPhone 6 iOS 9.1" />
         <parameter name="logFilePath" value="system.log" />
-        <parameter name="udid" value="e7d3e1759e5cb6724a473320209139f217436d8c" />
-        <parameter name="OS" value="9" />
+        <parameter name="udid" value="0b57a80f9855da5257db94bbdcef2e6e8b1e6ea3" />
+        <parameter name="OS" value="8" />
         <classes>
             <class name="Tests.BasicPlaybackSampleAppTests" />
         </classes>
