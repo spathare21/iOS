@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by Shivam on 16/05/16.
  */
-public class BasicPlayBackSampleApp {
+public class BasicPlayBackSampleApp extends  BaseClass {
 
     // Click on required test asset
     public static void assetSelect(AppiumDriver driver, int assetNo){
