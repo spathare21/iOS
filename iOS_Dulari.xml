@@ -2,5 +2,15 @@
 <suite name="Selenium Grid Tests" >
 
 
+  <test name="BasicPlaybackSampleApp iPAd">
+        <parameter name="platformVersion" value="9.2.1" />
+        <parameter name="deviceName" value="iPad" />
+        <parameter name="logFilePath" value="system.log" />
+
+        <classes>
+            <class name="Tests.BasicPlaybackSampleAppTests" />
+        </classes>
+    </test>
+
 
 </suite>

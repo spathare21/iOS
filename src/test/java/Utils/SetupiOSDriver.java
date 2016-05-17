@@ -12,24 +12,32 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
+import Utils.getLog;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import static Utils.getLog.getUdid;
 
 
 public class SetupiOSDriver {
 
 
+
     AppiumDriver driver;
 
-    public AppiumDriver setUpandReturniOSDriver( String appFilePath,String appName,String platformVersion,String deviceName,  String udid) throws MalformedURLException {
+    public AppiumDriver setUpandReturniOSDriver( String appFilePath,String appName,String platformVersion,String deviceName,  String ud) throws IOException {
 
         File app = new File(appFilePath, appName);
+
+
+
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformVersion", platformVersion);
         capabilities.setCapability("deviceName", deviceName);
         capabilities.setCapability("app", app.getAbsolutePath());
-        capabilities.setCapability("udid", udid);
+        capabilities.setCapability("udid", ud);
         capabilities.setCapability("platformName", "iOS");
         capabilities.setCapability("newCommandTimeout", 50000);
 

@@ -23,5 +23,20 @@ appium --show-sim-log
 If encountered Error related to ideviceinstaller, run below command 
 brew install --HEAD ideviceinstaller 
 
+
+// Before running the iOS SDK Automation please follow these guidelines.
+
+1. Folder Structure:---
+
+a. Create one folder With the iOS name and under this folder take clone of iOS Appium from this repo:- "git clone https://git.corp.ooyala.com/scm/pbq/ios-automation.git"
+b. Now in iOS folder create one more folder with the name of repo and under this repo take clone from - "git clone https://github.com/ooyala/ios-sample-apps.git"
+
+2. Prerequisites
+ a. Install follwing libraried before running the code:-
+    i. ios-deploy -->> https://github.com/phonegap/ios-deploy
+   ii. libimobiledevice -- >> http://confusatory.org/post/127183189821/ios-debugging-device-console-without-wires , https://github.com/libimobiledevice/libimobiledevice
+
+
+
 *Info will be added soon*
 
