@@ -49,11 +49,25 @@ public class BasicPlaybackSampleAppTests {
     @AfterClass // Will be executed once all the tests are completed.
     public void tearDown() throws Exception {
 
+
         driver.closeApp();
         System.out.println("closing app ");
+
+        LoadPropertyValues prop = new LoadPropertyValues();
+        Properties p=prop.loadProperty("BasicPlaybackSampleApp.properties");
+        String app = p.getProperty("app_Name");
+        Thread.sleep(1000);
+        getLog.appUninstall(app);
+
         getLog.delete("system.log");
         System.out.println("log file deleted");
+
+
+
+
         driver.quit();
+
+
 
     }
 
@@ -73,7 +87,7 @@ public class BasicPlaybackSampleAppTests {
     }
 
 
-    @Test
+   /* @Test
     public  void HLS() throws Exception {
 
         System.out.println("In test testPlay");
@@ -113,10 +127,10 @@ public class BasicPlaybackSampleAppTests {
         Thread.sleep(10000);
 
     }
+*/
 
-/*
         @Test
-        public  void MP4() throws Exception {
+        public void MP4() throws Exception {
 
             System.out.println("In test testPlay");
             Thread.sleep(2000);
@@ -155,5 +169,5 @@ public class BasicPlaybackSampleAppTests {
             Thread.sleep(10000);
 
         }
-*/
+
 }
