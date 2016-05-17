@@ -8,12 +8,10 @@ import Utils.*;
 import java.io.IOException;
 import java.util.List;
 
-
 /**
- * Created by Shivam on 16/05/16.
+ * Created by mahesh on 17/05/16.
  */
-public class BasicPlayBackSampleApp {
-
+public class BaseClass {
     // Click on required test asset
     public static void assetSelect(AppiumDriver driver, int assetNo){
         List<WebElement> asset = driver.findElementsByClassName("UIATableCell");
@@ -36,37 +34,41 @@ public class BasicPlayBackSampleApp {
         }
     }
 
-
     // Click on Master button in normal screen
     public static void masterBtn(AppiumDriver driver){
-        List<WebElement> button = driver.findElementsByClassName("UIAWindow");
+        List<WebElement> button = driver.findElementsByClassName("UIAButton");
         button.get(0).click();
     }
 
     // Click on Pay OR Pause button in normal screen
     public static void play_pauseBtn(AppiumDriver driver) throws InterruptedException {
-        driver.tap(1, 200, 300, 3);
-        Thread.sleep(1000);
+        driver.tap(1, 200, 300, 5);
+        Thread.sleep(2000);
         List<WebElement> button = driver.findElementsByClassName("UIAButton");
-        button.get(1).click();
+        button.get(2).click();
     }
 
     // Click on fullscreen button
     public static void fullscreenBtn(AppiumDriver driver) throws InterruptedException {
-        driver.tap(1, 200, 300, 3);
-        Thread.sleep(1000);
+        driver.tap(1, 200, 300, 5);
+        Thread.sleep(2000);
         List<WebElement> button = driver.findElementsByClassName("UIAButton");
         button.get(3).click();
+    }
+
+    // Click on Done button
+    public static void doneBtn(AppiumDriver driver) throws InterruptedException {
+        driver.tap(1, 200, 300, 5);
+        Thread.sleep(2000);
+        List<WebElement> button = driver.findElementsByClassName("UIAButton");
+        button.get(0).click();
     }
 
     // Click on Pay OR Pause button in full screen
     public static void play_pause_fullscreenBtn(AppiumDriver driver) throws InterruptedException {
-        driver.tap(1, 200, 300, 3);
-        Thread.sleep(1000);
+        driver.tap(1, 200, 300, 5);
+        Thread.sleep(2000);
         List<WebElement> button = driver.findElementsByClassName("UIAButton");
         button.get(3).click();
     }
-
-
-
 }
