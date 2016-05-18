@@ -182,7 +182,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
 
             // Verify playStarted event
-            //Thread.sleep(5000);
+            Thread.sleep(5000);
             found = _utils.getLog(LogFilePath, "playStarted", lastlinenumber);
             if (!found)
                 Assert.assertTrue(found);
