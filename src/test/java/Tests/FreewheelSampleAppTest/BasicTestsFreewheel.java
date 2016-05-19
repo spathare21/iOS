@@ -8,14 +8,13 @@ import org.testng.annotations.*;
 import io.appium.java_client.AppiumDriver;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.*;
-import java.util.List;
+
 
 import Utils.*;
 import pageObject.*;
-import sun.jvm.hotspot.debugger.cdbg.basic.BasicBaseClass;
+
 
 /**
  * Created by Shivam on 18/05/16.
@@ -29,6 +28,7 @@ public class BasicTestsFreewheel extends BaseClass {
     String LogFilePath;
     logging _utils = new logging();
     boolean found=false;
+
 
 
     // This variable is used in checking the latest entry in the log.
