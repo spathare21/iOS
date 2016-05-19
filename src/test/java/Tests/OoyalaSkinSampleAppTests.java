@@ -114,6 +114,8 @@ public class OoyalaSkinSampleAppTests {
         if(!found)
             Assert.assertTrue(found);
 
+        //UIAActivityIndicator[1]
+
         // Verify playStarted event
         Thread.sleep(5000);
         found=_utils.getLog(LogFilePath,"playStarted",lastlinenumber);

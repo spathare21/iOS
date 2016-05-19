@@ -12,14 +12,14 @@
         </classes>
     </test>
 
-   <!-- <test name="BasicplaybackSampleapp iPAd">
-        <parameter name="platformVersion" value="9.2.1" />
-        <parameter name="deviceName" value="iPad" />
-        <parameter name="logFilePath" value="system.log" />
+    <!-- <test name="BasicplaybackSampleapp iPAd">
+          <parameter name="platformVersion" value="9.2.1" />
+          <parameter name="deviceName" value="iPad" />
+          <parameter name="logFilePath" value="system.log" />
 
-        <classes>
-            <class name="Tests.BasicPlaybackSampleAppTests" />
-        </classes>
-    </test>  -->
+          <classes>
+              <class name="Tests.BasicPlaybackSampleAppTests" />
+          </classes>
+      </test>  -->
 
 </suite>

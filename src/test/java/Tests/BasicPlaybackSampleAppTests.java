@@ -55,7 +55,7 @@ public class BasicPlaybackSampleAppTests extends  BaseClass{
 
         LoadPropertyValues prop = new LoadPropertyValues();
         Properties p=prop.loadProperty("BasicPlaybackSampleApp.properties");
-        String app = p.getProperty("app_Name");
+        String app = p.getProperty("bundleid");
         Thread.sleep(1000);
         getLog.appUninstall(app);
 
