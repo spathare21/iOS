@@ -4,6 +4,7 @@ package Tests;
  * Created by dulari on 1/14/16.
  */
 
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import io.appium.java_client.AppiumDriver;
@@ -60,7 +61,7 @@ public class OoyalaSkinSampleAppTests {
         Properties p=prop.loadProperty("OoyalaSkinSampleApp.properties");
         String app = p.getProperty("bundleid");
         Thread.sleep(1000);
-        getLog.appUninstall(app);
+       // getLog.appUninstall(app);
         getLog.delete("system.log");
         System.out.println("log file deleted");
 
@@ -114,7 +115,10 @@ public class OoyalaSkinSampleAppTests {
         if(!found)
             Assert.assertTrue(found);
 
-        //UIAActivityIndicator[1]
+        Thread.sleep(2000);
+
+        pgObj.play_video(driver);
+
 
         // Verify playStarted event
         Thread.sleep(5000);
@@ -122,8 +126,11 @@ public class OoyalaSkinSampleAppTests {
         if(!found)
             Assert.assertTrue(found);
 
+        //for pause the video
+        pgObj.play_video(driver);
+
         // Verify pause event at normal screen
-        pgObj.play_pauseBtn(driver);
+      // pgObj.play_pauseBtn(driver);
         found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
         if(!found)
             Assert.assertTrue(found);
