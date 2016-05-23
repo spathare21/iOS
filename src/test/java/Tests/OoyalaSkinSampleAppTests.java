@@ -62,8 +62,8 @@ public class OoyalaSkinSampleAppTests {
         String app = p.getProperty("bundleid");
         Thread.sleep(1000);
        // getLog.appUninstall(app);
-        getLog.delete("system.log");
-        System.out.println("log file deleted");
+        //getLog.delete("system.log");
+       // System.out.println("log file deleted");
 
         driver.quit();
     }
@@ -117,24 +117,28 @@ public class OoyalaSkinSampleAppTests {
 
         Thread.sleep(2000);
 
-        pgObj.play_video(driver);
+
+        // Click Play button
+        pgObj.play_pauseBtn(driver);
 
 
         // Verify playStarted event
-        Thread.sleep(5000);
+        Thread.sleep(3000);
         found=_utils.getLog(LogFilePath,"playStarted",lastlinenumber);
         if(!found)
             Assert.assertTrue(found);
 
         //for pause the video
-        pgObj.play_video(driver);
+        pgObj.play_pauseBtn(driver);
 
         // Verify pause event at normal screen
-      // pgObj.play_pauseBtn(driver);
-        found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
+        //pgObj.play_pauseBtn(driver);
+        Thread.sleep(4000);
+        found=_utils.getLog(LogFilePath,"desired_pause",lastlinenumber);
         if(!found)
             Assert.assertTrue(found);
 
+        // Play the video again and verify playing event
         // Verify playing event at normal screen
         pgObj.play_pauseBtn(driver);
         found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
@@ -147,7 +151,7 @@ public class OoyalaSkinSampleAppTests {
 
         // Verify pause event at full screen
         pgObj.play_pause_fullscreenBtn(driver);
-        found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
+        found=_utils.getLog(LogFilePath,"desired_pause",lastlinenumber);
         if(!found)
             Assert.assertTrue(found);
 

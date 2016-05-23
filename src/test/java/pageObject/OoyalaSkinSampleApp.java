@@ -12,10 +12,19 @@ import java.util.List;
 //playing the video
 public class OoyalaSkinSampleApp extends BaseClass {
 
-    public void play_video (AppiumDriver driver)
-    {
+   // public void play_video(AppiumDriver driver)
+    //{
+      //  System.out.println(" clicking on play button");
+        //List<WebElement> p = driver.findElementsByClassName("UIAElement");
+        //p.get(0).click();
+   // }
+
+    // Click on Pay OR Pause button in normal screen
+    public static void play_pauseBtn(AppiumDriver driver) throws InterruptedException {
+
         System.out.println(" clicking on play button");
         List<WebElement> p = driver.findElementsByClassName("UIAElement");
         p.get(0).click();
+
     }
 }
