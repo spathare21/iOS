@@ -621,7 +621,7 @@ public class BasicTestsBasicPlayback extends  BaseClass{
                 Assert.assertTrue(found);
 
             Thread.sleep(8000);
-
+//
             // adCompleted event verification
             found = _utils.getLog(LogFilePath, "adPodCompleted", lastlinenumber);
             if (!found)
