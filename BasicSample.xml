@@ -25,13 +25,13 @@
     </test>  -->
 
 
-    <test name="BasicPlaybackSampleApp iPAd">
-        <parameter name="platformVersion" value="9.2.1" />
-        <parameter name="deviceName" value="iPad" />
+    <test name="BasicPlaybackSampleApp iPhone">
+        <parameter name="platformVersion" value="8.4" />
+        <parameter name="deviceName" value="iPhone" />
         <parameter name="logFilePath" value="system.log" />
 
         <classes>
-            <class name="Tests.BasicPlaybackSampleAppTests" />
+            <class name="Tests.BasicSampleAppTest.BasicTestsBasicPlayback" />
         </classes>
     </test>
 

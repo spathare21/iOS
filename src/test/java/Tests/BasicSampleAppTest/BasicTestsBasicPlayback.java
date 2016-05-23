@@ -1,7 +1,7 @@
-package Tests;
+package Tests.BasicSampleAppTest;
 
 /**
- * Created by dulari on 1/14/16.
+ * Created by mahesh on 23/05/16.
  */
 
 import org.openqa.selenium.WebElement;
@@ -21,8 +21,8 @@ import pageObject.*;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
-public class BasicPlaybackSampleAppTests extends  BaseClass{
 
+public class BasicTestsBasicPlayback extends  BaseClass{
     public static String ud;
     private AppiumDriver driver;
 
@@ -115,7 +115,7 @@ public class BasicPlaybackSampleAppTests extends  BaseClass{
         if(!found)
             Assert.assertTrue(found);
 
-         // Verify playing event at normal screen
+        // Verify playing event at normal screen
         BaseClass.play_pauseBtn(driver);
         found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
         if(!found)
@@ -151,78 +151,72 @@ public class BasicPlaybackSampleAppTests extends  BaseClass{
             Thread.sleep(1000);
         }
         Thread.sleep(10000);
-
         // Click on Master button
         BaseClass.masterBtn(driver);
-
     }
-
 
     @Test
     public void MP4() throws Exception {
+        System.out.println("In test testPlay");
+        Thread.sleep(2000);
+        assetSelect(driver, 1);
 
-       System.out.println("In test testPlay");
-       Thread.sleep(2000);
-       assetSelect(driver, 1);
-
-       // Verify SDK version
-       Thread.sleep(5000);
-       found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-          if(!found)
-              Assert.assertTrue(found);
-
-       // Verify playStarted event
-       Thread.sleep(5000);
-       found=_utils.getLog(LogFilePath,"playStarted",lastlinenumber);
-         if(!found)
-             Assert.assertTrue(found);
-
-       // Verify pause event at normal screen
-       BaseClass. play_pauseBtn(driver);
-       found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
-       if(!found)
-             Assert.assertTrue(found);
-
-       // Verify playing event at normal screen
-       BaseClass.play_pauseBtn(driver);
-       found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
-       if(!found)
+        // Verify SDK version
+        Thread.sleep(5000);
+        found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
+        if(!found)
             Assert.assertTrue(found);
 
-       // Click on fullscreen
-       BaseClass.fullscreenBtn(driver);
-       Thread.sleep(5000);
+        // Verify playStarted event
+        Thread.sleep(5000);
+        found=_utils.getLog(LogFilePath,"playStarted",lastlinenumber);
+        if(!found)
+            Assert.assertTrue(found);
 
-       // Verify pause event at full screen
-       BaseClass.play_pause_fullscreenBtn(driver);
-       found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
-       if(!found)
-             Assert.assertTrue(found);
+        // Verify pause event at normal screen
+        BaseClass. play_pauseBtn(driver);
+        found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
+        if(!found)
+            Assert.assertTrue(found);
 
-       // Verify playing event at full screen
-       Thread.sleep(5000);
-       BaseClass.play_pause_fullscreenBtn(driver);
-       found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
-       if(!found)
-             Assert.assertTrue(found);
+        // Verify playing event at normal screen
+        BaseClass.play_pauseBtn(driver);
+        found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
+        if(!found)
+            Assert.assertTrue(found);
 
-       // Switch from full screen to normal screen
-       Thread.sleep(5000);
-       System.out.println("clicking on screen normal ");
-       BaseClass.doneBtn(driver);
+        // Click on fullscreen
+        BaseClass.fullscreenBtn(driver);
+        Thread.sleep(5000);
 
-       // Verify playCompleted event
-       boolean end=true;
-       while(end)
-       {
-           end=!_utils.getLog(LogFilePath,"playCompleted",lastlinenumber);
-           Thread.sleep(1000);
-       }
-       Thread.sleep(10000);
+        // Verify pause event at full screen
+        BaseClass.play_pause_fullscreenBtn(driver);
+        found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
+        if(!found)
+            Assert.assertTrue(found);
 
-       // Click on Master button
-       BaseClass.masterBtn(driver);
+        // Verify playing event at full screen
+        Thread.sleep(5000);
+        BaseClass.play_pause_fullscreenBtn(driver);
+        found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
+        if(!found)
+            Assert.assertTrue(found);
 
+        // Switch from full screen to normal screen
+        Thread.sleep(5000);
+        System.out.println("clicking on screen normal ");
+        BaseClass.doneBtn(driver);
+
+        // Verify playCompleted event
+        boolean end=true;
+        while(end)
+        {
+            end=!_utils.getLog(LogFilePath,"playCompleted",lastlinenumber);
+            Thread.sleep(1000);
+        }
+        Thread.sleep(10000);
+        // Click on Master button
+        BaseClass.masterBtn(driver);
     }
 
     @Test
@@ -257,7 +251,7 @@ public class BasicPlaybackSampleAppTests extends  BaseClass{
             found1 = driver.findElementByClassName("UIATableCell").isDisplayed();
         }
         catch (Exception e){
-               found1 = false;
+            found1 = false;
         }
         if(!found1)
             Assert.assertTrue(found1);
@@ -322,15 +316,12 @@ public class BasicPlaybackSampleAppTests extends  BaseClass{
             Thread.sleep(1000);
         }
         Thread.sleep(10000);
-
         // Click on Master button
         BaseClass.masterBtn(driver);
-
     }
 
     @Test
     public  void aspectRatio() throws Exception {
-
         System.out.println("In test testPlay");
         Thread.sleep(2000);
         assetSelect(driver, 3);
@@ -392,7 +383,6 @@ public class BasicPlaybackSampleAppTests extends  BaseClass{
 
         // Click on Master button
         BaseClass.masterBtn(driver);
-
     }
 
     @Test
@@ -453,6 +443,211 @@ public class BasicPlaybackSampleAppTests extends  BaseClass{
 
     }
 
+    @Test
+    public void vast_PreRoll() throws InterruptedException {
+        System.out.println("Playing Vast Preroll");
+        try {
+            System.out.println("In test testPlay");
+            Thread.sleep(2000);
+            assetSelect(driver, 5);
+
+            // Verify SDK version
+            Thread.sleep(5000);
+            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+            Thread.sleep(8000);
+            //adStarted event verification
+            found = _utils.getLog(LogFilePath, "adStarted", lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+            Thread.sleep(25000);
+
+            // adCompleted event verification
+            System.out.println("Veifying ad complete event");
+            found = _utils.getLog(LogFilePath, "adPodCompleted", lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+            // Verify playStarted event
+            Thread.sleep(5000);
+            System.out.println("Veifying play started event");
+            found = _utils.getLog(LogFilePath, "playStarted", lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+            // Verify pause event at normal screen
+            play_pauseBtn(driver);
+            found = _utils.getLog(LogFilePath, "paused", lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+
+            // Verify playing event at normal screen
+            BaseClass.play_pauseBtn(driver);
+            found = _utils.getLog(LogFilePath, "playing", lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+
+            // Verify playCompleted event
+            boolean end = true;
+            while (end) {
+                end = !_utils.getLog(LogFilePath, "playCompleted", lastlinenumber);
+                Thread.sleep(1000);
+            }
+            Thread.sleep(10000);
+
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(" Exception " + e);
+            e.printStackTrace();
+        }
+        Thread.sleep(10000);
+
+        // Click on Master button
+        BaseClass.masterBtn(driver);
+
+    }
+
+    @Test
+    public  void vast_Midroll() throws Exception {
+
+        System.out.println("Playing Vast Midroll");
+        try {
+            System.out.println("In test testPlay");
+            Thread.sleep(2000);
+            assetSelect(driver, 6);
+
+            // Verify SDK version
+            Thread.sleep(5000);
+            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+            // Verify playStarted event
+            Thread.sleep(5000);
+            found = _utils.getLog(LogFilePath, "playStarted", lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+            // Verify pause event at normal screen
+            play_pauseBtn(driver);
+            found = _utils.getLog(LogFilePath, "paused", lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+
+            // Verify playing event at normal screen
+            BaseClass.play_pauseBtn(driver);
+            found = _utils.getLog(LogFilePath, "playing", lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+            Thread.sleep(7000);
+            //adStarted event verification
+            found = _utils.getLog(LogFilePath, "adStarted", lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+            Thread.sleep(18000);
+
+            // adCompleted event verification
+            found = _utils.getLog(LogFilePath, "adPodCompleted", lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+            // Verify playCompleted event
+            boolean end = true;
+            while (end) {
+                end = !_utils.getLog(LogFilePath, "playCompleted", lastlinenumber);
+                Thread.sleep(1000);
+            }
+            Thread.sleep(10000);
+
+        } catch (Exception e) {
+            System.out.println(" Exception " + e);
+            e.printStackTrace();
+        }
+
+        // Click on Master button
+        BaseClass.masterBtn(driver);
+
+    }
+
+
+    @Test
+    public  void vast_Postroll() throws Exception {
+
+        System.out.println("Playing vast Postroll");
+        try {
+
+            System.out.println("In test testPlay");
+            Thread.sleep(2000);
+            assetSelect(driver, 7);
+
+            // Verify SDK version
+            Thread.sleep(5000);
+            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
+            if(!found)
+                Assert.assertTrue(found);
+
+            // Verify playStarted event
+            Thread.sleep(5000);
+            found=_utils.getLog(LogFilePath,"playStarted",lastlinenumber);
+            if(!found)
+                Assert.assertTrue(found);
+
+            // Verify pause event at normal screen
+            BaseClass.play_pauseBtn(driver);
+            found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
+            if(!found)
+                Assert.assertTrue(found);
+
+            // Verify playing event at normal screen
+            BaseClass.play_pauseBtn(driver);
+            found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
+            if(!found)
+                Assert.assertTrue(found);
+
+            Thread.sleep(13000);
+            //adStarted event verification
+            found = _utils.getLog(LogFilePath, "adStarted", lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+            Thread.sleep(8000);
+
+            // adCompleted event verification
+            found = _utils.getLog(LogFilePath, "adPodCompleted", lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+
+            // Verify playCompleted event
+            boolean end = true;
+            while (end) {
+                end = !_utils.getLog(LogFilePath, "playCompleted", lastlinenumber);
+                Thread.sleep(1000);
+            }
+            Thread.sleep(10000);
+
+        }
+        catch (Exception e)
+        {
+            System.out.println(" Exception " + e);
+            e.printStackTrace();
+        }
+        // Click on Master button
+        BaseClass.masterBtn(driver);
+
+    }
+
+
     // Click on fullscreen button
     public static void fullscreenBtn(AppiumDriver driver) throws InterruptedException {
         driver.tap(1, 200, 300, 5);
@@ -460,5 +655,6 @@ public class BasicPlaybackSampleAppTests extends  BaseClass{
         List<WebElement> button = driver.findElementsByClassName("UIAButton");
         button.get(4).click();
     }
+
 
 }
