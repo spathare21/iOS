@@ -15,7 +15,7 @@ public class ParseEventFile {
         //System.out.println("count 1 is " +count1);
         String[] tokens = line.split(":");
         //System.out.println("printing tokens", +tokens.toString());
-        String trimToken = tokens[4].trim();
+        String trimToken = tokens[7].trim();
         System.out.println("trim tocked in " +trimToken);
         count1=Integer.parseInt(trimToken);
         System.out.println("count 1 is " +count1);
@@ -30,7 +30,7 @@ public class ParseEventFile {
 
         {
 
-            BufferedReader buf = new BufferedReader(new FileReader("/Users/sumit/Desktop/iOS/ios-automation/system.log"));
+            BufferedReader buf = new BufferedReader(new FileReader("/Users/mahesh/sdk_auto/ios-automation/system.log"));
             System.out.println("Reading file");
             String line = "";
             //BufferedReader buf = null;
