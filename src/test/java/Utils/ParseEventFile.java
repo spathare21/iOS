@@ -30,7 +30,7 @@ public class ParseEventFile {
 
         {
 
-            BufferedReader buf = new BufferedReader(new FileReader("/Users/mahesh/sdk_auto/ios-automation/system.log"));
+            BufferedReader buf = new BufferedReader(new FileReader("../../../ios-automation/system.log"));
             System.out.println("Reading file");
             String line = "";
             //BufferedReader buf = null;
@@ -55,8 +55,9 @@ public class ParseEventFile {
                     }
 
                 }
+
                 line = buf.readLine();
-                line = line+1;
+                //line = line+1;
             }
 
         }
