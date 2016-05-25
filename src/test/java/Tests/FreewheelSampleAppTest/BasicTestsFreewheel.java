@@ -65,11 +65,7 @@ public class BasicTestsFreewheel extends BaseClass {
         Properties p=prop.loadProperty("FreewheelSampleApp.properties");
         String app = p.getProperty("app_Name");
         Thread.sleep(1000);
-        getLog.appUninstall(app);
-
-        getLog.delete("system.log");
-        System.out.println("log file deleted");
-
+        //getLog.appUninstall(app);
 
         driver.quit();
 
@@ -78,11 +74,12 @@ public class BasicTestsFreewheel extends BaseClass {
     }
 
     @BeforeMethod
-    public void  beforeMethod() throws IOException {
+    public void  beforeMethod() throws IOException, InterruptedException {
 
         System.out.println("in before method ");
         getLog.getlog(ud);
         System.out.println("log file created");
+        Thread.sleep(3000);
 
     }
 
@@ -93,6 +90,10 @@ public class BasicTestsFreewheel extends BaseClass {
         Thread.sleep(2000);
         BaseClass.masterBtn(driver);
         Thread.sleep(1000);
+        System.out.println("Deleting log file");
+        getLog.delete("system.log");
+        System.out.println("log file deleted");
+        Thread.sleep(5000);
 
     }
 
@@ -106,51 +107,40 @@ public class BasicTestsFreewheel extends BaseClass {
             assetSelect(driver, 6);
 
             // Verify SDK version
-            Thread.sleep(5000);
+            Thread.sleep(3000);
             found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
             if (!found)
                 Assert.assertTrue(found);
 
-            Thread.sleep(2000);
-            //adStarted event verification
-            found = _utils.getLog(LogFilePath, "adStarted", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            //Creting the object of EventVerification class
+            EventVerification ev = new EventVerification();
 
-            Thread.sleep(7000);
+            //verifing the ad started evnet
+            ev.verifyEvent("adStarted", "Ad has been started", 10000);
 
-            // adCompleted event verification
-            found = _utils.getLog(LogFilePath, "adPodCompleted", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+           //verifing ad Completed Event
+
+            ev.verifyEvent("adPodCompleted", " Ad has been completed" , 15000);
 
             // Verify playStarted event
-            Thread.sleep(5000);
-            found = _utils.getLog(LogFilePath, "playStarted", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("playStarted", "Play has been started", 15000);
 
-            // Verify pause event at normal screen
+            Thread.sleep(5000);
+            // Clicking on pause button
             play_pauseBtn(driver);
-            found = _utils.getLog(LogFilePath, "paused", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+
+            ev.verifyEvent("paused", "Video has been paused", 25000);
+
 
 
             // Verify playing event at normal screen
             BaseClass.play_pauseBtn(driver);
-            found = _utils.getLog(LogFilePath, "playing", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
 
+            ev.verifyEvent("playing", "Video started playing again" , 30000);
 
-            // Verify playCompleted event
-            boolean end = true;
-            while (end) {
-                end = !_utils.getLog(LogFilePath, "playCompleted", lastlinenumber);
-                Thread.sleep(1000);
-            }
-            Thread.sleep(10000);
+            //verifind playCompleted Event
+
+            ev.verifyEvent("playCompleted","Video has been completed", 50000);
 
         }
         catch (Exception e)
@@ -162,7 +152,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void fw_Midroll() throws Exception {
 
         System.out.println("Playing Freewheel Midroll");
@@ -229,7 +219,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void fw_Postroll() throws Exception {
 
         System.out.println("Playing Freewheel Postroll");
@@ -296,7 +286,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void fw_PreMidPost() throws Exception {
 
         try {
@@ -389,7 +379,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void fw_Overlay() throws Exception {
 
         System.out.println("Playing Overlay");
@@ -448,7 +438,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void fw_MultiMid() throws Exception {
 
         System.out.println("Playing MultiMidroll");
@@ -527,7 +517,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void fw_PreMidPost_Overlay() throws Exception {
         System.out.println(" Playing Freewheel PreMidPost overlay");
 
