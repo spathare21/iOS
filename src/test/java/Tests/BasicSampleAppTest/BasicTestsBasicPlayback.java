@@ -89,9 +89,10 @@ public class BasicTestsBasicPlayback extends  BaseClass{
 
     }
 
-
     @Test
     public  void HLS() throws Exception {
+
+        EventVerification ev = new EventVerification();
 
         System.out.println("In test testPlay");
         Thread.sleep(2000);
@@ -104,22 +105,15 @@ public class BasicTestsBasicPlayback extends  BaseClass{
             Assert.assertTrue(found);
 
         // Verify playStarted event
-        Thread.sleep(5000);
-        found=_utils.getLog(LogFilePath,"playStarted",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: playStarted", "HLS video has been playing started", 10000);
 
         // Verify pause event at normal screen
         BaseClass.play_pauseBtn(driver);
-        found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: paused", "video is in paused state", 10000);
 
         // Verify playing event at normal screen
         BaseClass.play_pauseBtn(driver);
-        found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: playing", "video is in playing state", 10000);
 
         // Click on fullscreen
         BaseClass.fullscreenBtn(driver);
@@ -127,16 +121,12 @@ public class BasicTestsBasicPlayback extends  BaseClass{
 
         // Verify pause event at full screen
         BaseClass.play_pause_fullscreenBtn(driver);
-        found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: paused", "Verified video is in paused state at fullscreen at fullscreen", 10000);
 
         // Verify playing event at full screen
         Thread.sleep(5000);
         BaseClass.play_pause_fullscreenBtn(driver);
-        found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: playing", "Verified video is in playing state at fullscreen at fullscreen", 10000);
 
         // Switch from full screen to normal screen
         Thread.sleep(5000);
@@ -156,7 +146,10 @@ public class BasicTestsBasicPlayback extends  BaseClass{
     }
 
     @Test
-    public void MP4() throws Exception {
+    public  void MP4() throws Exception {
+
+        EventVerification ev = new EventVerification();
+
         System.out.println("In test testPlay");
         Thread.sleep(2000);
         assetSelect(driver, 1);
@@ -168,22 +161,15 @@ public class BasicTestsBasicPlayback extends  BaseClass{
             Assert.assertTrue(found);
 
         // Verify playStarted event
-        Thread.sleep(5000);
-        found=_utils.getLog(LogFilePath,"playStarted",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("playStarted", "MP4 video has been playing started", 20000);
 
         // Verify pause event at normal screen
-        BaseClass. play_pauseBtn(driver);
-        found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        BaseClass.play_pauseBtn(driver);
+        ev.verifyEvent("Notification Received: stateChanged. state: paused", "video is in paused state", 20000);
 
         // Verify playing event at normal screen
         BaseClass.play_pauseBtn(driver);
-        found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: playing", "video is in playing state", 20000);
 
         // Click on fullscreen
         BaseClass.fullscreenBtn(driver);
@@ -191,20 +177,16 @@ public class BasicTestsBasicPlayback extends  BaseClass{
 
         // Verify pause event at full screen
         BaseClass.play_pause_fullscreenBtn(driver);
-        found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: paused", "Verified video is in paused state at fullscreen at fullscreen", 20000);
 
         // Verify playing event at full screen
         Thread.sleep(5000);
         BaseClass.play_pause_fullscreenBtn(driver);
-        found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: playing", "Verified video is in playing state at fullscreen at fullscreen", 20000);
 
         // Switch from full screen to normal screen
         Thread.sleep(5000);
-        System.out.println("clicking on screen normal ");
+        System.out.println("clicking on screen normal");
         BaseClass.doneBtn(driver);
 
         // Verify playCompleted event
@@ -222,6 +204,8 @@ public class BasicTestsBasicPlayback extends  BaseClass{
     @Test
     public  void vodCC() throws Exception {
 
+        EventVerification ev = new EventVerification();
+
         System.out.println("In test testPlay");
         Thread.sleep(2000);
         assetSelect(driver, 2);
@@ -234,15 +218,11 @@ public class BasicTestsBasicPlayback extends  BaseClass{
 
         // Verify playStarted event
         Thread.sleep(5000);
-        found=_utils.getLog(LogFilePath,"playStarted",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("playStarted", "VOD with CC video has been playing started", 20000);
 
         // Verify pause event at normal screen
         BaseClass.play_pauseBtn(driver);
-        found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: paused", "video is in paused state", 20000);
 
         // Verify CC button
         BaseClass.ccBtn(driver, "normal");
@@ -304,9 +284,7 @@ public class BasicTestsBasicPlayback extends  BaseClass{
         // Verify playing event at normal screen
         Thread.sleep(5000);
         BaseClass.play_pauseBtn(driver);
-        found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: playing", "video is in playing state", 20000);
 
         // Verify playCompleted event
         boolean end=true;
@@ -322,6 +300,9 @@ public class BasicTestsBasicPlayback extends  BaseClass{
 
     @Test
     public  void aspectRatio() throws Exception {
+
+        EventVerification ev = new EventVerification();
+
         System.out.println("In test testPlay");
         Thread.sleep(2000);
         assetSelect(driver, 3);
@@ -334,21 +315,15 @@ public class BasicTestsBasicPlayback extends  BaseClass{
 
         // Verify playStarted event
         Thread.sleep(5000);
-        found=_utils.getLog(LogFilePath,"playStarted",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("playStarted", "Aspect Ratio video has been playing started", 20000);
 
         // Verify pause event at normal screen
         BaseClass.play_pauseBtn(driver);
-        found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: paused", "video is in paused state", 20000);
 
         // Verify playing event at normal screen
         BaseClass.play_pauseBtn(driver);
-        found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: playing", "video is in playing state", 20000);
 
         // Click on fullscreen
         BaseClass.fullscreenBtn(driver);
@@ -356,16 +331,12 @@ public class BasicTestsBasicPlayback extends  BaseClass{
 
         // Verify pause event at full screen
         BaseClass.play_pause_fullscreenBtn(driver);
-        found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: paused", "video is in paused state at fullscreen", 20000);
 
         // Verify playing event at full screen
         Thread.sleep(5000);
         BaseClass.play_pause_fullscreenBtn(driver);
-        found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: playing", "video is in playing state at fullscreen", 20000);
 
         // Switch from full screen to normal screen
         Thread.sleep(5000);
@@ -388,6 +359,8 @@ public class BasicTestsBasicPlayback extends  BaseClass{
     @Test
     public  void vertical() throws Exception {
 
+        EventVerification ev = new EventVerification();
+
         System.out.println("In test testPlay");
         Thread.sleep(2000);
         assetSelect(driver, 4);
@@ -400,21 +373,15 @@ public class BasicTestsBasicPlayback extends  BaseClass{
 
         // Verify playStarted event
         Thread.sleep(5000);
-        found=_utils.getLog(LogFilePath,"playStarted",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("playStarted", "Vertical 16:9 video has been playing started", 20000);
 
         // Verify pause event at normal screen
         BaseClass.play_pauseBtn(driver);
-        found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: paused", "video is in paused state", 20000);
 
         // Verify playing event at normal screen
         BaseClass.play_pauseBtn(driver);
-        found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: playing", "video is in playing state", 20000);
 
         // Click on fullscreen
         BaseClass.fullscreenBtn(driver);
@@ -422,16 +389,12 @@ public class BasicTestsBasicPlayback extends  BaseClass{
 
         // Verify pause event at full screen
         BaseClass.play_pause_fullscreenBtn(driver);
-        found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: paused", "video is in paused state at fullscreen", 20000);
 
         // Verify playing event at full screen
         Thread.sleep(5000);
         BaseClass.play_pause_fullscreenBtn(driver);
-        found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+        ev.verifyEvent("Notification Received: stateChanged. state: playing", "video is in playing state at fullscreen", 20000);
 
         // Switch from full screen to normal screen
         Thread.sleep(5000);
@@ -440,11 +403,11 @@ public class BasicTestsBasicPlayback extends  BaseClass{
 
         // Click on Master button
         BaseClass.masterBtn(driver);
-
     }
 
     @Test
     public void vast_PreRoll() throws InterruptedException {
+        EventVerification ev = new EventVerification();
         System.out.println("Playing Vast Preroll");
         try {
             System.out.println("In test testPlay");
@@ -459,37 +422,27 @@ public class BasicTestsBasicPlayback extends  BaseClass{
 
             Thread.sleep(8000);
             //adStarted event verification
-            found = _utils.getLog(LogFilePath, "adStarted", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("Notification Received: adStarted", "Preroll ad is start to playing", 10000);
 
             Thread.sleep(25000);
 
             // adCompleted event verification
             System.out.println("Veifying ad complete event");
-            found = _utils.getLog(LogFilePath, "adPodCompleted", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("Notification Received: adPodCompleted", "Preroll ad is completed", 10000);
 
             // Verify playStarted event
-            Thread.sleep(5000);
+            Thread.sleep(10000);
             System.out.println("Veifying play started event");
-            found = _utils.getLog(LogFilePath, "playStarted", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("playStarted", "Vast Preroll video has been playing started", 10000);
 
             // Verify pause event at normal screen
             play_pauseBtn(driver);
-            found = _utils.getLog(LogFilePath, "paused", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video is paused", 10000);
 
 
             // Verify playing event at normal screen
             BaseClass.play_pauseBtn(driver);
-            found = _utils.getLog(LogFilePath, "playing", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("Notification Received: stateChanged. state: paying", "Video is playing", 10000);
 
 
             // Verify playCompleted event
@@ -516,7 +469,7 @@ public class BasicTestsBasicPlayback extends  BaseClass{
 
     @Test
     public  void vast_Midroll() throws Exception {
-
+        EventVerification ev = new EventVerification();
         System.out.println("Playing Vast Midroll");
         try {
             System.out.println("In test testPlay");
@@ -531,35 +484,25 @@ public class BasicTestsBasicPlayback extends  BaseClass{
 
             // Verify playStarted event
             Thread.sleep(5000);
-            found = _utils.getLog(LogFilePath, "playStarted", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("playStarted", "Vast Midroll video has been playing started", 20000);
 
             // Verify pause event at normal screen
             play_pauseBtn(driver);
-            found = _utils.getLog(LogFilePath, "paused", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video is paused", 20000);
 
 
             // Verify playing event at normal screen
             BaseClass.play_pauseBtn(driver);
-            found = _utils.getLog(LogFilePath, "playing", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video is playing", 20000);
 
             Thread.sleep(7000);
             //adStarted event verification
-            found = _utils.getLog(LogFilePath, "adStarted", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+             ev.verifyEvent("Notification Received: adStarted", "Midroll ad is start to playing", 20000);
 
-            Thread.sleep(18000);
+            Thread.sleep(20000);
 
             // adCompleted event verification
-            found = _utils.getLog(LogFilePath, "adPodCompleted", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("Notification Received: adPodCompleted", "Midroll ad is completed", 50000);
 
             // Verify playCompleted event
             boolean end = true;
@@ -576,13 +519,11 @@ public class BasicTestsBasicPlayback extends  BaseClass{
 
         // Click on Master button
         BaseClass.masterBtn(driver);
-
     }
-
 
     @Test
     public  void vast_Postroll() throws Exception {
-
+        EventVerification ev = new EventVerification();
         System.out.println("Playing vast Postroll");
         try {
 
@@ -598,34 +539,23 @@ public class BasicTestsBasicPlayback extends  BaseClass{
 
             // Verify playStarted event
             Thread.sleep(5000);
-            found=_utils.getLog(LogFilePath,"playStarted",lastlinenumber);
-            if(!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("playStarted", "Vast Postroll video has been playing started", 20000);
 
             // Verify pause event at normal screen
             BaseClass.play_pauseBtn(driver);
-            found=_utils.getLog(LogFilePath,"paused",lastlinenumber);
-            if(!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video is in paused state", 20000);
 
             // Verify playing event at normal screen
             BaseClass.play_pauseBtn(driver);
-            found=_utils.getLog(LogFilePath,"playing",lastlinenumber);
-            if(!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video is in playing state", 20000);
 
             Thread.sleep(13000);
             //adStarted event verification
-            found = _utils.getLog(LogFilePath, "adStarted", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+             ev.verifyEvent("Notification Received: adStarted", "Postroll ad is start to playing", 20000);
 
             Thread.sleep(8000);
-//
             // adCompleted event verification
-            found = _utils.getLog(LogFilePath, "adPodCompleted", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("Notification Received: adPodCompleted", "Postroll ad is completed", 30000);
 
 
             // Verify playCompleted event
@@ -644,9 +574,7 @@ public class BasicTestsBasicPlayback extends  BaseClass{
         }
         // Click on Master button
         BaseClass.masterBtn(driver);
-
     }
-
 
     // Click on fullscreen button
     public static void fullscreenBtn(AppiumDriver driver) throws InterruptedException {

@@ -55,8 +55,9 @@ public class ParseEventFile {
                     }
 
                 }
+
                 line = buf.readLine();
-                line = line+1;
+                //line = line+1;
             }
 
         }
