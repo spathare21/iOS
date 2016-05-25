@@ -91,7 +91,7 @@ public class BasicTestsFreewheel extends BaseClass {
         BaseClass.masterBtn(driver);
         Thread.sleep(1000);
         System.out.println("Deleting log file");
-        getLog.delete("system.log");
+        //getLog.delete("system.log");
         System.out.println("log file deleted");
         Thread.sleep(5000);
 
@@ -107,7 +107,7 @@ public class BasicTestsFreewheel extends BaseClass {
             assetSelect(driver, 6);
 
             // Verify SDK version
-            Thread.sleep(3000);
+            Thread.sleep(7000);
             found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
             if (!found)
                 Assert.assertTrue(found);
@@ -116,31 +116,31 @@ public class BasicTestsFreewheel extends BaseClass {
             EventVerification ev = new EventVerification();
 
             //verifing the ad started evnet
-            ev.verifyEvent("adStarted", "Ad has been started", 10000);
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 10000);
 
            //verifing ad Completed Event
 
-            ev.verifyEvent("adPodCompleted", " Ad has been completed" , 15000);
+            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 15000);
 
             // Verify playStarted event
-            ev.verifyEvent("playStarted", "Play has been started", 15000);
+            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 20000);
 
             Thread.sleep(5000);
             // Clicking on pause button
             play_pauseBtn(driver);
 
-            ev.verifyEvent("paused", "Video has been paused", 25000);
+            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 25000);
 
 
 
             // Verify playing event at normal screen
-            BaseClass.play_pauseBtn(driver);
+            play_pauseBtn(driver);
 
-            ev.verifyEvent("playing", "Video started playing again" , 30000);
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 30000);
 
             //verifind playCompleted Event
 
-            ev.verifyEvent("playCompleted","Video has been completed", 50000);
+            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 50000);
 
         }
         catch (Exception e)
@@ -152,7 +152,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void fw_Midroll() throws Exception {
 
         System.out.println("Playing Freewheel Midroll");
@@ -172,45 +172,33 @@ public class BasicTestsFreewheel extends BaseClass {
 
 
             // Verify playStarted event
+            EventVerification ev = new EventVerification();
+            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 10000);
+
             Thread.sleep(5000);
-            found = _utils.getLog(LogFilePath, "playStarted", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
 
             // Verify pause event at normal screen
             play_pauseBtn(driver);
-            found = _utils.getLog(LogFilePath, "paused", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 25000);
 
 
             // Verify playing event at normal screen
             BaseClass.play_pauseBtn(driver);
-            found = _utils.getLog(LogFilePath, "playing", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 30000);
 
-            Thread.sleep(10000);
+
+
             //adStarted event verification
-            found = _utils.getLog(LogFilePath, "adStarted", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 40000);
 
-            Thread.sleep(7000);
+            //verifing ad Completed Event
 
-            // adCompleted event verification
-            found = _utils.getLog(LogFilePath, "adPodCompleted", lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 50000);
 
 
             // Verify playCompleted event
-            boolean end = true;
-            while (end) {
-                end = !_utils.getLog(LogFilePath, "playCompleted", lastlinenumber);
-                Thread.sleep(1000);
-            }
-            Thread.sleep(10000);
+            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 50000);
+
 
         } catch (Exception e) {
             System.out.println(" Exception " + e);
