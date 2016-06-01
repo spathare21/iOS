@@ -30,13 +30,13 @@ public class ParseEventFile {
 
         {
 
-            BufferedReader buf = new BufferedReader(new FileReader("../../../ios-automation/system.log"));
+            BufferedReader buf = new BufferedReader(new FileReader("/Users/sumit/Desktop/iOS/ios-automation/system.log"));
             System.out.println("Reading file");
             String line = "";
             //BufferedReader buf = null;
 
             line = buf.readLine();
-            System.out.println("line is " +line);
+            System.out.println("line is " + line);
 
             while(line != null){
                 //System.out.println(line);

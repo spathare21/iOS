@@ -8,7 +8,8 @@ import org.testng.annotations.*;
 import io.appium.java_client.AppiumDriver;
 
 import java.awt.*;
-import java.io.IOException;
+import java.io.*;
+import java.sql.Time;
 import java.util.*;
 
 
@@ -76,12 +77,47 @@ public class BasicTestsFreewheel extends BaseClass {
     @BeforeMethod
     public void  beforeMethod() throws IOException, InterruptedException {
 
+
+
         System.out.println("in before method ");
+
         getLog.getlog(ud);
+        inheritIO(getLog.pro.getInputStream(),new FileWriter(new File("system.log")));
         System.out.println("log file created");
+
+//        new Thread(new StreamGabber(getLog.pro.getInputStream(),new FileWriter(new File("system.log")))).start();
+
+
+
         Thread.sleep(3000);
 
     }
+
+    private static void inheritIO(final InputStream src, final FileWriter dest){
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    getLog.log_save();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Scanner sc = new Scanner(src);
+                while (sc.hasNextLine()) {
+                    try {
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        dest.append(sc.nextLine());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
 
     @AfterMethod
     public void afterMethod() throws IOException, InterruptedException {
@@ -107,10 +143,10 @@ public class BasicTestsFreewheel extends BaseClass {
             assetSelect(driver, 6);
 
             // Verify SDK version
-            Thread.sleep(7000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+            Thread.sleep(2000);
+//            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
+//            if (!found)
+//                Assert.assertTrue(found);
 
             //Creting the object of EventVerification class
             EventVerification ev = new EventVerification();
@@ -152,7 +188,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void fw_Midroll() throws Exception {
 
         System.out.println("Playing Freewheel Midroll");
