@@ -24,19 +24,17 @@ public class ParseEventFile {
 
     public int parseeventfile(String comp, int count ) throws IOException {
 
-        //System.out.println("in parse event file");
 
         try
 
         {
 
+
             BufferedReader buf = new BufferedReader(new FileReader("system.log"));
-           // System.out.println("Reading file");
+
             String line = "";
-            //BufferedReader buf = null;
 
             line = buf.readLine();
-            //System.out.println("line is " +line);
 
             while(line != null){
                 //System.out.println(line);

@@ -1,5 +1,9 @@
 package Utils;
 
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+
 import java.io.IOException;
 import java.util.*;
 import java.io.IOException;
@@ -8,11 +12,13 @@ import java.io.*;
 
 public class getLog {
 
+    public static Process pro;
+
     // capturing the iDevices log and saving in one System.log file
     public static void getlog(String udid) throws IOException {
         System.out.println("executing command for system log");
         System.out.println("in getlog udid is : " + udid);
-        final String command = "idevicesyslog -u " + udid + " >> system.log";
+        final String command = "idevicesyslog -u " + udid + ">> system.log";
 
         System.out.println("command is " + command);
 
@@ -20,8 +26,8 @@ public class getLog {
         System.out.println("final command is " + final_command);
 
         Runtime run = Runtime.getRuntime();
-        Process pr = run.exec(final_command);
-        System.out.println("logs are getting saved in system.log file");
+        pro = run.exec(final_command);
+        System.out.println("logs command has been excuted");
     }
 
     // Delete the System.log file after class.
@@ -29,7 +35,7 @@ public class getLog {
         System.out.println("Deleting system log file");
         final String cmd = " rm  -rf  system.log";
         String[] final_command = CommandLine.command(cmd);
-        System.out.println("The command we are executing is " +cmd);
+        System.out.println("The command we are executing is " + cmd);
         Runtime run = Runtime.getRuntime();
         Process pr = run.exec(final_command);
 
@@ -77,7 +83,7 @@ public class getLog {
     public static String getDeviceInfo() throws IOException {
 
         String deviceInfo = " ";
-        String DeviceOs = " " ;
+        String DeviceOs = " ";
         String DeviceName = " ";
 
         System.out.println("executing command for getting Device Info");
@@ -102,18 +108,16 @@ public class getLog {
         String deviceinfo = null;
         while ((deviceinfo = stdInput.readLine()) != null) {
 
-            if (deviceinfo.contains("DeviceName"))
-            {
+            if (deviceinfo.contains("DeviceName")) {
                 DeviceName = deviceinfo;
                 System.out.println("" + DeviceName + "\n");
             }
 
-            if(deviceinfo.contains("ProductVersion"))
-            {
+            if (deviceinfo.contains("ProductVersion")) {
                 DeviceOs = deviceinfo;
                 System.out.println("Device Os is :" + DeviceOs + "\n");
             }
-            
+
         }
         // read any errors from the attempted command
         System.out.println("Here is the standard error of the command (if any):\n");
@@ -128,8 +132,8 @@ public class getLog {
     public static void appUninstall(String ap) throws IOException, InterruptedException {
         String app = "";
         System.out.println("uninstalling application");
-        final String command = "ios-deploy --list_bundle_id | grep  " +  ap  + " ";
-        System.out.println("command is >> " +command);
+        final String command = "ios-deploy --list_bundle_id | grep  " + ap + " ";
+        System.out.println("command is >> " + command);
         String[] final_command = CommandLine.command(command);
         System.out.println("final command  is " + final_command);
 
@@ -170,4 +174,5 @@ public class getLog {
         System.out.println("app uninstalled");
 
     }
+
 }

@@ -8,7 +8,8 @@ import org.testng.annotations.*;
 import io.appium.java_client.AppiumDriver;
 
 import java.awt.*;
-import java.io.IOException;
+import java.io.*;
+import java.sql.Time;
 import java.util.*;
 
 
@@ -74,14 +75,17 @@ public class BasicTestsFreewheel extends BaseClass {
     }
 
     @BeforeMethod
-    public void  beforeMethod() throws IOException, InterruptedException {
+    public void  beforeMethod() throws IOException, InterruptedException
+    {
 
         System.out.println("in before method ");
         getLog.getlog(ud);
         System.out.println("log file created");
-        Thread.sleep(3000);
+        Thread.sleep(5000);
 
     }
+
+
 
     @AfterMethod
     public void afterMethod() throws IOException, InterruptedException {
@@ -91,13 +95,13 @@ public class BasicTestsFreewheel extends BaseClass {
         BaseClass.masterBtn(driver);
         Thread.sleep(1000);
         System.out.println("Deleting log file");
-        //getLog.delete("system.log");
+        getLog.delete();
         System.out.println("log file deleted");
         Thread.sleep(5000);
 
     }
 
-    //@Test
+    @Test
     public  void fw_Preroll() throws Exception {
 
         System.out.println("Playing FW Preroll");
@@ -107,7 +111,7 @@ public class BasicTestsFreewheel extends BaseClass {
             assetSelect(driver, 6);
 
             // Verify SDK version
-            Thread.sleep(7000);
+            Thread.sleep(2000);
             found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
             if (!found)
                 Assert.assertTrue(found);
@@ -152,7 +156,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void fw_Midroll() throws Exception {
 
         System.out.println("Playing Freewheel Midroll");
