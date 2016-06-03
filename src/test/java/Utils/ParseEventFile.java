@@ -16,27 +16,27 @@ public class ParseEventFile {
         String[] tokens = line.split(":");
         //System.out.println("printing tokens", +tokens.toString());
         String trimToken = tokens[7].trim();
-        System.out.println("trim tocked in " +trimToken);
+        //System.out.println("trim tocked in " +trimToken);
         count1=Integer.parseInt(trimToken);
-        System.out.println("count 1 is " +count1);
+        //System.out.println("count 1 is " +count1);
         return count1;
     }
 
     public int parseeventfile(String comp, int count ) throws IOException {
 
-        System.out.println("in parse event file");
+        //System.out.println("in parse event file");
 
         try
 
         {
 
-            BufferedReader buf = new BufferedReader(new FileReader("../../../ios-automation/system.log"));
-            System.out.println("Reading file");
+            BufferedReader buf = new BufferedReader(new FileReader("system.log"));
+           // System.out.println("Reading file");
             String line = "";
             //BufferedReader buf = null;
 
             line = buf.readLine();
-            System.out.println("line is " +line);
+            //System.out.println("line is " +line);
 
             while(line != null){
                 //System.out.println(line);

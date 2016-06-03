@@ -58,7 +58,7 @@ public class BasicTestsIMA extends BaseClass{
         Thread.sleep(1000);
         //   getLog.appUninstall(app);
 
-        getLog.delete("system.log");
+        getLog.delete();
         System.out.println("log file deleted");
 
 

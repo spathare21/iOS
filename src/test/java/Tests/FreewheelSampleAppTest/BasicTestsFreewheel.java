@@ -120,27 +120,27 @@ public class BasicTestsFreewheel extends BaseClass {
 
            //verifing ad Completed Event
 
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 15000);
+            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 20000);
 
             // Verify playStarted event
-            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 20000);
+            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 30000);
 
             Thread.sleep(5000);
             // Clicking on pause button
             play_pauseBtn(driver);
 
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 25000);
+            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 50000);
 
 
 
             // Verify playing event at normal screen
             play_pauseBtn(driver);
 
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 30000);
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 50000);
 
             //verifind playCompleted Event
 
-            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 50000);
+            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 90000);
 
         }
         catch (Exception e)
@@ -173,31 +173,31 @@ public class BasicTestsFreewheel extends BaseClass {
 
             // Verify playStarted event
             EventVerification ev = new EventVerification();
-            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 10000);
+            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 20000);
 
             Thread.sleep(5000);
 
             // Verify pause event at normal screen
             play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 25000);
+            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 30000);
 
 
             // Verify playing event at normal screen
             BaseClass.play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 30000);
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 50000);
 
 
 
             //adStarted event verification
-            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 40000);
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 50000);
 
             //verifing ad Completed Event
 
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 50000);
+            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 60000);
 
 
             // Verify playCompleted event
-            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 50000);
+            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 90000);
 
 
         } catch (Exception e) {

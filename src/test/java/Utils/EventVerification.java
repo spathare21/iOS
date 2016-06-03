@@ -20,7 +20,7 @@ public class EventVerification {
 
         int returncount;
 
-        System.out.println("in verify event");
+        //System.out.println("in verify event");
         // Paused  Verification
         boolean status=false;
         long startTime = System.currentTimeMillis(); //fetch starting time
@@ -28,8 +28,8 @@ public class EventVerification {
 
             //status = ParseEventsFile.parseeventfile("stateChanged - state: PAUSED");
             ParseEventFile pe=new ParseEventFile();
-            System.out.println("event type is" +eventType);
-            System.out.println("count is " +count);
+            //System.out.println("event type is" +eventType);
+            //System.out.println("count is " +count);
             returncount = pe.parseeventfile(eventType, count);
 
             if (returncount== -1){

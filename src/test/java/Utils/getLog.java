@@ -25,9 +25,9 @@ public class getLog {
     }
 
     // Delete the System.log file after class.
-    public static void delete(String logfile) throws IOException {
+    public static void delete() throws IOException {
         System.out.println("Deleting system log file");
-        final String cmd = "rm -rf " + logfile;
+        final String cmd = " rm  -rf  system.log";
         String[] final_command = CommandLine.command(cmd);
         System.out.println("The command we are executing is " +cmd);
         Runtime run = Runtime.getRuntime();
