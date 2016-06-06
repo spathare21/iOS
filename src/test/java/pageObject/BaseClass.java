@@ -79,6 +79,7 @@ public class BaseClass {
             List<WebElement> l  = driver.findElementsByClassName("UIAScrollView");
             found = l.get(0).isDisplayed();
             System.out.println("Overlay displayed");
+            found = true;
 
         }
         catch (Exception e)
