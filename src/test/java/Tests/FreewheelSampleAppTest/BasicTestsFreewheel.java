@@ -102,7 +102,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void fw_Preroll() throws Exception {
 
         System.out.println("Playing FW Preroll");
@@ -157,7 +157,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void fw_Midroll() throws Exception {
 
         System.out.println("Playing Freewheel Midroll");
@@ -212,7 +212,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void fw_Postroll() throws Exception {
 
         System.out.println("Playing Freewheel Postroll");
@@ -267,7 +267,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void fw_PreMidPost() throws Exception {
 
         try {
@@ -336,7 +336,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void fw_Overlay() throws Exception {
 
         System.out.println("Playing Overlay");
@@ -382,7 +382,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void fw_MultiMid() throws Exception {
 
         System.out.println("Playing MultiMidroll");
@@ -478,6 +478,9 @@ public class BasicTestsFreewheel extends BaseClass {
             play_pauseBtn(driver);
 
             ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 40000);
+
+            overlay(driver);
+            Thread.sleep(2000);
 
             // Verify playing event at normal screen
             play_pauseBtn(driver);
