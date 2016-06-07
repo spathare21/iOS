@@ -12,7 +12,7 @@ import java.io.IOException;
 public class logging {
 
 
-    public boolean getLog(String logfilename, String text, int lastlinenumber) throws IOException {
+    public boolean getLog(String logfilename, String text, int lastlinenumber, int timeout) throws IOException {
         String filePath = logfilename;
         String textToMatch = text;
         String content;
@@ -26,7 +26,8 @@ public class logging {
 
             String line;
             //System.out.println("Searching for " + textToMatch + " in file...");
-            while (( line = bf.readLine()) != null)
+            long startTime = System.currentTimeMillis(); //fetch starting time
+            while ((( line = bf.readLine()) != null) && (startTime- System.currentTimeMillis())< timeout)
 
             {
                 // Increment the count and find the index of the word
