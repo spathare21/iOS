@@ -2,6 +2,8 @@ package Tests.IMASampleApp;
 
 import Utils.*;
 import io.appium.java_client.AppiumDriver;
+
+import org.junit.experimental.theories.Theories;
 import org.testng.annotations.*;
 import org.testng.Assert;
 import pageObject.BaseClass;
@@ -87,7 +89,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    //@Test
+    @Test
     public void IMA_Preroll() throws Exception {
         System.out.println(" playing IMA preroll");
         try {
@@ -140,7 +142,7 @@ public class BasicTestsIMA extends BaseClass{
         }
     }
 
-    //@Test
+    @Test
     public  void IMA_Midroll() throws Exception {
 
         System.out.println("Playing IMA Midroll");
@@ -158,7 +160,6 @@ public class BasicTestsIMA extends BaseClass{
             if (!found)
                 Assert.assertTrue(found);
 
-
             // Verify playStarted event
             EventVerification ev = new EventVerification();
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 20000);
@@ -173,7 +174,6 @@ public class BasicTestsIMA extends BaseClass{
             // Verify playing event at normal screen
             BaseClass.play_pauseBtn(driver);
             ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 50000);
-
 
 
             //adStarted event verification
@@ -194,7 +194,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    //@Test
+    @Test
     public  void IMA_Postroll() throws Exception {
 
         System.out.println("Playing IMA Postroll");
@@ -250,7 +250,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    //@Test
+    @Test
     public void IMA_Podded_Preroll() throws Exception {
         System.out.println(" playing IMA podded preroll");
         try {
@@ -316,7 +316,7 @@ public class BasicTestsIMA extends BaseClass{
         }
     }
 
-    //@Test
+    @Test
     public  void IMA_Podded_Midroll() throws Exception {
 
         System.out.println("Playing IMA Podded Midroll");
@@ -378,7 +378,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    //@Test
+    @Test
     public  void IMA_Podded_Postroll() throws Exception {
 
         System.out.println("Playing IMA Podded Postroll");
@@ -407,8 +407,7 @@ public class BasicTestsIMA extends BaseClass{
 
             // Verify playing event at normal screen
             BaseClass.play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 50000);
-
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again", 50000);
 
 
             //adStarted event verification
@@ -416,22 +415,19 @@ public class BasicTestsIMA extends BaseClass{
 
             //verifing ad Completed Event
 
-            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 60000);
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed", 60000);
 
             //adStarted event verification
             ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 70000);
 
             //verifing ad Completed Event
 
-            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 80000);
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed", 80000);
 
             // Verify playCompleted event
-            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 90000);
-
-
-
-
+            ev.verifyEvent("Notification Received: playCompleted", "Video has been completed", 90000);
         }
+
         catch (Exception e)
         {
             System.out.println(" Exception " + e);
@@ -440,7 +436,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    //@Test
+    @Test
     public  void IMA_Podded_PreMidPost() throws Exception {
         System.out.println("IMA PreMidPost podded");
 
@@ -580,7 +576,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    //@Test
+    @Test
     public void IMA_Skippable() throws Exception {
         System.out.println(" playing IMA preroll");
         try {
@@ -656,7 +652,9 @@ public class BasicTestsIMA extends BaseClass{
             EventVerification ev = new EventVerification();
 
             //verifing the ad started evnet
+
             ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 15000);
+
 
             Thread.sleep(10000);
             //verifing ad Completed Event
@@ -729,10 +727,12 @@ public class BasicTestsIMA extends BaseClass{
 
             // Verify playStarted event
             EventVerification ev = new EventVerification();
+
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 30000);
 
 
             Thread.sleep(10000);
+
 
             //adStarted event verification
             ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 40000);
@@ -740,6 +740,7 @@ public class BasicTestsIMA extends BaseClass{
 
             Thread.sleep(5000);
             //verifing ad Completed Event
+
 
             ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 40000);
 

@@ -26,7 +26,8 @@ public class logging {
 
             String line;
             //System.out.println("Searching for " + textToMatch + " in file...");
-            while (( line = bf.readLine()) != null)
+
+            while ((( line = bf.readLine()) != null))
 
             {
                 // Increment the count and find the index of the word

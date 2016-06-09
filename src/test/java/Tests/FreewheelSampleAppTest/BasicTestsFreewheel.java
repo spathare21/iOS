@@ -484,6 +484,9 @@ public class BasicTestsFreewheel extends BaseClass {
 
             ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 40000);
 
+            overlay(driver);
+            Thread.sleep(2000);
+
             // Verify playing event at normal screen
             play_pauseBtn(driver);
 
