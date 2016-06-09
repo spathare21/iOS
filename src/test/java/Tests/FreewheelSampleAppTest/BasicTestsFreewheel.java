@@ -41,6 +41,10 @@ public class BasicTestsFreewheel extends BaseClass {
     @BeforeClass // Will be executed before any of the test run.
     public void beforeTest( String platformVersion,  String deviceName, String logFilePath) throws Exception {
 
+        getLog.reboot();
+
+        System.out.println("System rebooted successfully./");
+
         // set up appium
         LogFilePath = logFilePath;
 
@@ -50,6 +54,11 @@ public class BasicTestsFreewheel extends BaseClass {
         ud = getLog.getUdid();
 
         System.out.println("valued of ud is " +ud);
+
+        getLog.getlog(ud);
+        System.out.println("log file created");
+        Thread.sleep(5000);
+
         SetupiOSDriver setUpdriver = new SetupiOSDriver();
         driver = setUpdriver.setUpandReturniOSDriver( p.getProperty("appFilePath"),  p.getProperty("appName"),platformVersion, deviceName, ud);
         Thread.sleep(2000);
@@ -67,6 +76,10 @@ public class BasicTestsFreewheel extends BaseClass {
         Properties p=prop.loadProperty("FreewheelSampleApp.properties");
         String app = p.getProperty("app_Name");
         Thread.sleep(1000);
+        System.out.println("Deleting log file");
+        getLog.delete();
+        System.out.println("log file deleted");
+        Thread.sleep(5000);
         //getLog.appUninstall(app);
 
         driver.quit();
@@ -78,11 +91,7 @@ public class BasicTestsFreewheel extends BaseClass {
     @BeforeMethod
     public void  beforeMethod() throws IOException, InterruptedException
     {
-
         System.out.println("in before method ");
-        getLog.getlog(ud);
-        System.out.println("log file created");
-        Thread.sleep(5000);
 
     }
 
@@ -95,14 +104,10 @@ public class BasicTestsFreewheel extends BaseClass {
         Thread.sleep(2000);
         BaseClass.masterBtn(driver);
         Thread.sleep(1000);
-        System.out.println("Deleting log file");
-        getLog.delete();
-        System.out.println("log file deleted");
-        Thread.sleep(5000);
 
     }
 
-    //@Test
+    @Test
     public  void fw_Preroll() throws Exception {
 
         System.out.println("Playing FW Preroll");
@@ -157,7 +162,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void fw_Midroll() throws Exception {
 
         System.out.println("Playing Freewheel Midroll");
@@ -212,7 +217,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void fw_Postroll() throws Exception {
 
         System.out.println("Playing Freewheel Postroll");
@@ -267,7 +272,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void fw_PreMidPost() throws Exception {
 
         try {
@@ -336,7 +341,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void fw_Overlay() throws Exception {
 
         System.out.println("Playing Overlay");
@@ -382,7 +387,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void fw_MultiMid() throws Exception {
 
         System.out.println("Playing MultiMidroll");

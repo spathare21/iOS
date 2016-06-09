@@ -10,10 +10,10 @@ import java.io.IOException;
  */
 public class EventVerification {
 
-    private int count ;
+    public static int count = 0;
 
     public EventVerification(){
-        count=0;
+
     }
 
     public void verifyEvent(String eventType,String consoleMessage,int timeout) throws IOException {

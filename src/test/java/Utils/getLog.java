@@ -18,7 +18,7 @@ public class getLog {
     public static void getlog(String udid) throws IOException {
         System.out.println("executing command for system log");
         System.out.println("in getlog udid is : " + udid);
-        final String command = "idevicesyslog -u " + udid + ">> system.log";
+        final String command = "idevicesyslog -u " + udid + " >> system.log";
 
         System.out.println("command is " + command);
 
@@ -173,6 +173,22 @@ public class getLog {
 
         System.out.println("app uninstalled");
 
+    }
+
+    public static void reboot () throws IOException, InterruptedException {
+        System.out.println("executing command for system log");
+
+        final String command = "idevicediagnostics restart";
+
+        System.out.println("command is " + command);
+
+        String[] final_command = CommandLine.command(command);
+        System.out.println("final command is " + final_command);
+
+        Runtime run = Runtime.getRuntime();
+        Process pr = run.exec(final_command);
+        System.out.println("logs command has been excuted");
+        Thread.sleep(100000);
     }
 
 }

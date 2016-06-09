@@ -24,12 +24,9 @@ public class ParseEventFile {
 
     public int parseeventfile(String comp, int count ) throws IOException {
 
-
         try
 
         {
-
-
             BufferedReader buf = new BufferedReader(new FileReader("system.log"));
 
             String line = "";
