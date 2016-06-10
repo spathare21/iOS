@@ -31,8 +31,6 @@ public class BasicTestsFreewheel extends BaseClass {
     logging _utils = new logging();
     boolean found=false;
 
-
-
     // This variable is used in checking the latest entry in the log.
     private static int lastlinenumber;
 
@@ -40,6 +38,8 @@ public class BasicTestsFreewheel extends BaseClass {
 
     @BeforeClass // Will be executed before any of the test run.
     public void beforeTest( String platformVersion,  String deviceName, String logFilePath) throws Exception {
+
+        EventVerification.count =0 ;
 
         getLog.reboot();
 
@@ -162,7 +162,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void fw_Midroll() throws Exception {
 
         System.out.println("Playing Freewheel Midroll");
@@ -217,7 +217,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void fw_Postroll() throws Exception {
 
         System.out.println("Playing Freewheel Postroll");
@@ -272,7 +272,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void fw_PreMidPost() throws Exception {
 
         try {
@@ -341,7 +341,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void fw_Overlay() throws Exception {
 
         System.out.println("Playing Overlay");
@@ -387,7 +387,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void fw_MultiMid() throws Exception {
 
         System.out.println("Playing MultiMidroll");
@@ -449,7 +449,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void fw_PreMidPost_Overlay() throws Exception {
         System.out.println(" Playing Freewheel PreMidPost overlay");
 

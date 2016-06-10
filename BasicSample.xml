@@ -32,6 +32,7 @@
 
         <classes>
             <class name="Tests.BasicSampleAppTest.BasicTestsBasicPlayback" />
+            <!--<class name="Tests.BasicSampleAppTest.DeepTestsBasicPlayback" />-->
         </classes>
     </test>
 

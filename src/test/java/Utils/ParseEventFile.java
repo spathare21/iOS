@@ -46,6 +46,7 @@ public class ParseEventFile {
 
                         System.out.println("Event Recieved From SDK AND Sample App :- " + line);
                         count=latestCount(line);
+                        //System.out.println("count is if condition in parse event method is " +count);
                         return count;
                     }
 

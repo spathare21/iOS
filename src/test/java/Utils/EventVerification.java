@@ -14,6 +14,7 @@ public class EventVerification {
 
     public EventVerification(){
 
+
     }
 
     public void verifyEvent(String eventType,String consoleMessage,int timeout) throws IOException {
@@ -29,6 +30,7 @@ public class EventVerification {
             ParseEventFile pe=new ParseEventFile();
 
             returncount = pe.parseeventfile(eventType, count);
+            //System.out.println("count value after returing" +returncount + "count is " +count);
 
             if (returncount== -1){
                 status=false;
