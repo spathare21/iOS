@@ -34,9 +34,10 @@ b. Now in iOS folder create one more folder with the name of repo and under this
 2. Prerequisites
  a. Install follwing libraried before running the code:-
     i. ios-deploy -->> https://github.com/phonegap/ios-deploy
-   ii. libimobiledevice -- >> http://confusatory.org/post/127183189821/ios-debugging-device-console-without-wires , https://github.com/libimobiledevice/libimobiledevice
+   ii. libimobiledevice -- >> http://confusatory.org/post/127183189821/ios-debugging-device-console-without-wires , https://github.com/libimobiledevice/libimobiledevice (This library has been added in maven dependency now no need to install manually.)
 
-
+3. how to run iOS Automation
+a. Move to iOS-automation folder and run this following command :-
+        mvn clean test -DsuiteXmlFile="Enter XML file which you want "
 
 *Info will be added soon*
-

@@ -71,4 +71,49 @@ public class BaseClass {
         List<WebElement> button = driver.findElementsByClassName("UIAButton");
         button.get(3).click();
     }
+
+    public static  void overlay(AppiumDriver driver)
+    {
+        boolean found = false;
+        try{
+            List<WebElement> l  = driver.findElementsByClassName("UIAScrollView");
+            found = l.get(0).isDisplayed();
+            System.out.println("Overlay displayed");
+            found = true;
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("value of found" +found);
+        }
+
+        if(!found)
+        {
+            Assert.assertTrue(!found);
+        }
+    }
+
+
+    // Click on CC button
+    public static void ccBtn(AppiumDriver driver, String screen) throws InterruptedException {
+        driver.tap(1, 200, 300, 5);
+        Thread.sleep(2000);
+        List<WebElement> button = driver.findElementsByClassName("UIAButton");
+        if(screen == "normal"){
+            button.get(3).click();
+        }
+        else{
+            button.get(1).click();
+        }
+
+    }
+
+    // Click on CC button
+    public static void ccDoneBtn(AppiumDriver driver) throws InterruptedException {
+     //   driver.tap(1, 200, 300, 5);
+        Thread.sleep(2000);
+        List<WebElement> button = driver.findElementsByClassName("UIAButton");
+        button.get(0).click();
+    }
+
 }
