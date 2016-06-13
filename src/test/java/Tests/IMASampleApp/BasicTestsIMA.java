@@ -252,7 +252,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    //@Test
+    @Test
     public void IMA_Podded_Preroll() throws Exception {
         System.out.println(" playing IMA podded preroll");
         try {
@@ -318,7 +318,7 @@ public class BasicTestsIMA extends BaseClass{
         }
     }
 
-    //@Test
+    @Test
     public  void IMA_Podded_Midroll() throws Exception {
 
         System.out.println("Playing IMA Podded Midroll");
@@ -380,7 +380,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-   // @Test
+    @Test
     public  void IMA_Podded_Postroll() throws Exception {
 
         System.out.println("Playing IMA Podded Postroll");
@@ -438,7 +438,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    //@Test
+    @Test
     public  void IMA_Podded_PreMidPost() throws Exception {
         System.out.println("IMA PreMidPost podded");
 
@@ -578,7 +578,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    //@Test
+    @Test
     public void IMA_Skippable() throws Exception {
         System.out.println(" playing IMA preroll");
         try {
@@ -636,7 +636,7 @@ public class BasicTestsIMA extends BaseClass{
         }
     }
 
-    //@Test
+    @Test
     public  void IMA_PreMidPost_skippable() throws Exception {
 
         try {
@@ -708,7 +708,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    //@Test
+    @Test
     public  void IMA_client_config() throws Exception {
 
         System.out.println("Playing IMA Client Side confu=ig");
