@@ -41,7 +41,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
         EventVerification.count =0 ;
 
-        getLog.reboot();
+        //getLog.reboot();
 
         System.out.println("System rebooted successfully./");
 
