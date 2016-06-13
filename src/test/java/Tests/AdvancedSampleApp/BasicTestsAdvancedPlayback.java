@@ -42,7 +42,7 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
         EventVerification.count =0 ;
 
-        //getLog.reboot();
+        getLog.reboot();
 
         System.out.println("Device reboot successfully");
 
