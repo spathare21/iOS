@@ -208,7 +208,7 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
             ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 60000);
             Thread.sleep(2000);
 
-            AdvancedplaybackSampleApp.select_asset(driver);
+            AdvancedplaybackSampleApp.select_asset(driver, 5);
 
             // Verify playStarted event
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 65000);
@@ -276,26 +276,48 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
             ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 60000);
             Thread.sleep(2000);
 
-            AdvancedplaybackSampleApp.select_asset(driver);
+            System.out.println("selecting VAST Ad");
+
+            AdvancedplaybackSampleApp.select_asset(driver,4);
+
+            play_pauseBtn(driver);
+
+            System.out.println("VAST Ad selected");
+
+            //adStarted event verification
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 50000);
+
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 60000);
 
             // Verify playStarted event
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 65000);
 
-
-            Thread.sleep(5000);
-
-            // Verify pause event at normal screen
-            play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 70000);
-
-
-            // Verify playing event at normal screen
-            BaseClass.play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 80000);
-
-
             // Verify playCompleted event
             ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 90000);
+
+            System.out.println("Selecting Ooyala Ad");
+
+            AdvancedplaybackSampleApp.select_asset(driver,5);
+
+            play_pauseBtn(driver);
+
+            System.out.println("Ooyala Ad selected");
+
+            //adStarted event verification
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 100000);
+
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 120000);
+
+            // Verify playStarted event
+            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 150000);
+
+            // Verify playCompleted event
+            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 190000);
+
 
         } catch (Exception e) {
             System.out.println(" Exception " + e);
@@ -370,9 +392,6 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
 
             EventVerification ev = new EventVerification();
-
-            //PlayWith initial time so seek event occur
-            ev.verifyEvent("Notification Received: seekStarted. state: ready","Video seeked before playing started", 25000);
 
             // Verify playStarted event
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 25000);

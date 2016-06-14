@@ -11,10 +11,10 @@ import io.appium.java_client.AppiumDriver;
  */
 public class AdvancedplaybackSampleApp {
 
-    public static void select_asset(AppiumDriver driver) {
+    public static void select_asset(AppiumDriver driver, int a) {
         System.out.println("Selecting Video 2");
         java.util.List<WebElement> l = driver.findElementsByClassName("UIAButton");
-        l.get(5).click();
+        l.get(a).click();
 
     }
 
