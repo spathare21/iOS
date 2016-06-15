@@ -2,37 +2,13 @@
 <suite name="Selenium Grid Tests" >
 
 
-    <!--<test name="BasicPlaybackSampleApp iPod Touch">
-        <parameter name="platformVersion" value="7.1.2" />
-        <parameter name="deviceName" value="Playback iTouch9" />
-        <parameter name="logFilePath" value="system.log" />
-        <parameter name="udid" value="dcb1950c7f0eb51e54107628b9d22d18b01a7804" />
-         <parameter name="OS" value="7" />
-        <classes>
-            <class name="Tests.BasicPlaybackSampleAppTests" />
-        </classes>
-    </test>
--->
-
-   <!-- <test name="BasicPlaybackSampleApp iPhone 6+">
-        <parameter name="platformVersion" value="9.1" />
-        <parameter name="deviceName" value="iPhone 6 iOS 9.3.1" />
-        <parameter name="logFilePath" value="system.log" />
-
-        <classes>
-            <class name="Tests.BasicPlaybackSampleAppTests" />
-        </classes>
-    </test>  -->
-
-
-    <test name="BasicPlaybackSampleApp iPhone">
-        <parameter name="platformVersion" value="8.4" />
-        <parameter name="deviceName" value="iPhone" />
+    <test name="BasicPlaybackSampleApp iPAd">
+        <parameter name="platformVersion" value="9.2.1" />
+        <parameter name="deviceName" value="iPad" />
         <parameter name="logFilePath" value="system.log" />
 
         <classes>
             <class name="Tests.BasicSampleAppTest.BasicTestsBasicPlayback" />
-            <!--<class name="Tests.BasicSampleAppTest.DeepTestsBasicPlayback" />-->
         </classes>
     </test>
 
