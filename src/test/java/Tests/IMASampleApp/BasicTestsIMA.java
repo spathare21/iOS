@@ -91,7 +91,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    @Test
+    //@Test
     public void IMA_Preroll() throws Exception {
         System.out.println(" playing IMA preroll");
         try {
@@ -157,7 +157,7 @@ public class BasicTestsIMA extends BaseClass{
             assetSelect(driver, 8);
 
             // Verify SDK version
-            Thread.sleep(5000);
+            Thread.sleep(3000);
             found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
             if (!found)
                 Assert.assertTrue(found);
@@ -166,7 +166,7 @@ public class BasicTestsIMA extends BaseClass{
             EventVerification ev = new EventVerification();
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 20000);
 
-            Thread.sleep(5000);
+            Thread.sleep(2000);
 
             // Verify pause event at normal screen
             play_pauseBtn(driver);
@@ -252,7 +252,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    @Test
+    //@Test
     public void IMA_Podded_Preroll() throws Exception {
         System.out.println(" playing IMA podded preroll");
         try {
@@ -318,7 +318,7 @@ public class BasicTestsIMA extends BaseClass{
         }
     }
 
-    @Test
+    //@Test
     public  void IMA_Podded_Midroll() throws Exception {
 
         System.out.println("Playing IMA Podded Midroll");
