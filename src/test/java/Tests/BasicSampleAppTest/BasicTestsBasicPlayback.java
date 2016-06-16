@@ -35,7 +35,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
         EventVerification.count =0 ;
 
-        //getLog.reboot();
+        getLog.reboot();
 
         System.out.println("Device reboot successfully");
 
@@ -346,7 +346,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
             assetSelect(driver, 6);
 
             // Verify SDK version
-            Thread.sleep(5000);
+            Thread.sleep(3000);
             found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
             if (!found)
                 Assert.assertTrue(found);
