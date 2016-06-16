@@ -132,15 +132,14 @@ public class getLog {
     public static void appUninstall(String ap) throws IOException, InterruptedException {
         String app = "";
         System.out.println("uninstalling application");
-        final String command = "ios-deploy --list_bundle_id | grep  " + ap + " ";
-        System.out.println("command is >> " + command);
+
+        final String command = "ios-deploy --list_bundle_id | grep  " +  ap  + " ";
+        System.out.println("command to list bundle ids is >> " +command);
+
         String[] final_command = CommandLine.command(command);
-        System.out.println("final command  is " + final_command);
 
-        Thread.sleep(5000);
-
-        Runtime run = Runtime.getRuntime();
-        Process pr = run.exec(final_command);
+        Thread.sleep(2000);
+        Process pr = Runtime.getRuntime().exec(final_command);
 
         BufferedReader stdInput = new BufferedReader(new
                 InputStreamReader(pr.getInputStream()));
@@ -164,7 +163,7 @@ public class getLog {
 
         Thread.sleep(2000);
         final String command1 = "ios-deploy --uninstall_only --bundle_id " + app;
-        System.out.println("final caommand1 is " + command1);
+        System.out.println("final caommand1 to uninstall app is " + command1);
 
         String[] final_command2 = CommandLine.command(command1);
 

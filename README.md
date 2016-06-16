@@ -20,7 +20,8 @@ How to run
 - Start Appium. Show simulator log on console.
 appium --show-sim-log
 
-
+If encountered Error related to ideviceinstaller, run below command 
+brew install --HEAD ideviceinstaller 
 
 
 // Before running the iOS SDK Automation please follow these guidelines.

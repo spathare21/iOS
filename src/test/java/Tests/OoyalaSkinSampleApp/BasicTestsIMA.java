@@ -1,7 +1,5 @@
 package Tests.OoyalaSkinSampleApp;
 
-
-
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -23,9 +21,9 @@ import pageObject.BaseClass;
 import pageObject.OoyalaSkinSampleApp;
 
 /**
- * Created by Shivam on 10/06/16.
+ * Created by Shivam on 13/06/16.
  */
-public class BasicTestsFreewheel extends BaseClass {
+public class BasicTestsIMA extends BaseClass{
 
     public static String ud;
     private AppiumDriver driver;
@@ -67,7 +65,7 @@ public class BasicTestsFreewheel extends BaseClass {
         Thread.sleep(2000);
 
         System.out.println("selecting integration");
-        OoyalaSkinSampleApp.select_integration(driver, 2);
+        OoyalaSkinSampleApp.select_integration(driver, 3);
     }
 
     @AfterClass // Will be executed once all the tests are completed.
@@ -104,9 +102,9 @@ public class BasicTestsFreewheel extends BaseClass {
     }
 
     @Test
-    public  void fw_Preroll() throws Exception {
+    public  void IMA_Preroll() throws Exception {
 
-        System.out.println("Playing FW Preroll");
+        System.out.println("Playing IMA Preroll");
         try {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
@@ -130,7 +128,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
             //verifing ad Completed Event
 
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 20000);
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 20000);
 
             // Verify playStarted event
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 30000);
@@ -164,9 +162,9 @@ public class BasicTestsFreewheel extends BaseClass {
     }
 
     @Test
-    public  void fw_Midroll() throws Exception {
+    public  void IMA_Midroll() throws Exception {
 
-        System.out.println("Playing Freewheel Midroll");
+        System.out.println("Playing IMA Midroll");
 
         try {
             System.out.println("In test testPlay");
@@ -187,28 +185,28 @@ public class BasicTestsFreewheel extends BaseClass {
             EventVerification ev = new EventVerification();
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 20000);
 
-            Thread.sleep(5000);
+            Thread.sleep(10000);
+
+                        //adStarted event verification
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 30000);
+
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 40000);
+
+            Thread.sleep(3000);
 
             // Verify pause event at normal screen
             driver.tap(1, 200, 300, 5);
             Thread.sleep(1000);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
 
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 30000);
+            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 50000);
 
 
             // Verify playing event at normal screen
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 50000);
-
-
-
-            //adStarted event verification
-            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 50000);
-
-            //verifing ad Completed Event
-
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 60000);
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 60000);
 
 
             // Verify playCompleted event
@@ -223,9 +221,9 @@ public class BasicTestsFreewheel extends BaseClass {
     }
 
     @Test
-    public  void fw_Postroll() throws Exception {
+    public  void IMA_Postroll() throws Exception {
 
-        System.out.println("Playing Freewheel Midroll");
+        System.out.println("Playing IMA Postroll");
 
         try {
             System.out.println("In test testPlay");
@@ -267,7 +265,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
             //verifing ad Completed Event
 
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 60000);
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 60000);
 
 
             // Verify playCompleted event
@@ -282,14 +280,148 @@ public class BasicTestsFreewheel extends BaseClass {
     }
 
     @Test
-    public  void fw_Pre_MidPostroll() throws Exception {
+    public  void IMA_Podded_Preroll() throws Exception {
 
-        System.out.println("Playing Freewheel Midroll");
-
+        System.out.println("Playing IMA Podded Preroll");
         try {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 3);
+
+            OoyalaSkinSampleApp.presenceOfElement(driver);
+            OoyalaSkinSampleApp.play_pauseBtn(driver);
+
+            // Verify SDK version
+            Thread.sleep(2000);
+            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+
+            //Creting the object of EventVerification class
+            EventVerification ev = new EventVerification();
+
+            //verifing the ad started evnet
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 10000);
+
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 20000);
+
+
+            //verifing the ad started evnet
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 30000);
+
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 40000);
+
+            // Verify playStarted event
+            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 50000);
+
+            Thread.sleep(5000);
+            // Clicking on pause button
+            driver.tap(1, 200, 300, 5);
+            Thread.sleep(1000);
+            OoyalaSkinSampleApp.play_pauseBtn(driver);
+
+            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 60000);
+
+
+            // Verify playing event at normal screen
+            OoyalaSkinSampleApp.play_pauseBtn(driver);
+
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 70000);
+
+            //verifind playCompleted Event
+
+            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 90000);
+
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(" Exception " + e);
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public  void IMA_Podded_Midroll() throws Exception {
+
+        System.out.println("Playing IMA Podded Midroll");
+
+        try {
+            System.out.println("In test testPlay");
+            Thread.sleep(2000);
+            assetSelect(driver, 4);
+
+            OoyalaSkinSampleApp.presenceOfElement(driver);
+            // Verify SDK version
+            OoyalaSkinSampleApp.play_pauseBtn(driver);
+
+            Thread.sleep(3000);
+            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+
+            // Verify playStarted event
+            EventVerification ev = new EventVerification();
+            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 20000);
+
+            Thread.sleep(10000);
+
+            //adStarted event verification
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 30000);
+
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 40000);
+
+            //adStarted event verification
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 45000);
+
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 55000);
+
+            Thread.sleep(3000);
+
+            // Verify pause event at normal screen
+            driver.tap(1, 200, 300, 5);
+            Thread.sleep(1000);
+            OoyalaSkinSampleApp.play_pauseBtn(driver);
+
+            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 60000);
+
+
+            // Verify playing event at normal screen
+            OoyalaSkinSampleApp.play_pauseBtn(driver);
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 80000);
+
+
+            // Verify playCompleted event
+            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 90000);
+
+
+        } catch (Exception e) {
+            System.out.println(" Exception " + e);
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public  void IMA_Podded_Postroll() throws Exception {
+
+        System.out.println("Playing IMA Podded Postroll");
+
+        try {
+            System.out.println("In test testPlay");
+            Thread.sleep(2000);
+            assetSelect(driver, 5);
 
             // Verify SDK version
             OoyalaSkinSampleApp.presenceOfElement(driver);
@@ -303,16 +435,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
             // Verify playStarted event
             EventVerification ev = new EventVerification();
-
-            //adStarted event verification
-            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 15000);
-
-            //verifing ad Completed Event
-
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 25000);
-
-
-            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 30000);
+            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 20000);
 
             Thread.sleep(5000);
 
@@ -326,7 +449,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
             // Verify playing event at normal screen
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 40000);
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 50000);
 
 
 
@@ -335,15 +458,14 @@ public class BasicTestsFreewheel extends BaseClass {
 
             //verifing ad Completed Event
 
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 60000);
-
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 60000);
 
             //adStarted event verification
-            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 70000);
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 50000);
 
             //verifing ad Completed Event
 
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 80000);
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 60000);
 
 
             // Verify playCompleted event
@@ -358,144 +480,9 @@ public class BasicTestsFreewheel extends BaseClass {
     }
 
     @Test
-    public  void fw_Overlay() throws Exception {
+    public  void IMA_Podded_PreMidPostroll() throws Exception {
 
-        System.out.println("Playing Overlay");
-        try {
-
-            System.out.println("In test testPlay");
-            Thread.sleep(2000);
-            assetSelect(driver, 4);
-
-            // Verify SDK version
-            OoyalaSkinSampleApp.presenceOfElement(driver);
-            OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            Thread.sleep(3000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
-            EventVerification ev = new EventVerification();
-            // Verify playStarted event
-            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 30000);
-
-            Thread.sleep(5000);
-
-            overlay(driver);
-
-            Thread.sleep(5000);
-
-            // Clicking on pause button
-            driver.tap(1, 200, 300, 5);
-            Thread.sleep(1000);
-            OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 50000);
-
-            OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 50000);
-
-            //verifind playCompleted Event
-
-            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 90000);
-
-        }
-        catch (Exception e)
-        {
-            System.out.println(" Exception " + e);
-            e.printStackTrace();
-        }
-
-    }
-
-    @Test
-    public  void fw_PreMidPost_Overlay() throws Exception {
-        System.out.println(" Playing Freewheel PreMidPost overlay");
-
-        try {
-
-            System.out.println("In test testPlay");
-            Thread.sleep(2000);
-            assetSelect(driver, 5);
-
-            OoyalaSkinSampleApp.presenceOfElement(driver);
-            OoyalaSkinSampleApp.play_pauseBtn(driver);
-            // Verify SDK version
-            Thread.sleep(3000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
-            //Creting the object of EventVerification class
-            EventVerification ev = new EventVerification();
-
-            //verifing the ad started evnet
-            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 15000);
-
-            //verifing ad Completed Event
-
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 20000);
-
-            // Verify playStarted event
-            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 30000);
-
-            Thread.sleep(5000);
-
-            overlay(driver);
-
-            Thread.sleep(1000);
-
-            driver.tap(1, 200, 300, 5);
-            Thread.sleep(1000);
-            OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 40000);
-
-
-            Thread.sleep(2000);
-
-            // Verify playing event at normal screen
-            driver.tap(1, 200, 300, 5);
-            Thread.sleep(1000);
-            OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 50000);
-
-            //verifing the ad started evnet
-            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 60000);
-
-            Thread.sleep(5000);
-            //verifing ad Completed Event
-
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 70000);
-
-
-            //verifing the ad started evnet
-            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 70000);
-
-            //verifing ad Completed Event
-
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 80000);
-
-            //verifind playCompleted Event
-
-            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 90000);
-
-        }
-        catch (Exception e)
-        {
-            System.out.println(" Exception " + e);
-            e.printStackTrace();
-        }
-
-    }
-
-    @Test
-    public  void fw_MultiMid() throws Exception {
-
-        System.out.println("Playing MultiMidroll");
+        System.out.println("Playing IMA Podded PreMidPostroll");
         try {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
@@ -505,59 +492,264 @@ public class BasicTestsFreewheel extends BaseClass {
             OoyalaSkinSampleApp.play_pauseBtn(driver);
 
             // Verify SDK version
-            Thread.sleep(3000);
+            Thread.sleep(2000);
             found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
             if (!found)
                 Assert.assertTrue(found);
 
-            // Verify playStarted event
+
+            //Creting the object of EventVerification class
             EventVerification ev = new EventVerification();
-            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 20000);
+
+            //verifing the ad started evnet
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 10000);
+
+            Thread.sleep(5000);
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 20000);
+
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 25000);
+
+            Thread.sleep(5000);
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 30000);
+
+
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 35000);
+
+            Thread.sleep(5000);
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 40000);
+
+
+            // Verify playStarted event
+            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 45000);
 
             Thread.sleep(10000);
 
-            //adStarted event verification
-            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 30000);
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 50000);
 
             Thread.sleep(5000);
-
             //verifing ad Completed Event
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 40000);
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 55000);
+
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 60000);
 
             Thread.sleep(5000);
+            //verifing ad Completed Event
 
-            // Verify pause event at normal screen
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 65000);
+
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 70000);
+
+            Thread.sleep(5000);
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 75000);
+
+
+            Thread.sleep(3000);
+
+            // Clicking on pause button
             driver.tap(1, 200, 300, 5);
             Thread.sleep(1000);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 50000);
+
+            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 80000);
+
 
             // Verify playing event at normal screen
             OoyalaSkinSampleApp.play_pauseBtn(driver);
 
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 50000);
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 90000);
 
-            //adStarted event verification
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 50000);
+
+            Thread.sleep(5000);
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 55000);
+
             ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 60000);
 
             Thread.sleep(5000);
-
             //verifing ad Completed Event
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 70000);
 
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 65000);
 
-            //verifing event for playCompleted
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 70000);
+
+            Thread.sleep(5000);
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 75000);
+
+            //verifind playCompleted Event
 
             ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 90000);
 
         }
         catch (Exception e)
         {
+
             System.out.println(" Exception " + e);
             e.printStackTrace();
         }
 
     }
 
-}
+    @Test
+    public  void IMA_Skippable() throws Exception {
 
+        System.out.println("Playing IMA Skippable");
+        try {
+            System.out.println("In test testPlay");
+            Thread.sleep(2000);
+            assetSelect(driver, 7);
+
+            OoyalaSkinSampleApp.presenceOfElement(driver);
+            OoyalaSkinSampleApp.play_pauseBtn(driver);
+
+            // Verify SDK version
+            Thread.sleep(2000);
+            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+
+            //Creting the object of EventVerification class
+            EventVerification ev = new EventVerification();
+
+            //verifing the ad started evnet
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 10000);
+
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 20000);
+
+            // Verify playStarted event
+            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 30000);
+
+            Thread.sleep(2000);
+            // Clicking on pause button
+            driver.tap(1, 200, 300, 5);
+            Thread.sleep(1000);
+            OoyalaSkinSampleApp.play_pauseBtn(driver);
+
+            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 50000);
+
+
+            // Verify playing event at normal screen
+            OoyalaSkinSampleApp.play_pauseBtn(driver);
+
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 50000);
+
+            //verifing the ad started evnet
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 60000);
+
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 70000);
+
+            //verifind playCompleted Event
+
+            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 90000);
+
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(" Exception " + e);
+            e.printStackTrace();
+        }
+
+    }
+
+    @Test
+    public  void IMA_PreMidPostroll() throws Exception {
+
+        System.out.println("Playing IMA Podded PreMidPostroll");
+        try {
+            System.out.println("In test testPlay");
+            Thread.sleep(2000);
+            assetSelect(driver, 8);
+
+            OoyalaSkinSampleApp.presenceOfElement(driver);
+            OoyalaSkinSampleApp.play_pauseBtn(driver);
+
+            // Verify SDK version
+            Thread.sleep(2000);
+            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
+            if (!found)
+                Assert.assertTrue(found);
+
+
+            //Creting the object of EventVerification class
+            EventVerification ev = new EventVerification();
+
+            //verifing the ad started evnet
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 10000);
+
+            Thread.sleep(5000);
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 20000);
+
+
+
+            // Verify playStarted event
+            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 45000);
+
+            Thread.sleep(10000);
+
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 50000);
+
+            Thread.sleep(5000);
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 55000);
+
+
+
+            Thread.sleep(3000);
+
+            // Clicking on pause button
+            driver.tap(1, 200, 300, 5);
+            Thread.sleep(1000);
+            OoyalaSkinSampleApp.play_pauseBtn(driver);
+
+            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 80000);
+
+
+            // Verify playing event at normal screen
+            OoyalaSkinSampleApp.play_pauseBtn(driver);
+
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 90000);
+
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 50000);
+
+            Thread.sleep(5000);
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 55000);
+
+            //verifind playCompleted Event
+
+            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 90000);
+
+        }
+        catch (Exception e)
+        {
+
+            System.out.println(" Exception " + e);
+            e.printStackTrace();
+        }
+
+    }
+
+
+}
