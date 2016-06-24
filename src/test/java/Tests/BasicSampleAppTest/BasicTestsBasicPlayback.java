@@ -113,6 +113,9 @@ public class BasicTestsBasicPlayback extends BaseClass {
             // Verify playStarted event
             ev.verifyEvent("Notification Received: playStarted", "HLS video has been playing started", 15000);
 
+            Thread.sleep(5000);
+
+
             // Verify pause event at normal screen
             BaseClass.play_pauseBtn(driver);
 
@@ -346,7 +349,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
             assetSelect(driver, 6);
 
             // Verify SDK version
-            Thread.sleep(3000);
+            Thread.sleep(5000);
             found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
             if (!found)
                 Assert.assertTrue(found);
@@ -354,25 +357,26 @@ public class BasicTestsBasicPlayback extends BaseClass {
             // Verify playStarted event
             ev.verifyEvent("Notification Received: playStarted", "Vast Midroll video has been playing started", 20000);
 
-            Thread.sleep(3000);
+
+            //adStarted event verification
+            ev.verifyEvent("Notification Received: adStarted", "Midroll ad is start to playing", 30000);
+
+
+            // adCompleted event verification
+            ev.verifyEvent("Notification Received: adPodCompleted", "Midroll ad is completed", 40000);
+
+            Thread.sleep(2000);
             // Verify pause event at normal screen
             play_pauseBtn(driver);
 
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video is paused", 30000);
+            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video is paused", 50000);
 
 
             // Verify playing event at normal screen
             BaseClass.play_pauseBtn(driver);
 
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video is playing", 40000);
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video is playing", 60000);
 
-
-            //adStarted event verification
-            ev.verifyEvent("Notification Received: adStarted", "Midroll ad is start to playing", 50000);
-
-
-            // adCompleted event verification
-            ev.verifyEvent("Notification Received: adPodCompleted", "Midroll ad is completed", 60000);
 
             // Verify playCompleted event
             ev.verifyEvent("Notification Received: playCompleted", "HLS video has been playing completed", 90000);
@@ -403,7 +407,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
             ev.verifyEvent("Notification Received: playStarted", "Vast Postroll video has been playing started", 20000);
 
-            Thread.sleep(3000);
+            Thread.sleep(2000);
             // Verify pause event at normal screen
             BaseClass.play_pauseBtn(driver);
 
@@ -421,7 +425,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
             ev.verifyEvent("Notification Received: adPodCompleted", "Postroll ad is completed", 60000);
 
             // Verify playCompleted event
-            ev.verifyEvent("Notification Received: playCompleted", "HLS video has been playing completed", 90000);
+            ev.verifyEvent("Notification Received: playCompleted", "VAST Postroll video has been playing completed", 90000);
 
         }
         catch (Exception e)
