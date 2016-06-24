@@ -331,7 +331,7 @@ public class BasicTestsIMA extends BaseClass{
             assetSelect(driver, 5);
 
             // Verify SDK version
-            Thread.sleep(4000);
+            Thread.sleep(3000);
             found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
             if (!found)
                 Assert.assertTrue(found);
@@ -340,7 +340,7 @@ public class BasicTestsIMA extends BaseClass{
             EventVerification ev = new EventVerification();
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 20000);
 
-            Thread.sleep(3000);
+            Thread.sleep(2000);
 
             // Verify pause event at normal screen
             play_pauseBtn(driver);
