@@ -95,7 +95,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
 
 
-    //@Test
+    @Test
     public  void HLS() throws Exception {
 
         EventVerification ev = new EventVerification();
@@ -166,24 +166,14 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    //@Test
+    @Test
     public  void vodCC() throws Exception {
-
         EventVerification ev = new EventVerification();
-
         try {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 2);
 
-            // Verify SDK version
-//            Thread.sleep(5000);
-//            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-//            if (!found)
-//                Assert.assertTrue(found);
-
-            // Verify playStarted event
-            //Thread.sleep(5000);
             ev.verifyEvent("Notification Received: playStarted", "VOD with CC video has been playing started", 20000);
 
             Thread.sleep(5000);
@@ -234,7 +224,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    //@Test
+    @Test
     public  void aspectRatio() throws Exception {
 
         EventVerification ev = new EventVerification();
@@ -268,7 +258,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    //@Test
+    @Test
     public void vast_PreRoll() throws InterruptedException {
         EventVerification ev = new EventVerification();
 
@@ -314,7 +304,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    //@Test
+    @Test
     public  void vast_Midroll() throws Exception {
         EventVerification ev = new EventVerification();
         System.out.println("Playing Vast Midroll");
@@ -356,7 +346,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    //@Test
+    @Test
     public  void vast_Postroll() throws Exception {
         EventVerification ev = new EventVerification();
         System.out.println("Playing vast Postroll");
@@ -398,7 +388,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void VAST_AD_Wrapper() throws Exception {
 
         EventVerification ev = new EventVerification();
@@ -435,7 +425,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    //@Test
+    @Test
     public void ooyala_PreRoll() throws InterruptedException {
         EventVerification ev = new EventVerification();
 
@@ -481,7 +471,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-   // @Test
+   @Test
     public  void ooyala_Midroll() throws Exception {
         EventVerification ev = new EventVerification();
         System.out.println("Playing Vast Midroll");
@@ -522,7 +512,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-   // @Test
+   @Test
     public  void ooyala_Postroll() throws Exception {
         EventVerification ev = new EventVerification();
         System.out.println("Playing vast Postroll");
@@ -565,7 +555,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public void Multi_Ad() throws InterruptedException {
         EventVerification ev = new EventVerification();
 
