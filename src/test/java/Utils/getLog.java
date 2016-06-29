@@ -15,10 +15,9 @@ public class getLog {
     public static Process pro;
 
     // capturing the iDevices log and saving in one System.log file
-    public static void getlog(String udid) throws IOException {
+    public static void getlog() throws IOException, InterruptedException {
         System.out.println("executing command for system log");
-        System.out.println("in getlog udid is : " + udid);
-        final String command = "idevicesyslog -u " + udid + " >> system.log";
+        final String command = "appium -g system.log";
 
         System.out.println("command is " + command);
 
@@ -28,6 +27,7 @@ public class getLog {
         Runtime run = Runtime.getRuntime();
         pro = run.exec(final_command);
         System.out.println("logs command has been excuted");
+        Thread.sleep(15000);
     }
 
     // Delete the System.log file after class.
@@ -174,10 +174,10 @@ public class getLog {
 
     }
 
-    public static void reboot () throws IOException, InterruptedException {
-        System.out.println("executing command for system log");
+    public static void killAppium () throws IOException, InterruptedException {
+        System.out.println("executing command for stop appium server");
 
-        final String command = "idevicediagnostics restart";
+        final String command = "killall node";
 
         System.out.println("command is " + command);
 
@@ -186,8 +186,8 @@ public class getLog {
 
         Runtime run = Runtime.getRuntime();
         Process pr = run.exec(final_command);
-        System.out.println("logs command has been excuted");
-        Thread.sleep(100000);
+        System.out.println("Appium server closed");
+
     }
 
 }

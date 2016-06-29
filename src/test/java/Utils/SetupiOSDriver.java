@@ -40,6 +40,7 @@ public class SetupiOSDriver {
         capabilities.setCapability("udid", ud);
         capabilities.setCapability("platformName", "iOS");
         capabilities.setCapability("newCommandTimeout", 50000);
+        capabilities.setCapability("showIOSLog",true);
 
 
         driver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);

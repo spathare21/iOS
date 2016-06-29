@@ -42,10 +42,6 @@ public class BasicTestsIMA extends BaseClass{
 
         EventVerification.count = 0;
 
-        getLog.reboot();
-
-        System.out.println("Device reboot successfully");
-
         // set up appium
         LogFilePath = logFilePath;
 
@@ -54,7 +50,7 @@ public class BasicTestsIMA extends BaseClass{
 
         ud = getLog.getUdid();
 
-        getLog.getlog(ud);
+        getLog.getlog();
         System.out.println("log file created");
 
         Thread.sleep(5000);
@@ -83,8 +79,9 @@ public class BasicTestsIMA extends BaseClass{
 
         getLog.delete();
         System.out.println("log file deleted");
-
         driver.quit();
+        Thread.sleep(5000);
+        getLog.killAppium();
 
     }
 
@@ -103,7 +100,6 @@ public class BasicTestsIMA extends BaseClass{
 
     @Test
     public  void IMA_Preroll() throws Exception {
-
         System.out.println("Playing IMA Preroll");
         try {
             System.out.println("In test testPlay");
@@ -112,13 +108,6 @@ public class BasicTestsIMA extends BaseClass{
 
             OoyalaSkinSampleApp.presenceOfElement(driver);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            // Verify SDK version
-            Thread.sleep(2000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             //Creting the object of EventVerification class
             EventVerification ev = new EventVerification();
@@ -163,9 +152,7 @@ public class BasicTestsIMA extends BaseClass{
 
     @Test
     public  void IMA_Midroll() throws Exception {
-
         System.out.println("Playing IMA Midroll");
-
         try {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
@@ -174,12 +161,6 @@ public class BasicTestsIMA extends BaseClass{
             OoyalaSkinSampleApp.presenceOfElement(driver);
             // Verify SDK version
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            Thread.sleep(3000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             // Verify playStarted event
             EventVerification ev = new EventVerification();
@@ -222,9 +203,7 @@ public class BasicTestsIMA extends BaseClass{
 
     @Test
     public  void IMA_Postroll() throws Exception {
-
         System.out.println("Playing IMA Postroll");
-
         try {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
@@ -233,12 +212,6 @@ public class BasicTestsIMA extends BaseClass{
             // Verify SDK version
             OoyalaSkinSampleApp.presenceOfElement(driver);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            Thread.sleep(3000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             // Verify playStarted event
             EventVerification ev = new EventVerification();
@@ -281,7 +254,6 @@ public class BasicTestsIMA extends BaseClass{
 
     @Test
     public  void IMA_Podded_Preroll() throws Exception {
-
         System.out.println("Playing IMA Podded Preroll");
         try {
             System.out.println("In test testPlay");
@@ -290,13 +262,6 @@ public class BasicTestsIMA extends BaseClass{
 
             OoyalaSkinSampleApp.presenceOfElement(driver);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            // Verify SDK version
-            Thread.sleep(2000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             //Creting the object of EventVerification class
             EventVerification ev = new EventVerification();

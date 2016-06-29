@@ -42,10 +42,6 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
         EventVerification.count =0 ;
 
-        getLog.reboot();
-
-        System.out.println("Device reboot successfully");
-
         // set up appium
         LogFilePath = logFilePath;
 
@@ -54,7 +50,7 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
         ud = getLog.getUdid();
 
-        getLog.getlog(ud);
+        getLog.getlog();
         System.out.println("log file created");
 
         Thread.sleep(5000);
@@ -78,12 +74,12 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
         String app = p.getProperty("app_Name");
         Thread.sleep(1000);
         //getLog.appUninstall(app);
-
         getLog.delete();
         System.out.println("log file deleted");
 
         driver.quit();
-
+        Thread.sleep(2000);
+        getLog.killAppium();
     }
 
     @BeforeMethod
@@ -109,13 +105,6 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 0);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             EventVerification ev = new EventVerification();
 
@@ -179,13 +168,6 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
             Thread.sleep(2000);
             assetSelect(driver, 1);
 
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
-
             EventVerification ev = new EventVerification();
 
 
@@ -236,22 +218,13 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void InsertAd_RunTime() throws Exception {
-
         try {
-
 
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 2);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             EventVerification ev = new EventVerification();
 
@@ -330,18 +303,9 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
     public  void Play_IntialTime() throws Exception {
 
         try {
-
-
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 3);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             EventVerification ev = new EventVerification();
 
@@ -378,18 +342,9 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
     public  void custom_control() throws Exception {
 
         try {
-
-
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 4);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             EventVerification ev = new EventVerification();
 
@@ -426,17 +381,9 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
         try {
 
-
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 7);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             // Verify playStarted event
             EventVerification ev = new EventVerification();
@@ -478,21 +425,11 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
     @Test
     public  void custom_overlay() throws Exception {
 
-        System.out.println("Playing custom overlay");
-
+       System.out.println("Playing custom overlay");
         try {
-
-
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 5);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             // Verify playStarted event
             EventVerification ev = new EventVerification();

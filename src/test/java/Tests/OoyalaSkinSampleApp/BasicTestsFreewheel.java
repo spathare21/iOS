@@ -44,10 +44,6 @@ public class BasicTestsFreewheel extends BaseClass {
 
         EventVerification.count = 0;
 
-        getLog.reboot();
-
-        System.out.println("Device reboot successfully");
-
         // set up appium
         LogFilePath = logFilePath;
 
@@ -56,7 +52,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
         ud = getLog.getUdid();
 
-        getLog.getlog(ud);
+        getLog.getlog();
         System.out.println("log file created");
 
         Thread.sleep(5000);
@@ -85,8 +81,9 @@ public class BasicTestsFreewheel extends BaseClass {
 
         getLog.delete();
         System.out.println("log file deleted");
-
         driver.quit();
+        Thread.sleep(5000);
+        getLog.killAppium();
 
     }
 
@@ -105,7 +102,6 @@ public class BasicTestsFreewheel extends BaseClass {
 
     @Test
     public  void fw_Preroll() throws Exception {
-
         System.out.println("Playing FW Preroll");
         try {
             System.out.println("In test testPlay");
@@ -114,13 +110,6 @@ public class BasicTestsFreewheel extends BaseClass {
 
             OoyalaSkinSampleApp.presenceOfElement(driver);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            // Verify SDK version
-            Thread.sleep(2000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             //Creting the object of EventVerification class
             EventVerification ev = new EventVerification();
@@ -165,9 +154,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     @Test
     public  void fw_Midroll() throws Exception {
-
         System.out.println("Playing Freewheel Midroll");
-
         try {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
@@ -176,12 +163,6 @@ public class BasicTestsFreewheel extends BaseClass {
             OoyalaSkinSampleApp.presenceOfElement(driver);
             // Verify SDK version
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            Thread.sleep(3000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             // Verify playStarted event
             EventVerification ev = new EventVerification();
@@ -224,9 +205,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     @Test
     public  void fw_Postroll() throws Exception {
-
         System.out.println("Playing Freewheel Midroll");
-
         try {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
@@ -235,12 +214,6 @@ public class BasicTestsFreewheel extends BaseClass {
             // Verify SDK version
             OoyalaSkinSampleApp.presenceOfElement(driver);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            Thread.sleep(3000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             // Verify playStarted event
             EventVerification ev = new EventVerification();
@@ -283,9 +256,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     @Test
     public  void fw_Pre_MidPostroll() throws Exception {
-
-        System.out.println("Playing Freewheel Midroll");
-
+       System.out.println("Playing Freewheel Midroll");
         try {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
@@ -294,12 +265,6 @@ public class BasicTestsFreewheel extends BaseClass {
             // Verify SDK version
             OoyalaSkinSampleApp.presenceOfElement(driver);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            Thread.sleep(3000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             // Verify playStarted event
             EventVerification ev = new EventVerification();
@@ -359,10 +324,8 @@ public class BasicTestsFreewheel extends BaseClass {
 
     @Test
     public  void fw_Overlay() throws Exception {
-
         System.out.println("Playing Overlay");
         try {
-
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 4);
@@ -370,11 +333,6 @@ public class BasicTestsFreewheel extends BaseClass {
             // Verify SDK version
             OoyalaSkinSampleApp.presenceOfElement(driver);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            Thread.sleep(3000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
 
             EventVerification ev = new EventVerification();
             // Verify playStarted event
@@ -413,20 +371,13 @@ public class BasicTestsFreewheel extends BaseClass {
     @Test
     public  void fw_PreMidPost_Overlay() throws Exception {
         System.out.println(" Playing Freewheel PreMidPost overlay");
-
         try {
-
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 5);
 
             OoyalaSkinSampleApp.presenceOfElement(driver);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-            // Verify SDK version
-            Thread.sleep(3000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
 
             //Creting the object of EventVerification class
             EventVerification ev = new EventVerification();
@@ -494,7 +445,6 @@ public class BasicTestsFreewheel extends BaseClass {
 
     @Test
     public  void fw_MultiMid() throws Exception {
-
         System.out.println("Playing MultiMidroll");
         try {
             System.out.println("In test testPlay");
@@ -504,11 +454,6 @@ public class BasicTestsFreewheel extends BaseClass {
             OoyalaSkinSampleApp.presenceOfElement(driver);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
 
-            // Verify SDK version
-            Thread.sleep(3000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
 
             // Verify playStarted event
             EventVerification ev = new EventVerification();

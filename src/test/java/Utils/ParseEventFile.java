@@ -9,17 +9,19 @@ import java.io.InputStreamReader;
  * Created by Shivam on 20/05/16.
  */
 public class ParseEventFile {
-
+    int count1;
     public int latestCount(String line){
-        int count1;
+
         //System.out.println("count 1 is " +count1);
         String[] tokens = line.split(":");
         //System.out.println("printing tokens", +tokens.toString());
-        String trimToken = tokens[7].trim();
+        String trimToken = tokens[11].trim();
         //System.out.println("trim tocked in " +trimToken);
-        count1=Integer.parseInt(trimToken);
-        //System.out.println("count 1 is " +count1);
+
+        count1 = Integer.parseInt(trimToken);
         return count1;
+        //System.out.println("count 1 is " +count1);
+
     }
 
     public int parseeventfile(String comp, int count ) throws IOException {

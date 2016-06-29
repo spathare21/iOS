@@ -39,10 +39,6 @@ public class DeepTestsBasicPlayback extends  BaseClass{
 
         EventVerification.count =0 ;
 
-        getLog.reboot();
-
-        System.out.println("Device reboot successfully");
-
         // set up appium
         LogFilePath = logFilePath;
 
@@ -51,7 +47,7 @@ public class DeepTestsBasicPlayback extends  BaseClass{
 
         ud = getLog.getUdid();
 
-        getLog.getlog(ud);
+        getLog.getlog();
         System.out.println("log file created");
 
         Thread.sleep(5000);
@@ -80,6 +76,8 @@ public class DeepTestsBasicPlayback extends  BaseClass{
         System.out.println("log file deleted");
 
         driver.quit();
+        Thread.sleep(5000);
+        getLog.killAppium();
 
     }
 
@@ -105,12 +103,6 @@ public class DeepTestsBasicPlayback extends  BaseClass{
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 0);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
 
             // Verify playStarted event
             ev.verifyEvent("Notification Received: playStarted", "HLS video has been playing started", 15000);
@@ -165,12 +157,6 @@ public class DeepTestsBasicPlayback extends  BaseClass{
             Thread.sleep(2000);
             assetSelect(driver, 1);
 
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
             // Verify playStarted event
             ev.verifyEvent("playStarted", "MP4 video has been playing started", 20000);
 
@@ -211,7 +197,6 @@ public class DeepTestsBasicPlayback extends  BaseClass{
         }
     }
 
-
     @Test
     public  void vodCC() throws Exception {
 
@@ -222,11 +207,6 @@ public class DeepTestsBasicPlayback extends  BaseClass{
             Thread.sleep(2000);
             assetSelect(driver, 2);
 
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
 
             // Verify playStarted event
             Thread.sleep(5000);
@@ -302,7 +282,6 @@ public class DeepTestsBasicPlayback extends  BaseClass{
         }
     }
 
-
     @Test
     public  void aspectRatio() throws Exception {
 
@@ -312,12 +291,6 @@ public class DeepTestsBasicPlayback extends  BaseClass{
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 3);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
 
             // Verify playStarted event
             ev.verifyEvent("playStarted", "Aspect Ratio video has been playing started", 20000);
@@ -357,7 +330,6 @@ public class DeepTestsBasicPlayback extends  BaseClass{
             e.printStackTrace();
         }
     }
-
 
 
     //TODO Handel Length of video is too long

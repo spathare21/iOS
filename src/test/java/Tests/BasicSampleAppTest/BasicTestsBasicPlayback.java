@@ -35,7 +35,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
         EventVerification.count =0 ;
 
-        getLog.reboot();
+        //getLog.reboot();
 
         System.out.println("Device reboot successfully");
 
@@ -47,10 +47,8 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
         ud = getLog.getUdid();
 
-        getLog.getlog(ud);
-        System.out.println("log file created");
-
-        Thread.sleep(5000);
+        getLog.getlog();
+        //System.out.println("log file created");
 
         System.out.println("valued of ud is " +ud);
         SetupiOSDriver setUpdriver = new SetupiOSDriver();
@@ -76,6 +74,8 @@ public class BasicTestsBasicPlayback extends BaseClass {
         System.out.println("log file deleted");
 
         driver.quit();
+        Thread.sleep(5000);
+        getLog.killAppium();
 
     }
 
@@ -95,7 +95,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
 
 
-    @Test
+    //@Test
     public  void HLS() throws Exception {
 
         EventVerification ev = new EventVerification();
@@ -103,12 +103,6 @@ public class BasicTestsBasicPlayback extends BaseClass {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 0);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
 
             // Verify playStarted event
             ev.verifyEvent("Notification Received: playStarted", "HLS video has been playing started", 15000);
@@ -147,12 +141,6 @@ public class BasicTestsBasicPlayback extends BaseClass {
             Thread.sleep(2000);
             assetSelect(driver, 1);
 
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
             // Verify playStarted event
             ev.verifyEvent("Notification Received: playStarted", "MP4 video has been playing started", 20000);
 
@@ -178,7 +166,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    @Test
+    //@Test
     public  void vodCC() throws Exception {
 
         EventVerification ev = new EventVerification();
@@ -189,13 +177,13 @@ public class BasicTestsBasicPlayback extends BaseClass {
             assetSelect(driver, 2);
 
             // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
+//            Thread.sleep(5000);
+//            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
+//            if (!found)
+//                Assert.assertTrue(found);
 
             // Verify playStarted event
-            Thread.sleep(5000);
+            //Thread.sleep(5000);
             ev.verifyEvent("Notification Received: playStarted", "VOD with CC video has been playing started", 20000);
 
             Thread.sleep(5000);
@@ -246,7 +234,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    @Test
+    //@Test
     public  void aspectRatio() throws Exception {
 
         EventVerification ev = new EventVerification();
@@ -255,12 +243,6 @@ public class BasicTestsBasicPlayback extends BaseClass {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 3);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
 
             // Verify playStarted event
             ev.verifyEvent("Notification Received: playStarted", "Aspect Ratio video has been playing started", 20000);
@@ -286,7 +268,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    @Test
+    //@Test
     public void vast_PreRoll() throws InterruptedException {
         EventVerification ev = new EventVerification();
 
@@ -295,13 +277,6 @@ public class BasicTestsBasicPlayback extends BaseClass {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 5);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             //adStarted event verification
             ev.verifyEvent("Notification Received: adStarted", "Preroll ad is start to playing", 20000);
@@ -339,7 +314,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    @Test
+    //@Test
     public  void vast_Midroll() throws Exception {
         EventVerification ev = new EventVerification();
         System.out.println("Playing Vast Midroll");
@@ -347,12 +322,6 @@ public class BasicTestsBasicPlayback extends BaseClass {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 6);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
 
             // Verify playStarted event
             ev.verifyEvent("Notification Received: playStarted", "Vast Midroll video has been playing started", 20000);
@@ -387,7 +356,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    @Test
+    //@Test
     public  void vast_Postroll() throws Exception {
         EventVerification ev = new EventVerification();
         System.out.println("Playing vast Postroll");
@@ -396,13 +365,6 @@ public class BasicTestsBasicPlayback extends BaseClass {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 7);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if(!found)
-                Assert.assertTrue(found);
-
             // Verify playStarted event
 
             ev.verifyEvent("Notification Received: playStarted", "Vast Postroll video has been playing started", 20000);
@@ -436,7 +398,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void VAST_AD_Wrapper() throws Exception {
 
         EventVerification ev = new EventVerification();
@@ -447,12 +409,6 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
             Thread.sleep(2000);
             assetSelect(driver, 8);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
 
             // Verify playStarted event
             ev.verifyEvent("Notification Received: playStarted", "Vast AD Wrapper video has been playing started", 20000);
@@ -479,7 +435,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    @Test
+    //@Test
     public void ooyala_PreRoll() throws InterruptedException {
         EventVerification ev = new EventVerification();
 
@@ -488,13 +444,6 @@ public class BasicTestsBasicPlayback extends BaseClass {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 9);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             //adStarted event verification
             ev.verifyEvent("Notification Received: adStarted", "Preroll ad is start to playing", 20000);
@@ -532,7 +481,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    @Test
+   // @Test
     public  void ooyala_Midroll() throws Exception {
         EventVerification ev = new EventVerification();
         System.out.println("Playing Vast Midroll");
@@ -540,12 +489,6 @@ public class BasicTestsBasicPlayback extends BaseClass {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 10);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
 
             // Verify playStarted event
             ev.verifyEvent("Notification Received: playStarted", "Ooyala Midroll video has been playing started", 20000);
@@ -579,7 +522,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    @Test
+   // @Test
     public  void ooyala_Postroll() throws Exception {
         EventVerification ev = new EventVerification();
         System.out.println("Playing vast Postroll");
@@ -588,12 +531,6 @@ public class BasicTestsBasicPlayback extends BaseClass {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 11);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if(!found)
-                Assert.assertTrue(found);
 
             // Verify playStarted event
 
@@ -628,7 +565,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public void Multi_Ad() throws InterruptedException {
         EventVerification ev = new EventVerification();
 
@@ -637,13 +574,6 @@ public class BasicTestsBasicPlayback extends BaseClass {
             System.out.println("In test testPlay");
             Thread.sleep(2000);
             assetSelect(driver, 12);
-
-            // Verify SDK version
-            Thread.sleep(5000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             //adStarted event verification
             ev.verifyEvent("Notification Received: adStarted", "Preroll ad is start to playing", 20000);
