@@ -304,19 +304,6 @@ public class BasicTestsIMA extends BaseClass{
             EventVerification ev = new EventVerification();
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 20000);
 
-            Thread.sleep(2000);
-
-            // Verify pause event at normal screen
-            play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 30000);
-
-
-            // Verify playing event at normal screen
-            BaseClass.play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 40000);
-
-
-
             //adStarted event verification
             ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 50000);
 
@@ -330,6 +317,17 @@ public class BasicTestsIMA extends BaseClass{
             //verifing ad Completed Event
 
             ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 80000);
+
+            Thread.sleep(2000);
+
+            // Verify pause event at normal screen
+            play_pauseBtn(driver);
+            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 80000);
+
+
+            // Verify playing event at normal screen
+            BaseClass.play_pauseBtn(driver);
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 90000);
 
 
             // Verify playCompleted event
@@ -546,7 +544,7 @@ public class BasicTestsIMA extends BaseClass{
             // Verify playStarted event
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 30000);
 
-            Thread.sleep(5000);
+            Thread.sleep(3000);
             // Clicking on pause button
             play_pauseBtn(driver);
 
