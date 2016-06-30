@@ -8,10 +8,10 @@
         <parameter name="logFilePath" value="system.log" />
         <classes>
             <class name="Tests.BasicSampleAppTest.BasicTestsBasicPlayback" />
-            <class name="Tests.FreewheelSampleAppTest.BasicTestsFreewheel" />
+            <!--<class name="Tests.FreewheelSampleAppTest.BasicTestsFreewheel" />-->
             <class name="Tests.IMASampleApp.BasicTestsIMA" />
-            <class name="Tests.OoyalaSkinSampleApp.BasicTestsIMA" />
-            <class name="Tests.OoyalaSkinSampleApp.BasicTestsFreewheel" />
+            <!--<class name="Tests.OoyalaSkinSampleApp.BasicTestsIMA" />-->
+            <!--<class name="Tests.OoyalaSkinSampleApp.BasicTestsFreewheel" />-->
         </classes>
     </test>
 
