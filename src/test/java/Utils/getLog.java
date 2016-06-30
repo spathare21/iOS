@@ -189,5 +189,4 @@ public class getLog {
         System.out.println("Appium server closed");
 
     }
-
 }

@@ -13,6 +13,7 @@ import java.util.Properties;
 
 import Utils.EventVerification;
 import Utils.LoadPropertyValues;
+import Utils.SDKVersion;
 import Utils.SetupiOSDriver;
 import Utils.getLog;
 import Utils.logging;
@@ -41,6 +42,9 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
     public void beforeTest( String platformVersion,  String deviceName, String logFilePath) throws Exception {
 
         EventVerification.count =0 ;
+
+        // We are exucting this command, If something went wrong in after Class while deleting the log file then next it should not effect the code.
+        getLog.delete();
 
         // set up appium
         LogFilePath = logFilePath;
@@ -74,6 +78,8 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
         String app = p.getProperty("app_Name");
         Thread.sleep(1000);
         //getLog.appUninstall(app);
+
+        //Thread.sleep(5000);
         getLog.delete();
         System.out.println("log file deleted");
 
@@ -83,9 +89,10 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
     }
 
     @BeforeMethod
-    public void  beforeMethod() throws IOException
-    {
+    public void  beforeMethod() throws IOException, InterruptedException {
         System.out.println("in before method ");
+
+
     }
 
     @AfterMethod
@@ -93,10 +100,16 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
         System.out.println("in after method");
         BaseClass.masterBtn(driver);
         Thread.sleep(2000);
+        System.out.println("Your script is executed on following SDK Version and Commit:------ ");
+        Thread.sleep(1000);
+        SDKVersion.version();
+        Thread.sleep(1000);
+        SDKVersion.gitSHA();
+
 
     }
 
-    @Test
+    //@Test
     public  void Plugin_Player() throws Exception {
 
         try {
@@ -158,7 +171,7 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void Change_Video() throws Exception {
 
         try {
@@ -218,7 +231,7 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void InsertAd_RunTime() throws Exception {
         try {
 
@@ -231,7 +244,6 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
             // Verify playStarted event
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 25000);
-
 
             Thread.sleep(5000);
 
@@ -262,10 +274,10 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
             //verifing ad Completed Event
 
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 60000);
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 60000);
 
             // Verify playStarted event
-            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 65000);
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Play has been started", 65000);
 
             // Verify playCompleted event
             ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 90000);
@@ -283,10 +295,10 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
             //verifing ad Completed Event
 
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 120000);
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 120000);
 
             // Verify playStarted event
-            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 150000);
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Play has been started", 150000);
 
             // Verify playCompleted event
             ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 190000);
@@ -299,7 +311,7 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void Play_IntialTime() throws Exception {
 
         try {
@@ -338,7 +350,7 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void custom_control() throws Exception {
 
         try {
@@ -374,7 +386,7 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void performance_Profiling() throws Exception {
 
         System.out.println("Playing Preformance Profiling");

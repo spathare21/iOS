@@ -15,6 +15,7 @@ import java.util.Properties;
 
 import Utils.EventVerification;
 import Utils.LoadPropertyValues;
+import Utils.SDKVersion;
 import Utils.SetupiOSDriver;
 import Utils.getLog;
 import Utils.logging;
@@ -43,6 +44,8 @@ public class BasicTestsFreewheel extends BaseClass {
     public void beforeTest(String platformVersion, String deviceName, String logFilePath) throws Exception {
 
         EventVerification.count = 0;
+        // We are exucting this command, If something went wrong in after Class while deleting the log file then next it should not effect the code.
+        getLog.delete();
 
         // set up appium
         LogFilePath = logFilePath;
@@ -97,6 +100,11 @@ public class BasicTestsFreewheel extends BaseClass {
         System.out.println("in after method");
         BaseClass.masterBtn(driver);
         Thread.sleep(2000);
+        System.out.println("Your script is executed on following SDK Version and Commit:------ ");
+        Thread.sleep(1000);
+        SDKVersion.version();
+        Thread.sleep(1000);
+        SDKVersion.gitSHA();
 
     }
 
