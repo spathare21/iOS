@@ -176,28 +176,27 @@ public class BasicTestsFreewheel extends BaseClass {
             EventVerification ev = new EventVerification();
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 20000);
 
-            Thread.sleep(5000);
+            //adStarted event verification
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 30000);
+
+            //verifing ad Completed Event
+
+            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 50000);
+
+            Thread.sleep(2000);
 
             // Verify pause event at normal screen
             driver.tap(1, 200, 300, 5);
             Thread.sleep(1000);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
 
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 30000);
+            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 60000);
 
 
             // Verify playing event at normal screen
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 50000);
+            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 70000);
 
-
-
-            //adStarted event verification
-            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 50000);
-
-            //verifing ad Completed Event
-
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 60000);
 
 
             // Verify playCompleted event
@@ -287,11 +286,11 @@ public class BasicTestsFreewheel extends BaseClass {
 
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 30000);
 
-            Thread.sleep(5000);
+            Thread.sleep(3000);
 
             // Verify pause event at normal screen
             driver.tap(1, 200, 300, 5);
-            Thread.sleep(1000);
+            Thread.sleep(700);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
 
             ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 30000);
@@ -400,14 +399,14 @@ public class BasicTestsFreewheel extends BaseClass {
             // Verify playStarted event
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 30000);
 
-            Thread.sleep(5000);
+            Thread.sleep(3000);
 
             overlay(driver);
 
             Thread.sleep(1000);
 
             driver.tap(1, 200, 300, 5);
-            Thread.sleep(1000);
+            Thread.sleep(700);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
 
             ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 40000);
@@ -432,15 +431,15 @@ public class BasicTestsFreewheel extends BaseClass {
 
 
             //verifing the ad started evnet
-            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 70000);
+            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 80000);
 
             //verifing ad Completed Event
 
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 80000);
+            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 90000);
 
             //verifind playCompleted Event
 
-            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 90000);
+            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 100000);
 
         }
         catch (Exception e)
@@ -477,7 +476,7 @@ public class BasicTestsFreewheel extends BaseClass {
             //verifing ad Completed Event
             ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 40000);
 
-            Thread.sleep(5000);
+            Thread.sleep(3000);
 
             // Verify pause event at normal screen
             driver.tap(1, 200, 300, 5);
@@ -498,9 +497,7 @@ public class BasicTestsFreewheel extends BaseClass {
             //verifing ad Completed Event
             ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 70000);
 
-
             //verifing event for playCompleted
-
             ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 90000);
 
         }
