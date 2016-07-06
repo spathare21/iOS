@@ -109,7 +109,7 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void Plugin_Player() throws Exception {
 
         try {
@@ -171,7 +171,7 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void Change_Video() throws Exception {
 
         try {
@@ -311,7 +311,7 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void Play_IntialTime() throws Exception {
 
         try {
@@ -350,7 +350,7 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void custom_control() throws Exception {
 
         try {
@@ -386,7 +386,7 @@ public class BasicTestsAdvancedPlayback extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void performance_Profiling() throws Exception {
 
         System.out.println("Playing Preformance Profiling");
