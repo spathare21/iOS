@@ -8,7 +8,7 @@
         <parameter name="logFilePath" value="system.log" />
 
         <classes>
-            <!--<class name="Tests.OoyalaSkinSampleApp.BasicTestsFreewheel" />-->
+            <class name="Tests.OoyalaSkinSampleApp.BasicTestsFreewheel" />
             <class name="Tests.OoyalaSkinSampleApp.BasicTestsIMA" />
         </classes>
     </test>
