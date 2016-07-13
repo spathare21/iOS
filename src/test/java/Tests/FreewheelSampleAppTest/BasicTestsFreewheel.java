@@ -245,7 +245,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void fw_PreMidPost() throws Exception{
         try {
             System.out.println("In test testPlay");
