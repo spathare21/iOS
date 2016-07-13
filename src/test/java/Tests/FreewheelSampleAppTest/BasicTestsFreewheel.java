@@ -256,7 +256,8 @@ public class BasicTestsFreewheel extends BaseClass {
             EventVerification ev = new EventVerification();
 
             //verifing the ad started evnet
-            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 10000);
+            ev.verifyEvent("Notification Received: adStarted. state: playing.", "Ad has been started", 10000);
+                           
 
             //verifing ad Completed Event
 
