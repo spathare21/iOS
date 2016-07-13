@@ -333,13 +333,7 @@ public class BasicTestsIMA extends BaseClass{
             OoyalaSkinSampleApp.presenceOfElement(driver);
             // Verify SDK version
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            Thread.sleep(3000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
-
+            
             // Verify playStarted event
             EventVerification ev = new EventVerification();
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 20000);
@@ -400,12 +394,6 @@ public class BasicTestsIMA extends BaseClass{
             OoyalaSkinSampleApp.presenceOfElement(driver);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
 
-            Thread.sleep(3000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
-
             // Verify playStarted event
             EventVerification ev = new EventVerification();
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 20000);
@@ -463,13 +451,6 @@ public class BasicTestsIMA extends BaseClass{
 
             OoyalaSkinSampleApp.presenceOfElement(driver);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            // Verify SDK version
-            Thread.sleep(2000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
 
             //Creting the object of EventVerification class
             EventVerification ev = new EventVerification();
@@ -587,13 +568,6 @@ public class BasicTestsIMA extends BaseClass{
             OoyalaSkinSampleApp.presenceOfElement(driver);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
 
-            // Verify SDK version
-            Thread.sleep(2000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
-
-
             //Creting the object of EventVerification class
             EventVerification ev = new EventVerification();
 
@@ -653,12 +627,6 @@ public class BasicTestsIMA extends BaseClass{
 
             OoyalaSkinSampleApp.presenceOfElement(driver);
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-
-            // Verify SDK version
-            Thread.sleep(2000);
-            found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-            if (!found)
-                Assert.assertTrue(found);
 
 
             //Creting the object of EventVerification class
