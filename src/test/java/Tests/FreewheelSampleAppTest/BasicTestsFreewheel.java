@@ -417,7 +417,7 @@ public class BasicTestsFreewheel extends BaseClass {
 
             System.out.println("Object created");
             //verifing the ad started evnet
-            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 10000);
+            ev.verifyEvent("Notification Received: adStarted. state: playing.", "Ad has been started", 30000);
 
             //verifing ad Completed Event
 
