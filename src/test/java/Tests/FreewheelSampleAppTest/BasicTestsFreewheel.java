@@ -404,15 +404,18 @@ public class BasicTestsFreewheel extends BaseClass {
 
     @Test
     public  void fw_PreMidPost_Overlay() throws Exception {
-        System.out.println(" Playing Freewheel PreMidPost overlay");
+        System.out.println("Playing FW PreMidPost Overlay");
         try {
             System.out.println("In test testPlay");
-            Thread.sleep(2000);
+            Thread.sleep(4000);
             assetSelect(driver, 1);
 
+            System.out.println("Asset selected");
             //Creting the object of EventVerification class
+
             EventVerification ev = new EventVerification();
 
+            System.out.println("Object created");
             //verifing the ad started evnet
             ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 10000);
 
