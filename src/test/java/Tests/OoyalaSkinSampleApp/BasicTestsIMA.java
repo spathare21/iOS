@@ -106,7 +106,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    //@Test
+    @Test
     public  void IMA_Preroll() throws Exception {
         System.out.println("Playing IMA Preroll");
         try {
@@ -158,7 +158,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    //@Test
+    @Test
     public  void IMA_Midroll() throws Exception {
         System.out.println("Playing IMA Midroll");
         try {
@@ -260,7 +260,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-   // @Test
+    @Test
     public  void IMA_Podded_Preroll() throws Exception {
         System.out.println("Playing IMA Podded Preroll");
         try {
@@ -320,7 +320,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-   // @Test
+    @Test
     public  void IMA_Podded_Midroll() throws Exception {
 
         System.out.println("Playing IMA Podded Midroll");
@@ -380,7 +380,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    //@Test
+    @Test
     public  void IMA_Podded_Postroll() throws Exception {
 
         System.out.println("Playing IMA Podded Postroll");
@@ -440,7 +440,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    //@Test
+    @Test
     public  void IMA_Podded_PreMidPostroll() throws Exception {
 
         System.out.println("Playing IMA Podded PreMidPostroll");
