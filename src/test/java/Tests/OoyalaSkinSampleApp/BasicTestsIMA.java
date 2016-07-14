@@ -106,7 +106,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    @Test
+    //@Test
     public  void IMA_Preroll() throws Exception {
         System.out.println("Playing IMA Preroll");
         try {
@@ -158,7 +158,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    @Test
+    //@Test
     public  void IMA_Midroll() throws Exception {
         System.out.println("Playing IMA Midroll");
         try {
@@ -246,7 +246,7 @@ public class BasicTestsIMA extends BaseClass{
 
             //verifing ad Completed Event
 
-            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 60000);
+            ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 80000);
 
 
             // Verify playCompleted event
@@ -260,7 +260,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    @Test
+   // @Test
     public  void IMA_Podded_Preroll() throws Exception {
         System.out.println("Playing IMA Podded Preroll");
         try {
@@ -320,7 +320,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    @Test
+   // @Test
     public  void IMA_Podded_Midroll() throws Exception {
 
         System.out.println("Playing IMA Podded Midroll");
@@ -333,7 +333,7 @@ public class BasicTestsIMA extends BaseClass{
             OoyalaSkinSampleApp.presenceOfElement(driver);
             // Verify SDK version
             OoyalaSkinSampleApp.play_pauseBtn(driver);
-            
+
             // Verify playStarted event
             EventVerification ev = new EventVerification();
             ev.verifyEvent("Notification Received: playStarted", "Play has been started", 20000);
@@ -380,7 +380,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    @Test
+    //@Test
     public  void IMA_Podded_Postroll() throws Exception {
 
         System.out.println("Playing IMA Podded Postroll");
@@ -440,7 +440,7 @@ public class BasicTestsIMA extends BaseClass{
 
     }
 
-    @Test
+    //@Test
     public  void IMA_Podded_PreMidPostroll() throws Exception {
 
         System.out.println("Playing IMA Podded PreMidPostroll");
@@ -574,6 +574,8 @@ public class BasicTestsIMA extends BaseClass{
             //verifing the ad started evnet
             ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 10000);
 
+            Thread.sleep(10000);
+
             //verifing ad Completed Event
 
             ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 20000);
@@ -598,6 +600,7 @@ public class BasicTestsIMA extends BaseClass{
             //verifing the ad started evnet
             ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 60000);
 
+            Thread.sleep(10000);
             //verifing ad Completed Event
 
             ev.verifyEvent("Notification Received: adCompleted", " Ad has been completed" , 70000);
@@ -656,7 +659,7 @@ public class BasicTestsIMA extends BaseClass{
 
 
 
-            Thread.sleep(3000);
+            Thread.sleep(2000);
 
             // Clicking on pause button
             driver.tap(1, 200, 300, 5);
