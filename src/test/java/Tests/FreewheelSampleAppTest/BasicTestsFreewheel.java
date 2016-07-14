@@ -416,49 +416,51 @@ public class BasicTestsFreewheel extends BaseClass {
             EventVerification ev = new EventVerification();
 
             System.out.println("Object created");
+            Thread.sleep(50000);
             //verifing the ad started evnet
-           // ev.verifyEvent("Notification Received: adStarted. state: playing.", "Ad has been started", 30000);
-
-            //verifing ad Completed Event
-
-          //  ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 20000);
-
-            // Verify playStarted event
-            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 30000);
-
-            Thread.sleep(5000);
-
-            play_pauseBtn(driver);
-
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 40000);
-
-            overlay(driver);
-            Thread.sleep(2000);
-
-            // Verify playing event at normal screen
-            play_pauseBtn(driver);
-
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 50000);
-
-            //verifing the ad started evnet
-            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 60000);
-
-            Thread.sleep(5000);
-            //verifing ad Completed Event
-
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 70000);
-
-
-            //verifing the ad started evnet
-            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 70000);
-
-            //verifing ad Completed Event
-
-            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 80000);
-
-            //verifind playCompleted Event
-
-            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 90000);
+//           // ev.verifyEvent("Notification Received: adStarted. state: playing.", "Ad has been started", 30000);
+//
+//            //verifing ad Completed Event
+//
+//          //  ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 20000);
+//
+//            // Verify playStarted event
+//            ev.verifyEvent("Notification Received: playStarted", "Play has been started", 30000);
+//
+//            Thread.sleep(5000);
+//
+//            play_pauseBtn(driver);
+//
+//            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video has been paused", 40000);
+//
+//            overlay(driver);
+//            Thread.sleep(2000);
+//
+//            // Verify playing event at normal screen
+//            play_pauseBtn(driver);
+//
+//            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video started playing again" , 50000);
+//
+//            //verifing the ad started evnet
+//            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 60000);
+//
+//            Thread.sleep(5000);
+//            //verifing ad Completed Event
+//
+//            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 70000);
+//
+//
+//            //verifing the ad started evnet
+//            ev.verifyEvent("Notification Received: adStarted", "Ad has been started", 70000);
+//
+//            //verifing ad Completed Event
+//
+//            ev.verifyEvent("Notification Received: adPodCompleted", " Ad has been completed" , 80000);
+//
+//            //verifind playCompleted Event
+//
+//            ev.verifyEvent("Notification Received: playCompleted","Video has been completed", 90000);
+            System.out.println("PlayCompleted here ");
 
         }
         catch (Exception e)
