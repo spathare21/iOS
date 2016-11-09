@@ -2,14 +2,18 @@ package pageObject;
 
 
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import Utils.*;
 import java.io.IOException;
 import java.util.List;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
- * Created by mahesh on 17/05/16.
+ * Created by Madhav on 11/01/16.
  */
 public class BaseClass {
     // Click on required test asset
@@ -17,6 +21,15 @@ public class BaseClass {
         List<WebElement> asset = driver.findElementsByClassName("UIATableCell");
         asset.get(assetNo).click();
     }
+
+    public static void waitForElementBasedOnXpath(AppiumDriver driver, String xPathString){
+
+
+        WebDriverWait wait = new WebDriverWait(driver,30);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xPathString)));
+    }
+
+
 
 
     public static boolean sdkVersion(String LogFilePath, int lastlinenumber) throws IOException {

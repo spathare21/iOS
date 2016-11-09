@@ -6,6 +6,7 @@ package Utils;
 
 import io.appium.java_client.*;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.AppiumDriver;
 
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.remote.CapabilityType;
@@ -30,20 +31,29 @@ public class SetupiOSDriver {
 
         File app = new File(appFilePath, appName);
 
-
-
-
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformVersion", platformVersion);
         capabilities.setCapability("deviceName", deviceName);
         capabilities.setCapability("app", app.getAbsolutePath());
+        //capabilities.setCapability("app", app);
         capabilities.setCapability("udid", ud);
         capabilities.setCapability("platformName", "iOS");
         capabilities.setCapability("newCommandTimeout", 50000);
         capabilities.setCapability("showIOSLog",true);
+        capabilities.setCapability("automationName","XCUITest");
 
 
-        driver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
+        driver = new AppiumDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities) {
+            public MobileElement scrollTo(String s) {
+                return null;
+            }
+
+            public MobileElement scrollToExact(String s) {
+                return null;
+            }
+        };
+
+        //driver = new IOSDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         //driver.manage().timeouts().implicitlyWait(3000,TimeUnit.SECONDS);
         return driver;
     }
@@ -57,11 +67,22 @@ public class SetupiOSDriver {
         capabilities.setCapability("platformVersion", platformVersion);
         capabilities.setCapability("deviceName", deviceName);
         capabilities.setCapability("app", app.getAbsolutePath());
+        //capabilities.setCapability("app", app);
         capabilities.setCapability("udid", udid);
-        capabilities.setCapability("newCommandTimeout", 50000);
         capabilities.setCapability("platformName", "iOS");
+        capabilities.setCapability("newCommandTimeout", 50000);
+        capabilities.setCapability("showIOSLog",true);
+        capabilities.setCapability("automationName","XCUITest");
 
-        driver = new IOSDriver(new URL("http://127.0.0.1:" + portNumber + "/wd/hub"), capabilities);
+        driver = new AppiumDriver(new URL("http://127.0.0.1:" + portNumber + "/wd/hub"), capabilities) {
+            public MobileElement scrollTo(String s) {
+                return null;
+            }
+
+            public MobileElement scrollToExact(String s) {
+                return null;
+            }
+        };
         return driver;
     }
 

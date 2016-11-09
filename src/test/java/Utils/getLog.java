@@ -52,7 +52,7 @@ public class getLog {
         System.out.println("command is " + command1);
 
         String[] final_command1 = CommandLine.command(command1);
-        System.out.println("final command to get udid is " + final_command1);
+        //System.out.println("final command to get udid is " + final_command1);
 
         Runtime run = Runtime.getRuntime();
         Process pr = run.exec(final_command1);
@@ -127,7 +127,7 @@ public class getLog {
         return (DeviceName + " " + DeviceOs);
     }
 
-
+    //todo refactor uninstall method
     //uninstalling app after execution of all tests
     public static void appUninstall(String ap) throws IOException, InterruptedException {
         String app = "";

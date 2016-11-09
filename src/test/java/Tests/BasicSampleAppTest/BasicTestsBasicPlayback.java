@@ -1,5 +1,7 @@
 package Tests.BasicSampleAppTest;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -15,89 +17,73 @@ import io.appium.java_client.AppiumDriver;
 import pageObject.BaseClass;
 
 /**
- * Created by Shivam on 10/06/16.
+ * Created by Madhav on 10/27/16.
  */
 public class BasicTestsBasicPlayback extends BaseClass {
 
+    //Variable for storing UUID of the device
     public static String ud;
+    //Variable for storing IOS Driver
     private AppiumDriver driver;
 
-    String LogFilePath;
+    //String LogFilePath;
     logging _utils = new logging();
     boolean found=false;
 
-    // This variable is used in checking the latest entry in the log.
-    private static int lastlinenumber;
-
+    // parameters obtained from XML file // TODO: 10/31/16 move these parameters to utils Properties file
     @Parameters({"platformVersion", "deviceName", "logFilePath" })
 
     @BeforeClass // Will be executed before any of the test run.
     public void beforeTest( String platformVersion,  String deviceName, String logFilePath) throws Exception {
 
         EventVerification.count =0 ;
-        // We are exucting this command, If something went wrong in after Class while deleting the log file then next it should not effect the code.
-        getLog.delete();
 
-        //getLog.reboot();
-
-        System.out.println("Device reboot successfully");
-
-        // set up appium
-        LogFilePath = logFilePath;
-
+        //loading the property values
         LoadPropertyValues prop = new LoadPropertyValues();
         Properties p=prop.loadProperty("BasicPlaybackSampleApp.properties");
 
+        // Getting UUID of the device programatically
         ud = getLog.getUdid();
-
-        getLog.getlog();
-        //System.out.println("log file created");
-
         System.out.println("valued of ud is " +ud);
+
+        // Setting up IOS Driver
         SetupiOSDriver setUpdriver = new SetupiOSDriver();
         driver = setUpdriver.setUpandReturniOSDriver( p.getProperty("appFilePath"),  p.getProperty("appName"),platformVersion, deviceName, ud);
+
         Thread.sleep(2000);
 
     }
 
     @AfterClass // Will be executed once all the tests are completed.
-    public void tearDown() throws Exception {
-
-
+    //public void tearDown() throws Exception {
+    public void afterTest() throws Exception {
+        //closing the app under test
         driver.closeApp();
         System.out.println("closing app ");
 
+        //Loading the property file to get App name .
         LoadPropertyValues prop = new LoadPropertyValues();
         Properties p=prop.loadProperty("BasicPlaybackSampleApp.properties");
         String app = p.getProperty("app_Name");
         Thread.sleep(1000);
-        //getLog.appUninstall(app);
 
-        getLog.delete();
-        System.out.println("log file deleted");
+        //Uninstall the app //todo refactor appUninstall method
+        getLog.appUninstall(app);
 
         driver.quit();
-        Thread.sleep(5000);
-        getLog.killAppium();
-
     }
 
     @BeforeMethod
     public void  beforeMethod() throws IOException
     {
-        System.out.println("in before method ");
+        System.out.println("in before method \n");
     }
 
     @AfterMethod
     public void afterMethod() throws IOException, InterruptedException {
-        System.out.println("in after method");
+        System.out.println("in after method \n");
         BaseClass.masterBtn(driver);
         Thread.sleep(2000);
-        System.out.println("Your script is executed on following SDK Version and Commit:------ ");
-        Thread.sleep(1000);
-        SDKVersion.version();
-        Thread.sleep(1000);
-        SDKVersion.gitSHA();
 
     }
 
@@ -108,12 +94,26 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
         EventVerification ev = new EventVerification();
         try {
-            System.out.println("In test testPlay");
+            System.out.println("In Basic Playback Sample App Home Screen \n");
             Thread.sleep(2000);
-            assetSelect(driver, 0);
+
+            //todo Write code to check if QA mode is enabled , only if its disabled , enable it
+            //Enable QA Mode . Should be moved to Before Test ?
+            WebElement w = driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]"));
+            System.out.println(" If QA Mode is enabled \n"+ w.getAttribute("value"));
+            if(w.getAttribute("value").equals("false")){
+                driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]")).click();
+            }
+            System.out.println(" If QA Mode is enabled \n"+ w.getAttribute("value"));
+
+            //Click on HLS Video
+            driver.findElement(By.name("HLS Video")).click();
+
+            BaseClass.waitForElementBasedOnXpath(driver,"//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextView[1]");
+            Thread.sleep(5000);
 
             // Verify playStarted event
-            ev.verifyEvent("Notification Received: playStarted", "HLS video has been playing started", 15000);
+            ev.verifyEvent(driver,"Notification Received: playStarted", "HLS video has started to play", 25000);
 
             Thread.sleep(5000);
 
@@ -121,15 +121,15 @@ public class BasicTestsBasicPlayback extends BaseClass {
             // Verify pause event at normal screen
             BaseClass.play_pauseBtn(driver);
 
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "video is in paused state", 25000);
+            ev.verifyEvent(driver,"Notification Received: stateChanged. state: paused", "HLS video has been paused ", 25000);
 
             // Verify playing event at normal screen
             BaseClass.play_pauseBtn(driver);
 
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "video is in playing state", 40000);
+            ev.verifyEvent(driver,"Notification Received: stateChanged. state: playing", "HLS Video has resumed to playing state from paused state", 40000);
 
             // Verify playCompleted event
-            ev.verifyEvent("Notification Received: playCompleted", "HLS video has been playing completed", 90000);
+            ev.verifyEvent(driver,"Notification Received: playCompleted", "HLS video has completed playing", 90000);
 
         } catch (Exception e) {
             System.out.println(" Exception " + e);
@@ -137,34 +137,43 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    @Test
+    //@Test
     public  void MP4() throws Exception {
 
         EventVerification ev = new EventVerification();
-
-        System.out.println("In test testPlay");
         try {
-
-
+            System.out.println("In Basic Playback Sample App Home Screen \n");
             Thread.sleep(2000);
-            assetSelect(driver, 1);
+
+
+            //Enable QA Mode . Should be moved to Before Test ?
+            WebElement w = driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]"));
+            if(w.getAttribute("value").equals("false")){
+                driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]")).click();
+            }
+
+            //Click on MP4 Video
+            driver.findElement(By.name("MP4 Video")).click();
+
+            BaseClass.waitForElementBasedOnXpath(driver,"//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextView[1]");
+            Thread.sleep(5000);
 
             // Verify playStarted event
-            ev.verifyEvent("Notification Received: playStarted", "MP4 video has been playing started", 20000);
+            ev.verifyEvent(driver,"Notification Received: playStarted", "MP4 video has started to play", 20000);
 
             Thread.sleep(5000);
 
             // Verify pause event at normal screen
             BaseClass.play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "video is in paused state", 30000);
+            ev.verifyEvent(driver,"Notification Received: stateChanged. state: paused", "MP4 video has been paused", 30000);
 
             // Verify playing event at normal screen
             BaseClass.play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "video is in playing state", 50000);
+            ev.verifyEvent(driver,"Notification Received: stateChanged. state: playing", "MP4 Video has resumed to playing state from paused state", 50000);
 
 
             // Verify playCompleted event
-            ev.verifyEvent("Notification Received: playCompleted", "HLS video has been playing completed", 90000);
+            ev.verifyEvent(driver,"Notification Received: playCompleted", "MP4 video has completed playing", 90000);
         }
 
         catch (Exception e)
@@ -174,7 +183,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    @Test
+    //@Test
     public  void vodCC() throws Exception {
         EventVerification ev = new EventVerification();
         try {
@@ -232,33 +241,44 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    @Test
+    //@Test
     public  void aspectRatio() throws Exception {
 
         EventVerification ev = new EventVerification();
-
         try {
-            System.out.println("In test testPlay");
+            System.out.println("In Basic Playback Sample App Home Screen \n");
             Thread.sleep(2000);
-            assetSelect(driver, 3);
+
+            //Enable QA Mode . Should be moved to Before Test ?
+            WebElement w = driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]"));
+            if(w.getAttribute("value").equals("false")){
+                driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]")).click();
+            }
+
+            //Click on 4:3 Aspect Ratio Video
+            driver.findElement(By.name("4:3 Aspect Ratio")).click();
+
+            BaseClass.waitForElementBasedOnXpath(driver,"//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextView[1]");
+            Thread.sleep(5000);
 
             // Verify playStarted event
-            ev.verifyEvent("Notification Received: playStarted", "Aspect Ratio video has been playing started", 20000);
+            ev.verifyEvent(driver,"Notification Received: playStarted", "Aspect Ratio video has started to play", 20000);
 
             Thread.sleep(5000);
             // Verify pause event at normal screen
             BaseClass.play_pauseBtn(driver);
 
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "video is in paused state", 30000);
+            // Pause Playing video
+            ev.verifyEvent(driver,"Notification Received: stateChanged. state: paused", "Aspect Ratio video has been paused", 30000);
 
             // Verify playing event at normal screen
             BaseClass.play_pauseBtn(driver);
 
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "video is in playing state", 40000);
+            ev.verifyEvent(driver,"Notification Received: stateChanged. state: playing", "Aspect Ratio has resumed to playing state from paused state", 40000);
 
 
             // Verify playCompleted event
-            ev.verifyEvent("Notification Received: playCompleted", "HLS video has been playing completed", 900000);
+            ev.verifyEvent(driver,"Notification Received: playCompleted", "Aspect Ratio video has completed playing", 900000);
 
         } catch (Exception e) {
             System.out.println(" Exception " + e);
@@ -266,42 +286,48 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    @Test
+    //@Test
     public void vast_PreRoll() throws InterruptedException {
-        EventVerification ev = new EventVerification();
 
-        System.out.println("Playing Vast Preroll");
+        EventVerification ev = new EventVerification();
         try {
-            System.out.println("In test testPlay");
+            System.out.println("In Basic Playback Sample App Home Screen \n");
             Thread.sleep(2000);
-            assetSelect(driver, 5);
+
+            //Enable QA Mode . Should be moved to Before Test ?
+            WebElement w = driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]"));
+            if(w.getAttribute("value").equals("false")){
+                driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]")).click();
+            }
+
+            //Click on VAST Ad Pre-roll Video
+            driver.findElement(By.name("VAST Ad Pre-roll")).click();
+
+            BaseClass.waitForElementBasedOnXpath(driver,"//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextView[1]");
+            Thread.sleep(5000);
 
             //adStarted event verification
-            ev.verifyEvent("Notification Received: adStarted", "Preroll ad is start to playing", 20000);
+            ev.verifyEvent(driver,"Notification Received: adStarted", "Preroll ad has started playing", 20000);
 
             Thread.sleep(5000);
 
             // adCompleted event verification
-
-            ev.verifyEvent("Notification Received: adPodCompleted", "Preroll ad is completed", 30000);
+            ev.verifyEvent(driver,"Notification Received: adCompleted", "Preroll ad has completed playing", 30000);
 
             // Verify playStarted event
-            ev.verifyEvent("playStarted", "Vast Preroll video has been playing started", 40000);
+            ev.verifyEvent(driver,"playStarted", "Vast Preroll video has started to play", 40000);
 
-            Thread.sleep(2000);
-
+            //  Commenting Play pause sequence because video length is too small.....
+            //Thread.sleep(2000);
             // Verify pause event at normal screen
-            play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video is paused", 50000);
-
-
+            //play_pauseBtn(driver);
+            //ev.verifyEvent(driver,"Notification Received: stateChanged. state: paused", "Vast Preroll video has paused", 50000);
             // Verify playing event at normal screen
-            BaseClass.play_pauseBtn(driver);
+            //BaseClass.play_pauseBtn(driver);
+            //ev.verifyEvent(driver,"Notification Received: stateChanged. state: playing", "Vast Preroll video has started playing again", 60000);
+            //........................................................................
 
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video is playing", 60000);
-
-
-            ev.verifyEvent("Notification Received: playCompleted", "HLS video has been playing completed", 90000);
+            ev.verifyEvent(driver,"Notification Received: playCompleted", "Vast Preroll video has completed playing", 90000);
 
         }
         catch (Exception e)
@@ -312,41 +338,37 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    @Test
+    //@Test
     public  void vast_Midroll() throws Exception {
+
         EventVerification ev = new EventVerification();
-        System.out.println("Playing Vast Midroll");
         try {
-            System.out.println("In test testPlay");
+            System.out.println("In Basic Playback Sample App Home Screen \n");
             Thread.sleep(2000);
-            assetSelect(driver, 6);
+
+            //Enable QA Mode . Should be moved to Before Test ?
+            WebElement w = driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]"));
+            if(w.getAttribute("value").equals("false")){
+                driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]")).click();
+            }
+
+            //Click on VAST Ad Mid-roll Video
+            driver.findElement(By.name("VAST Ad Mid-roll")).click();
+
+            BaseClass.waitForElementBasedOnXpath(driver,"//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextView[1]");
+            Thread.sleep(5000);
 
             // Verify playStarted event
-            ev.verifyEvent("Notification Received: playStarted", "Vast Midroll video has been playing started", 20000);
-
+            ev.verifyEvent(driver,"Notification Received: playStarted", "Vast Midroll video has been started to play", 20000);
 
             //adStarted event verification
-            ev.verifyEvent("Notification Received: adStarted", "Midroll ad is start to playing", 30000);
-
+            ev.verifyEvent(driver,"Notification Received: adStarted", "Midroll ad has started to play", 30000);
 
             // adCompleted event verification
-            ev.verifyEvent("Notification Received: adPodCompleted", "Midroll ad is completed", 40000);
-
-            Thread.sleep(2000);
-            // Verify pause event at normal screen
-            play_pauseBtn(driver);
-
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video is paused", 50000);
-
-
-            // Verify playing event at normal screen
-            BaseClass.play_pauseBtn(driver);
-
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video is playing", 60000);
-
+            ev.verifyEvent(driver,"Notification Received: adCompleted", "Midroll ad has completed to play", 40000);
 
             // Verify playCompleted event
-            ev.verifyEvent("Notification Received: playCompleted", "HLS video has been playing completed", 90000);
+            ev.verifyEvent(driver,"Notification Received: playCompleted", "VAST Mid-roll video has completed play", 90000);
 
         } catch (Exception e) {
             System.out.println(" Exception " + e);
@@ -354,38 +376,40 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    @Test
+    //@Test
     public  void vast_Postroll() throws Exception {
+
         EventVerification ev = new EventVerification();
-        System.out.println("Playing vast Postroll");
         try {
-
-            System.out.println("In test testPlay");
+            System.out.println("In Basic Playback Sample App Home Screen \n");
             Thread.sleep(2000);
-            assetSelect(driver, 7);
-            // Verify playStarted event
 
-            ev.verifyEvent("Notification Received: playStarted", "Vast Postroll video has been playing started", 20000);
+            //Enable QA Mode . Should be moved to Before Test ?
+            WebElement w = driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]"));
+            if(w.getAttribute("value").equals("false")){
+                driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]")).click();
+            }
 
-            Thread.sleep(2000);
-            // Verify pause event at normal screen
-            BaseClass.play_pauseBtn(driver);
+            //Click on VAST Ad Post-roll Video
+            driver.findElement(By.name("VAST Ad Post-roll")).click();
 
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video is in paused state", 30000);
+            BaseClass.waitForElementBasedOnXpath(driver,"//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextView[1]");
+            Thread.sleep(5000);
 
-            // Verify playing event at normal screen
-            BaseClass.play_pauseBtn(driver);
+            ev.verifyEvent(driver,"Notification Received: playStarted", "Vast Postroll video has started to play", 20000);
 
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video is in playing state", 40000);
+            Thread.sleep(3000);
 
-                        //adStarted event verification
-            ev.verifyEvent("Notification Received: adStarted", "Postroll ad is start to playing", 50000);
+            //adStarted event verification
+            ev.verifyEvent(driver,"Notification Received: adStarted", "Postroll ad started to play", 50000);
 
-                        // adCompleted event verification
-            ev.verifyEvent("Notification Received: adPodCompleted", "Postroll ad is completed", 60000);
+            Thread.sleep(3000);
+
+            // adCompleted event verification
+            ev.verifyEvent(driver,"Notification Received: adCompleted", "Postroll ad has completed play", 60000);
 
             // Verify playCompleted event
-            ev.verifyEvent("Notification Received: playCompleted", "VAST Postroll video has been playing completed", 90000);
+            ev.verifyEvent(driver,"Notification Received: playCompleted", "VAST Postroll video has completed play", 90000);
 
         }
         catch (Exception e)
@@ -396,34 +420,42 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public  void VAST_AD_Wrapper() throws Exception {
 
         EventVerification ev = new EventVerification();
-
-        System.out.println("In test testPlay");
         try {
 
-
+            System.out.println("In Basic Playback Sample App Home Screen \n");
             Thread.sleep(2000);
-            assetSelect(driver, 8);
+
+            //Enable QA Mode . Should be moved to Before Test ?
+            WebElement w = driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]"));
+            if(w.getAttribute("value").equals("false")){
+                driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]")).click();
+            }
+
+            //Click on VAST Ad -roll Video
+            driver.findElement(By.name("VAST Ad Wrapper")).click();
+
+            BaseClass.waitForElementBasedOnXpath(driver,"//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextView[1]");
+            Thread.sleep(5000);
 
             // Verify playStarted event
-            ev.verifyEvent("Notification Received: playStarted", "Vast AD Wrapper video has been playing started", 20000);
+            ev.verifyEvent(driver,"Notification Received: playStarted", "Vast AD Wrapper video has started to play", 20000);
 
             Thread.sleep(5000);
 
             // Verify pause event at normal screen
             BaseClass.play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "video is in paused state", 30000);
+            ev.verifyEvent(driver,"Notification Received: stateChanged. state: paused", "Vast AD Wrapper video is paused", 30000);
 
             // Verify playing event at normal screen
             BaseClass.play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "video is in playing state", 50000);
-
+            ev.verifyEvent(driver,"Notification Received: stateChanged. state: playing", "Vast AD Wrapper video started to play again", 50000);
 
             // Verify playCompleted event
-            ev.verifyEvent("Notification Received: playCompleted", "HLS video has been playing completed", 90000);
+            ev.verifyEvent(driver,"Notification Received: playCompleted", "Vast AD Wrapper video has completed play", 90000);
         }
 
         catch (Exception e)
@@ -433,7 +465,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    @Test
+    //@Test
     public void ooyala_PreRoll() throws InterruptedException {
         EventVerification ev = new EventVerification();
 
@@ -479,7 +511,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-   @Test
+   //@Test
     public  void ooyala_Midroll() throws Exception {
         EventVerification ev = new EventVerification();
         System.out.println("Playing Vast Midroll");
@@ -520,7 +552,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-   @Test
+   //@Test
     public  void ooyala_Postroll() throws Exception {
         EventVerification ev = new EventVerification();
         System.out.println("Playing vast Postroll");
@@ -563,7 +595,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
     }
 
-    @Test
+    //@Test
     public void Multi_Ad() throws InterruptedException {
         EventVerification ev = new EventVerification();
 
@@ -617,7 +649,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    //TODO Handel Length of video is too long
+    /*//TODO Handel Length of video is too long
     //@Test
     public  void vertical() throws Exception {
 
@@ -665,6 +697,6 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
         // Click on Master button
         BaseClass.masterBtn(driver);
-    }
+    }*/
 
 }
