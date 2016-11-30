@@ -89,7 +89,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
 
 
-    //@Test
+    @Test
     public  void HLS() throws Exception {
 
         EventVerification ev = new EventVerification();
@@ -137,7 +137,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    //@Test
+    @Test
     public  void MP4() throws Exception {
 
         EventVerification ev = new EventVerification();
@@ -254,7 +254,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    //@Test
+    @Test
     public  void aspectRatio() throws Exception {
 
         EventVerification ev = new EventVerification();
@@ -299,7 +299,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    //@Test
+    @Test
     public void vast_PreRoll() throws InterruptedException {
 
         EventVerification ev = new EventVerification();
@@ -351,7 +351,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    //@Test
+    @Test
     public  void vast_Midroll() throws Exception {
 
         EventVerification ev = new EventVerification();
@@ -389,7 +389,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    //@Test
+    @Test
     public  void vast_Postroll() throws Exception {
 
         EventVerification ev = new EventVerification();
@@ -433,7 +433,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public  void VAST_AD_Wrapper() throws Exception {
 
         EventVerification ev = new EventVerification();
@@ -478,7 +478,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    //@Test
+    @Test
     public void ooyala_PreRoll() throws InterruptedException {
         EventVerification ev = new EventVerification();
         try {
@@ -534,7 +534,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-   //@Test
+   @Test
     public  void ooyala_Midroll() throws Exception {
         EventVerification ev = new EventVerification();
         try {
@@ -574,7 +574,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-   //@Test
+   @Test
     public  void ooyala_Postroll() throws Exception {
         EventVerification ev = new EventVerification();
         try {
@@ -617,7 +617,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
     }
 
-    //@Test
+    @Test
     public void Multi_Ad() throws InterruptedException {
         EventVerification ev = new EventVerification();
         try {
@@ -671,54 +671,42 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
-    /*//TODO Handel Length of video is too long
-    //@Test
+    //TODO Handle Length of the video is too long
+    @Test
     public  void vertical() throws Exception {
 
-        EventVerification ev = new EventVerification();
+       EventVerification ev = new EventVerification();
+        try {
 
-        System.out.println("In test testPlay");
-        Thread.sleep(2000);
-        assetSelect(driver, 4);
+            System.out.println("In Basic Playback Sample App Home Screen \n");
+            Thread.sleep(2000);
 
-        // Verify SDK version
-        Thread.sleep(5000);
-        found = BaseClass.sdkVersion(LogFilePath, lastlinenumber);
-        if(!found)
-            Assert.assertTrue(found);
+            //Enable QA Mode . Should be moved to Before Test ?
+            WebElement w = driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]"));
+            if (w.getAttribute("value").equals("false")) {
+                driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]")).click();
+            }
 
-        // Verify playStarted event
-        Thread.sleep(5000);
-        ev.verifyEvent("playStarted", "Vertical 16:9 video has been playing started", 20000);
+            //Click on VAST Ad -roll Video
+            driver.findElement(By.name("Vertical 16:9")).click();
 
-        // Verify pause event at normal screen
-        BaseClass.play_pauseBtn(driver);
-        ev.verifyEvent("Notification Received: stateChanged. state: paused", "video is in paused state", 20000);
+            BaseClass.waitForElementBasedOnXpath(driver, "//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextView[1]");
+            Thread.sleep(5000);
 
-        // Verify playing event at normal screen
-        BaseClass.play_pauseBtn(driver);
-        ev.verifyEvent("Notification Received: stateChanged. state: playing", "video is in playing state", 20000);
+            // Verify playStarted event
+            ev.verifyEvent(driver, "Notification Received: playStarted", "Multi Mid Roll video has started to play", 40000);
 
-        // Click on fullscreen
-        BaseClass.fullscreenBtn(driver);
-        Thread.sleep(5000);
+            Thread.sleep(10000);
+        }
 
-        // Verify pause event at full screen
-        BaseClass.play_pause_fullscreenBtn(driver);
-        ev.verifyEvent("Notification Received: stateChanged. state: paused", "video is in paused state at fullscreen", 20000);
+            catch(Exception e)
+            {
 
-        // Verify playing event at full screen
-        Thread.sleep(5000);
-        BaseClass.play_pause_fullscreenBtn(driver);
-        ev.verifyEvent("Notification Received: stateChanged. state: playing", "video is in playing state at fullscreen", 20000);
+                System.out.println(" Exception " + e);
+                e.printStackTrace();
+            }
 
-        // Switch from full screen to normal screen
-        Thread.sleep(5000);
-        System.out.println("clicking on screen normal ");
-        BaseClass.doneBtn(driver);
 
-        // Click on Master button
-        BaseClass.masterBtn(driver);
-    }*/
+        }
 
 }
