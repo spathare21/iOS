@@ -89,7 +89,7 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
 
 
-    @Test
+    //@Test
     public  void HLS() throws Exception {
 
         EventVerification ev = new EventVerification();
@@ -183,21 +183,34 @@ public class BasicTestsBasicPlayback extends BaseClass {
         }
     }
 
+    //TODO Rewrite this method
     //@Test
     public  void vodCC() throws Exception {
         EventVerification ev = new EventVerification();
         try {
-            System.out.println("In test testPlay");
+            System.out.println("In Basic Playback Sample App Home Screen \n");
             Thread.sleep(2000);
-            assetSelect(driver, 2);
 
-            ev.verifyEvent("Notification Received: playStarted", "VOD with CC video has been playing started", 20000);
+
+            //Enable QA Mode . Should be moved to Before Test ?
+            WebElement w = driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]"));
+            if(w.getAttribute("value").equals("false")){
+                driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]")).click();
+            }
+
+            //Click on video with CC
+            driver.findElement(By.name("VOD with CCs")).click();
+
+            BaseClass.waitForElementBasedOnXpath(driver,"//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextView[1]");
+            Thread.sleep(5000);
+
+            ev.verifyEvent(driver,"Notification Received: playStarted", "VOD with CC video started to play", 20000);
 
             Thread.sleep(5000);
 
             // Verify pause event at normal screen
             BaseClass.play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "video is in paused state", 30000);
+            ev.verifyEvent(driver,"Notification Received: stateChanged. state: paused", "Video has been paused", 30000);
 
             // Verify CC button
             BaseClass.ccBtn(driver, "normal");
@@ -229,10 +242,10 @@ public class BasicTestsBasicPlayback extends BaseClass {
 
             BaseClass.play_pauseBtn(driver);
 
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "video is in playing state", 50000);
+            ev.verifyEvent(driver,"Notification Received: stateChanged. state: playing", "video is in playing state", 50000);
 
             // Verify playCompleted event
-            ev.verifyEvent("Notification Received: playCompleted", "HLS video has been playing completed", 90000);
+            ev.verifyEvent(driver,"Notification Received: playCompleted", "Video has completed play", 90000);
         }
         catch (Exception e)
         {
@@ -468,39 +481,49 @@ public class BasicTestsBasicPlayback extends BaseClass {
     //@Test
     public void ooyala_PreRoll() throws InterruptedException {
         EventVerification ev = new EventVerification();
-
-        System.out.println("Playing Vast Preroll");
         try {
-            System.out.println("In test testPlay");
+
+            System.out.println("In Basic Playback Sample App Home Screen \n");
             Thread.sleep(2000);
-            assetSelect(driver, 9);
+
+            //Enable QA Mode . Should be moved to Before Test ?
+            WebElement w = driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]"));
+            if(w.getAttribute("value").equals("false")){
+                driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]")).click();
+            }
+
+            //Click on VAST Ad -roll Video
+            driver.findElement(By.name("Ooyala Ad Pre-roll")).click();
+
+            BaseClass.waitForElementBasedOnXpath(driver,"//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextView[1]");
+            Thread.sleep(5000);
 
             //adStarted event verification
-            ev.verifyEvent("Notification Received: adStarted", "Preroll ad is start to playing", 20000);
+            ev.verifyEvent(driver,"Notification Received: adStarted", "Preroll ad has started to play", 20000);
 
             Thread.sleep(5000);
 
             // adCompleted event verification
 
-            ev.verifyEvent("Notification Received: adPodCompleted", "Preroll ad is completed", 30000);
+            ev.verifyEvent(driver,"Notification Received: adCompleted", "Preroll ad has completed play", 30000);
 
             // Verify playStarted event
-            ev.verifyEvent("Notification Received: playStarted", "Ooyala Preroll video has been playing started", 40000);
+            ev.verifyEvent(driver,"Notification Received: playStarted", "Ooyala Preroll video has started to play", 40000);
 
             Thread.sleep(2000);
 
             // Verify pause event at normal screen
             play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video is paused", 50000);
+            ev.verifyEvent(driver,"Notification Received: stateChanged. state: paused", "Video has paused", 50000);
 
 
             // Verify playing event at normal screen
             BaseClass.play_pauseBtn(driver);
 
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video is playing", 60000);
+            ev.verifyEvent(driver,"Notification Received: stateChanged. state: playing", "Video started playing again", 60000);
 
 
-            ev.verifyEvent("Notification Received: playCompleted", "Ooyala Preroll video has been playing completed", 90000);
+            ev.verifyEvent(driver,"Notification Received: playCompleted", "Ooyala Preroll video has completed playing", 90000);
 
         }
         catch (Exception e)
@@ -514,37 +537,36 @@ public class BasicTestsBasicPlayback extends BaseClass {
    //@Test
     public  void ooyala_Midroll() throws Exception {
         EventVerification ev = new EventVerification();
-        System.out.println("Playing Vast Midroll");
         try {
-            System.out.println("In test testPlay");
+
+            System.out.println("In Basic Playback Sample App Home Screen \n");
             Thread.sleep(2000);
-            assetSelect(driver, 10);
+
+            //Enable QA Mode . Should be moved to Before Test ?
+            WebElement w = driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]"));
+            if(w.getAttribute("value").equals("false")){
+                driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]")).click();
+            }
+
+            //Click on VAST Ad -roll Video
+            driver.findElement(By.name("Ooyala Ad Mid-roll")).click();
+
+            BaseClass.waitForElementBasedOnXpath(driver,"//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextView[1]");
+            Thread.sleep(5000);
 
             // Verify playStarted event
-            ev.verifyEvent("Notification Received: playStarted", "Ooyala Midroll video has been playing started", 20000);
+            ev.verifyEvent(driver,"Notification Received: playStarted", "Ooyala Midroll video has started to play", 20000);
 
-            Thread.sleep(3000);
-            // Verify pause event at normal screen
-            play_pauseBtn(driver);
-
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video is paused", 30000);
-
-
-            // Verify playing event at normal screen
-            BaseClass.play_pauseBtn(driver);
-
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video is playing", 40000);
-
+            Thread.sleep(11000);
 
             //adStarted event verification
-            ev.verifyEvent("Notification Received: adStarted", "Midroll ad is start to playing", 50000);
-
+            ev.verifyEvent(driver,"Notification Received: adStarted", "Ooyala Midroll ad has started to play", 50000);
 
             // adCompleted event verification
-            ev.verifyEvent("Notification Received: adPodCompleted", "Midroll ad is completed", 60000);
+            ev.verifyEvent(driver,"Notification Received: adCompleted", "Ooyala Midroll ad has completed play", 60000);
 
             // Verify playCompleted event
-            ev.verifyEvent("Notification Received: playCompleted", "Ooyala Midroll video has been playing completed", 90000);
+            ev.verifyEvent(driver,"Notification Received: playCompleted", "Ooyala Midroll video has completed play", 90000);
 
         } catch (Exception e) {
             System.out.println(" Exception " + e);
@@ -555,36 +577,36 @@ public class BasicTestsBasicPlayback extends BaseClass {
    //@Test
     public  void ooyala_Postroll() throws Exception {
         EventVerification ev = new EventVerification();
-        System.out.println("Playing vast Postroll");
         try {
 
-            System.out.println("In test testPlay");
+            System.out.println("In Basic Playback Sample App Home Screen \n");
             Thread.sleep(2000);
-            assetSelect(driver, 11);
+
+            //Enable QA Mode . Should be moved to Before Test ?
+            WebElement w = driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]"));
+            if(w.getAttribute("value").equals("false")){
+                driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]")).click();
+            }
+
+            //Click on VAST Ad -roll Video
+            driver.findElement(By.name("Ooyala Ad Post-roll")).click();
+
+            BaseClass.waitForElementBasedOnXpath(driver,"//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextView[1]");
+            Thread.sleep(5000);
 
             // Verify playStarted event
+            ev.verifyEvent(driver,"Notification Received: playStarted", "Vast Postroll video has started to play", 20000);
 
-            ev.verifyEvent("Notification Received: playStarted", "Vast Postroll video has been playing started", 20000);
-
-            Thread.sleep(3000);
-            // Verify pause event at normal screen
-            BaseClass.play_pauseBtn(driver);
-
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video is in paused state", 30000);
-
-            // Verify playing event at normal screen
-            BaseClass.play_pauseBtn(driver);
-
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video is in playing state", 40000);
+            Thread.sleep(11000);
 
             //adStarted event verification
-            ev.verifyEvent("Notification Received: adStarted", "Postroll ad is start to playing", 50000);
+            ev.verifyEvent(driver,"Notification Received: adStarted", "Postroll ad has started to play", 50000);
 
             // adCompleted event verification
-            ev.verifyEvent("Notification Received: adPodCompleted", "Postroll ad is completed", 60000);
+            ev.verifyEvent(driver,"Notification Received: adCompleted", "Postroll ad has completed play", 60000);
 
             // Verify playCompleted event
-            ev.verifyEvent("Notification Received: playCompleted", "Ooyala Postroll video has been playing completed", 90000);
+            ev.verifyEvent(driver,"Notification Received: playCompleted", "Ooyala Postroll video has completed play", 90000);
 
         }
         catch (Exception e)
@@ -598,47 +620,47 @@ public class BasicTestsBasicPlayback extends BaseClass {
     //@Test
     public void Multi_Ad() throws InterruptedException {
         EventVerification ev = new EventVerification();
-
-        System.out.println("Playing Vast Preroll");
         try {
-            System.out.println("In test testPlay");
+
+            System.out.println("In Basic Playback Sample App Home Screen \n");
             Thread.sleep(2000);
-            assetSelect(driver, 12);
+
+            //Enable QA Mode . Should be moved to Before Test ?
+            WebElement w = driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]"));
+            if(w.getAttribute("value").equals("false")){
+                driver.findElement(By.xpath("//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeNavigationBar[1]/XCUIElementTypeSwitch[1]")).click();
+            }
+
+            //Click on VAST Ad -roll Video
+            driver.findElement(By.name("Multi Ad combination")).click();
+
+            BaseClass.waitForElementBasedOnXpath(driver,"//XCUIElementTypeApplication[1]/XCUIElementTypeWindow[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeTextView[1]");
+            Thread.sleep(5000);
 
             //adStarted event verification
-            ev.verifyEvent("Notification Received: adStarted", "Preroll ad is start to playing", 20000);
+            ev.verifyEvent(driver,"Notification Received: adStarted", "Multi Mid Roll ad started to play", 20000);
 
             Thread.sleep(5000);
 
             // adCompleted event verification
-
-            ev.verifyEvent("Notification Received: adPodCompleted", "Preroll ad is completed", 30000);
+            ev.verifyEvent(driver,"Notification Received: adCompleted", "Multi Mid Roll ad has completed play", 30000);
 
             // Verify playStarted event
-            ev.verifyEvent("Notification Received: playStarted", "Ooyala Preroll video has been playing started", 40000);
+            ev.verifyEvent(driver,"Notification Received: playStarted", "Multi Mid Roll video has started to play", 40000);
 
-            Thread.sleep(2000);
-
-            // Verify pause event at normal screen
-            play_pauseBtn(driver);
-            ev.verifyEvent("Notification Received: stateChanged. state: paused", "Video is paused", 50000);
-
-
-            // Verify playing event at normal screen
-            BaseClass.play_pauseBtn(driver);
-
-            ev.verifyEvent("Notification Received: stateChanged. state: playing", "Video is playing", 60000);
+            Thread.sleep(10000);
 
             //adStarted event verification
-            ev.verifyEvent("Notification Received: adStarted", "Preroll ad is start to playing", 70000);
+            ev.verifyEvent(driver,"Notification Received: adStarted", "Multi Mid Roll ad has started to play", 70000);
 
             Thread.sleep(5000);
 
             // adCompleted event verification
+            ev.verifyEvent(driver,"Notification Received: adCompleted", "Multi Mid Roll ad has completed play", 80000);
 
-            ev.verifyEvent("Notification Received: adPodCompleted", "Preroll ad is completed", 80000);
+            Thread.sleep(10000);
 
-            ev.verifyEvent("Notification Received: playCompleted", "Ooyala Preroll video has been playing completed", 90000);
+            ev.verifyEvent(driver,"Notification Received: playCompleted", "Multi Mid Roll video has completed play", 90000);
 
         }
         catch (Exception e)
