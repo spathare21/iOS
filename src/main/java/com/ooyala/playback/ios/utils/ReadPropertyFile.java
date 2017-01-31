@@ -7,6 +7,14 @@ import java.io.InputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 
+
+
+/**
+ * 
+ * @author nraman
+ * Utility to read property file
+ */
+
 public class ReadPropertyFile {
 	
 	public static Properties readPropertiesFile(String propFile) throws IOException  {

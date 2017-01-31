@@ -1,19 +1,13 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Selenium Grid Tests" >
 
+<suite name="BasicPlaybackSampleApp Test suite" >
 
-
-
-
-    <test name="BasicPlaybackSampleApp iPAd">
-        <parameter name="platformVersion" value="10.0.2" />
+    <test name="BasicPlaybackSampleApp iphone">
+        <parameter name="platformVersion" value="10.1" />
         <parameter name="deviceName" value="iPhone 6s" />
-        <parameter name="logFilePath" value="system.log" />
 
         <classes>
-            <class name="Tests.BasicSampleAppTest.BasicTestsBasicPlayback" />
-            <!--<class name="Tests.BasicSampleAppTest.DeepTestsBasicPlayback" />-->
-
+            <class name="com.ooyala.playback.ios.basicplaybacksampleapp.tests.BasicPlaybackSampleAppTests" />
         </classes>
     </test>
 
