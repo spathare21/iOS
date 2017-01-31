@@ -9,8 +9,8 @@ public class PageNotCurrentException extends RuntimeException {
 		super(message);
 	}
 
-	public PageNotCurrentException() {
-		//KEEP ME
+	public PageNotCurrentException(String message, Throwable cause) {
+		super(message, cause);
 	}
 
 
