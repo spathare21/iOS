@@ -1,33 +1,25 @@
 package com.ooyala.playback.ios;
 
 
+/**
+ * 
+ * @author nraman
+ * This class contains all the Events triggered from IOS sampleApps
+ */
 public enum IOSEvents {
 	
-	PLAYBACK_STARTED("Notification Received: playStarted", "Video Started to Play", 35000);
+	PLAYBACK_STARTED("Notification Received: playStarted");
 	
 	//TODO All other events
 
-	String eventType, consoleMessage;
-	int timeout;
+	String eventType;
 	
-	
-	IOSEvents(String eventType, String consoleMessage, int timeout) {
+	IOSEvents(String eventType) {
 		this.eventType = eventType;
-		this.consoleMessage = consoleMessage;
-		this.timeout = timeout;
 	}
 	
 	public String getEventType() {
 		return eventType;
 	}
-	
-	public String getconsoleMessage() {
-		return consoleMessage;
-	}
-	
-	public int getTimeout() {
-		return timeout;
-	}
-	
 
 }

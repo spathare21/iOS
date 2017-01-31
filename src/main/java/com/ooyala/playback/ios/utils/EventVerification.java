@@ -3,6 +3,12 @@ package com.ooyala.playback.ios.utils;
 import org.testng.Assert;
 
 
+/**
+ * 
+ * This class contains EventVerfication logic
+ *
+ */
+
 public class EventVerification {
     
     private int count ;

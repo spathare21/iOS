@@ -6,16 +6,22 @@ import java.util.Properties;
 import com.ooyala.playback.ios.utils.ReadPropertyFile;
 
 
+/**
+ * 
+ * @author nraman
+ * This class is object mapper for apps properties file
+ *
+ */
+
 public class SampleAppProperties {
 	
 	private static final String PROPERTY_FILE_PATH = "./src/test/resources/config/";
 		
 	//Default values
-	private String APP_VALUE = "app-debug.apk";
 	private String PLATFORM_NAME = "iOS";
 	private String AUTOMATION_NAME  = "XCUITest";
 
-	private String appValue;
+	private String appName;
 	private String platformName; 
 	private String platformVersion; 
 	private String appPackage;
@@ -24,7 +30,8 @@ public class SampleAppProperties {
 	private String screenMode;
 	private String appDir; 
 	private boolean showIOSLog = true;
-	
+	private String deviceName;
+	private int newCommandTimeOut = 50000;
 	
 	public String getUdid() {
 		return udid;
@@ -50,12 +57,12 @@ public class SampleAppProperties {
 		this.appDir = appDir;
 	}
 
-	public String getAppValue() {
-		return appValue;
+	public String getAppName() {
+		return appName;
 	}
 
-	public void setAppValue(String appValue) {
-		this.appValue = appValue;
+	public void setAppName(String appName) {
+		this.appName = appName;
 	}
 
 	public String getPlatformName() {
@@ -98,37 +105,45 @@ public class SampleAppProperties {
 		this.showIOSLog = showIOSLog;
 	}
 	
-	public String getAUTOMATION_NAME() {
+	public String getAutomationName() {
 		return AUTOMATION_NAME;
 	}
 
-	public void setAUTOMATION_NAME(String aUTOMATION_NAME) {
+	public void setAutomationName(String aUTOMATION_NAME) {
 		AUTOMATION_NAME = aUTOMATION_NAME;
 	}
 
 
-	
+	public String getDeviceName() {
+		return deviceName;
+	}
+
+	public void setDeviceName(String deviceName) {
+		this.deviceName = deviceName;
+	}
+
+	public int getNewCommandTimeOut() {
+		return newCommandTimeOut;
+	}
+
+	public void setNewCommandTimeOut(int newCommandTimeOut) {
+		this.newCommandTimeOut = newCommandTimeOut;
+	}
 	
 	public void loadSampleAppProperties(String propertyFileName) throws IOException {
 		
 		Properties prop = ReadPropertyFile.readPropertiesFile(PROPERTY_FILE_PATH + propertyFileName);
 		
 		setUdid(prop.getProperty("udid"));
-		setAppActivity(prop.getProperty("appActivity"));
 		setAppDir(prop.getProperty("appDir"));
-		setAppValue(
-					(prop.getProperty("appValue") == null) ? APP_VALUE : prop.getProperty("appValue"));
+		setAppName(prop.getProperty("appName"));
 		setPlatformName(
 					(prop.getProperty("platformName") == null) ? PLATFORM_NAME : prop.getProperty("platformName"));
-		setPlatformVersion(prop.getProperty("platformVersion"));
-		setAppPackage(prop.getProperty("appPackage"));
 		setScreenMode(prop.getProperty("ScreenMode"));
+		setNewCommandTimeOut(Integer.parseInt(prop.getProperty("newCommandTimeout")));
 		
 	}
 
-
-
-	
 
 
 	
