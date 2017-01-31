@@ -44,7 +44,7 @@ public abstract class SampleAppBasePage {
 		try{
 			waitForPresence(pageIdentifier);
 		} catch (Exception e) {
-			throw new PageNotCurrentException(TestUtils.getCallerClassNameFromThread() + " is not the current app");
+			throw new PageNotCurrentException(TestUtils.getCallerClassNameFromThread() + " is not the current app", e);
 		}
 	}
 	
