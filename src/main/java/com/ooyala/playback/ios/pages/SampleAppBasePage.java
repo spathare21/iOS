@@ -8,7 +8,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import com.ooyala.playback.ios.IOSEvents;
 import com.ooyala.playback.ios.exceptions.PageNotCurrentException;
+import com.ooyala.playback.ios.utils.EventVerification;
 import com.ooyala.playback.ios.utils.TestUtils;
 import com.ooyala.playback.ios.utils.WebDriverFactory;
 
@@ -30,10 +32,15 @@ import io.appium.java_client.ios.IOSDriver;
 public abstract class SampleAppBasePage {
 
 	IOSDriver driver = WebDriverFactory.getIOSDriver();
+	EventVerification ev = null;
 	
 	
 	//Locators
 	private final By QA_MODE_SWITCH = By.xpath("//XCUIElementTypeSwitch[1]"); 
+	private final By NOTIFICATION_AREA = By.xpath("//XCUIElementTypeTextView[1]");
+	private final By LOADING_SPINNER = By.id("In progress");
+	private final By TOOL_BAR = By.xpath("//XCUIElementTypeToolbar[1]");
+	private final By PLAY_PAUSE_BUTTON = By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeButton[1]");
 	
 	/**
 	 * 
@@ -51,6 +58,11 @@ public abstract class SampleAppBasePage {
     public void waitForPresence(By locator) {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+    
+    public void waitForNotPresence(By locator) {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
     }
  
     public void clickElement(By locator) {
@@ -81,6 +93,62 @@ public abstract class SampleAppBasePage {
     	return Boolean.parseBoolean(driver.findElement(QA_MODE_SWITCH).getAttribute("value"));
     }
     
+    public SampleAppBasePage waitForNotificationAreaToLoad() {
+    	waitForPresence(NOTIFICATION_AREA);
+    	return this;
+    }
+    
+    /**
+     * 
+     * @param event
+     * @param consoleMessage
+     * @param timeout (in Milliseconds)
+     * @return
+     */
+    public SampleAppBasePage verifyEvent(IOSEvents event, String consoleMessage, int timeout) {
+    	if (ev == null)
+    		ev= new EventVerification();
+    	ev.verifyEvent(getNotificationEvents(), event.getEvent(), consoleMessage, timeout);
+    	return this;
+    }
+    
+    public String getNotificationEvents() {
+    	return driver.findElement(NOTIFICATION_AREA).getText();
+    }
+    
+    
+    public SampleAppBasePage handleLoadingSpinner() {
+    	waitForNotPresence(LOADING_SPINNER);
+    	return this;
+    }
+    
+    
+    /**
+     * this method is to tap the player to make play/pause button visible.
+     */
+    public SampleAppBasePage tapScreenIfRequired() {
+    	if (!isElementPresent(TOOL_BAR))
+    		tapScreen();
+    	return this;
+    }
+    
+    public SampleAppBasePage tapScreen() {
+    	List<WebElement> elements = driver.findElements(By.xpath("//XCUIElementTypeOther"));
+    	elements.get(6).click();
+    	return this;
+    }
+    
+    public SampleAppBasePage playVideo() {
+    	driver.findElement(PLAY_PAUSE_BUTTON);
+    	return this;
+    }
+    
+    public SampleAppBasePage pauseVideo() {
+    	driver.findElement(PLAY_PAUSE_BUTTON);
+    	return this;
+    }
+    
+
     
     
 
