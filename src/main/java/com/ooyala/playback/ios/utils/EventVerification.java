@@ -1,5 +1,6 @@
 package com.ooyala.playback.ios.utils;
 
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 
 
@@ -10,21 +11,19 @@ import org.testng.Assert;
  */
 
 public class EventVerification {
+	
+	final static Logger logger = Logger.getLogger(TestUtils.class);
     
-    private int count ;
+    int count = 0;
 
-    public EventVerification(){
-        count = 0;
-    }
-
-    public void verifyEvent(String eventType,String consoleMessage,int timeout){
+    public void verifyEvent(String notificationEvents, String eventToBeVerified, String consoleMessage, int timeout){
          
         int returncount = 0;
         boolean status=false;
-        long startTime = System.currentTimeMillis(); //fetch starting time
+        long startTime = System.currentTimeMillis();
         
-        while(!status && (System.currentTimeMillis()-startTime)<timeout) {
-        	// TODO >>>>  returncount = AndroidUtils.parseEventFile(eventType, count);
+        while(!status && (System.currentTimeMillis() - startTime) < timeout) {
+        	TestUtils.verifyNotificationEventPresence(notificationEvents, eventToBeVerified, returncount);
 
             if (returncount == -1)
                 status = false;
@@ -34,13 +33,10 @@ public class EventVerification {
                 count = returncount;
             }            
 
-            if (status == true) {
-                System.out.println(consoleMessage);
-                System.out.println("\n");
-            }
+            if (status == true) 
+            	logger.info(consoleMessage);
         }
-        if(!status) {
-            Assert.assertTrue(status, "verifyEvent failed !!!!");
-        }
+        if(!status) 
+            Assert.fail("VerifyEvent failed !!!!");
     }
 }

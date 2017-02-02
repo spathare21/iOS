@@ -15,5 +15,7 @@ public class BasicPlaybackSampleAppPage extends SampleAppBasePage {
 		assertCurrentPage(HLS);
 		return this;
 	}
+	
+	
 
 }
