@@ -1,9 +1,13 @@
 package com.ooyala.playback.ios;
 
 
+import com.ooyala.playback.ios.pages.SampleAppBasePage;
+import com.ooyala.playback.ios.utils.CommandLineUtils;
+import com.ooyala.playback.ios.utils.TestUtils;
 import com.ooyala.playback.ios.utils.WebDriverFactory;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.apache.log4j.net.SyslogAppender;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.logging.LogEntry;
@@ -12,8 +16,7 @@ import org.testng.IHookable;
 import org.testng.ITestResult;
 import ru.yandex.qatools.allure.annotations.*;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.time.Instant;
 import java.util.List;
 
@@ -55,6 +58,8 @@ public class IOSBaseTest implements IHookable {
         try {
             screenshotattach(iTestResult.getMethod().getMethodName());
             sdkVersion();
+            String logpath = storeLogFile(iTestResult.getMethod().getMethodName(), TestUtils.parseNotificationEvents(new SampleAppBasePage().getNotificationEvents()));
+            appendLogToAllure(logpath);
         } catch (Exception e) {
             logger.error("Here is the error",e);
         }
@@ -76,5 +81,38 @@ public class IOSBaseTest implements IHookable {
             }
         }
     }
+
+
+    public static String storeLogFile(String filename, String lines[]) throws Exception {
+        String logFileName = filename + "_" + Instant.now().toEpochMilli();
+        String currentDir = System.getProperty("user.dir");
+        String logspath = currentDir + "/res/snapshot/"+logFileName;
+
+        File file = new File(logFileName);
+        try {
+            FileWriter fileWriter = new FileWriter(file);
+            for(int i=0; i<lines.length; i++) {
+                fileWriter.write(lines[i]);
+            }
+        }catch(IOException e){
+            logger.error(e);
+        }
+        return logspath;
+    }
+
+    @Attachment(value = "{0}", type = "text/plain")
+    public static byte[] appendLogToAllure(String logspath) throws Exception {
+        try {
+            String filename = logspath;
+            File logfilename = new File(filename);
+            logger.debug("attach loggile "+ logfilename + " to allure");
+            Thread.sleep(5000);
+            return FileUtils.readFileToByteArray(logfilename);
+        } catch (IOException ignored) {
+            return null;
+        }
+    }
+
+
 
 }

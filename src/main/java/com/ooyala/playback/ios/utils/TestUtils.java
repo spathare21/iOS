@@ -33,12 +33,13 @@ public class TestUtils {
         return count;
     }
 
+
     public static int verifyNotificationEventPresence(String notificationEvents, String eventToBeVerified, int count) {
         try {
         	
         	String lines[] = parseNotificationEvents(notificationEvents);
             for (String line : lines){
-                
+
                 if(line.contains("state: ERROR")) {
                 	logger.error("APP CRASHED !!!!! ");
                     Assert.fail("App is crashed during playback");
@@ -60,15 +61,11 @@ public class TestUtils {
 
         return -1;
     }
-    
-    
+
     public static String[] parseNotificationEvents(String notificationEvents) {
     	String[] lines = notificationEvents.split("::::::::::");
     	logger.info("Splitted notification events >> " + lines);
     	return lines;
     	
     }
-
-
-
 }

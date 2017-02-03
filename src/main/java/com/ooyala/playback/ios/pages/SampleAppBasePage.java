@@ -13,6 +13,8 @@ import com.ooyala.playback.ios.exceptions.PageNotCurrentException;
 import com.ooyala.playback.ios.utils.EventVerification;
 import com.ooyala.playback.ios.utils.TestUtils;
 import com.ooyala.playback.ios.utils.WebDriverFactory;
+import static org.assertj.core.api.Assertions.*;
+
 
 import io.appium.java_client.ios.IOSDriver;
 
@@ -29,7 +31,7 @@ import io.appium.java_client.ios.IOSDriver;
 
 
 @SuppressWarnings({"unchecked", "rawtypes"})
-public abstract class SampleAppBasePage {
+public class SampleAppBasePage {
 
 	IOSDriver driver = WebDriverFactory.getIOSDriver();
 	EventVerification ev = null;
@@ -86,6 +88,7 @@ public abstract class SampleAppBasePage {
     		clickElement(QA_MODE_SWITCH);
     	
     	Assert.assertTrue(isQAModeEnabled(), "QA Mode is not enabled. Hence failing test");
+
     	return this;
     }
     
@@ -121,8 +124,7 @@ public abstract class SampleAppBasePage {
     	waitForNotPresence(LOADING_SPINNER);
     	return this;
     }
-    
-    
+
     /**
      * this method is to tap the player to make play/pause button visible.
      */
