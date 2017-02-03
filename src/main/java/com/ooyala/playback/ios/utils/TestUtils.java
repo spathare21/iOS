@@ -64,7 +64,6 @@ public class TestUtils {
     
     public static String[] parseNotificationEvents(String notificationEvents) {
     	String[] lines = notificationEvents.split("::::::::::");
-    	logger.info("Splitted notification events >> " + lines);
     	return lines;
     	
     }

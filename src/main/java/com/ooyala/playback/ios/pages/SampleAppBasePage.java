@@ -2,6 +2,7 @@ package com.ooyala.playback.ios.pages;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -10,7 +11,6 @@ import org.testng.Assert;
 
 import com.ooyala.playback.ios.IOSEvents;
 import com.ooyala.playback.ios.exceptions.PageNotCurrentException;
-import com.ooyala.playback.ios.utils.EventVerification;
 import com.ooyala.playback.ios.utils.TestUtils;
 import com.ooyala.playback.ios.utils.WebDriverFactory;
 
@@ -31,14 +31,18 @@ import io.appium.java_client.ios.IOSDriver;
 @SuppressWarnings({"unchecked", "rawtypes"})
 public abstract class SampleAppBasePage {
 
+	final static Logger logger = Logger.getLogger(SampleAppBasePage.class);
+	
 	IOSDriver driver = WebDriverFactory.getIOSDriver();
-	EventVerification ev = null;
+    
+	int eventVerificationCount = 0;
+
 	
 	
 	//Locators
 	private final By QA_MODE_SWITCH = By.xpath("//XCUIElementTypeSwitch[1]"); 
 	private final By NOTIFICATION_AREA = By.xpath("//XCUIElementTypeTextView[1]");
-	private final By LOADING_SPINNER = By.id("In progress");
+	private final By LOADING_SPINNER = By.xpath("//XCUIElementTypeActivityIndicator[1]");
 	private final By TOOL_BAR = By.xpath("//XCUIElementTypeToolbar[1]");
 	private final By PLAY_PAUSE_BUTTON = By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeButton[1]");
 	
@@ -106,23 +110,23 @@ public abstract class SampleAppBasePage {
      * @return
      */
     public SampleAppBasePage verifyEvent(IOSEvents event, String consoleMessage, int timeout) {
-    	if (ev == null)
-    		ev= new EventVerification();
-    	ev.verifyEvent(getNotificationEvents(), event.getEvent(), consoleMessage, timeout);
+    	verifyEvent(event.getEvent(), consoleMessage, timeout);
     	return this;
     }
     
     public String getNotificationEvents() {
-    	return driver.findElement(NOTIFICATION_AREA).getText();
+    	int counter = 0;
+    	int timeout = 10;
+    	String notifications = null;
+    	while (counter < timeout) {
+    		notifications = driver.findElement(NOTIFICATION_AREA).getText();
+    		if (notifications != null)
+    			return notifications;
+    		counter ++;
+    	}
+    	throw new NullPointerException("Notification events is NULL !!!");
     }
-    
-    
-    public SampleAppBasePage handleLoadingSpinner() {
-    	waitForNotPresence(LOADING_SPINNER);
-    	return this;
-    }
-    
-    
+
     /**
      * this method is to tap the player to make play/pause button visible.
      */
@@ -139,17 +143,72 @@ public abstract class SampleAppBasePage {
     }
     
     public SampleAppBasePage playVideo() {
-    	driver.findElement(PLAY_PAUSE_BUTTON);
+    	tapScreenIfRequired();
+    	driver.findElement(PLAY_PAUSE_BUTTON).click();
     	return this;
     }
     
     public SampleAppBasePage pauseVideo() {
-    	driver.findElement(PLAY_PAUSE_BUTTON);
+    	tapScreenIfRequired();
+    	driver.findElement(PLAY_PAUSE_BUTTON).click();
     	return this;
     }
     
-
     
+    public SampleAppBasePage handleLoadingSpinner() {
+        int i = 0;
+        int timeOut = 20;
+        
+        try {
+        	waitForPresence(LOADING_SPINNER);
+        	while (true) {
+	        	driver.findElement(LOADING_SPINNER);
+	            if (i < timeOut){
+	                logger.info("Handling Loading Spinner .... ");
+	                Thread.sleep(1000);
+	                i++;
+	            } else {
+	            	logger.error("Loading spinner occured more than " + i + " seconds");
+	                return this;
+	            }
+        	}
+            
+        } catch (Exception e) {
+        	logger.error("Loading spinner not present !!!");
+        }
+         return this;
+    }
+
+    public void verifyEvent(String eventToBeVerified, String consoleMessage, int timeout){
+         
+        int returncount = 0;
+        boolean status = false;
+        long startTime = System.currentTimeMillis();
+        
+
+        while((System.currentTimeMillis() - startTime) < timeout) {
+        	logger.info("Waiting for notification >>>> : " + eventToBeVerified);
+        	String notifiationEvents = getNotificationEvents();
+            returncount = TestUtils.verifyNotificationEventPresence(notifiationEvents, eventToBeVerified, eventVerificationCount);
+
+            if (returncount == -1)
+                status = false;
+            
+            else {
+                status = true;
+                eventVerificationCount = returncount;
+            }            
+
+            if (status == true) {
+            	logger.info(consoleMessage);
+            	return;
+            }
+        }
+        if(!status) {
+        	logger.error("ACTUAL notification : "  + getNotificationEvents());
+            Assert.fail("Event not found !!!. Expected Event : " + eventToBeVerified);
+        }
+    }
     
 
 }

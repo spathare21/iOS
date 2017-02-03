@@ -44,16 +44,11 @@ public class BasicTests extends IOSBaseTest {
     							.waitForNotificationAreaToLoad()
     							.handleLoadingSpinner()
     							.verifyEvent(IOSEvents.PLAYBACK_STARTED, "HLS video has started to play", 25000)
-    							.tapScreenIfRequired()
     							.pauseVideo()
     							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "HLS video has been paused", 25000)
     							.playVideo()
     							.verifyEvent(IOSEvents.PLAYBACK_RESUMED, "HLS Video has resumed to playing state from paused state", 25000)
     							.verifyEvent(IOSEvents.PLAYBACK_COMPLETED, "HLS video has completed playing", 90000);
-    							
-    							
-    							
-    							
     	
     }
 
