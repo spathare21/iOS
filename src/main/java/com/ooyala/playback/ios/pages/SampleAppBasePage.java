@@ -13,6 +13,8 @@ import com.ooyala.playback.ios.IOSEvents;
 import com.ooyala.playback.ios.exceptions.PageNotCurrentException;
 import com.ooyala.playback.ios.utils.TestUtils;
 import com.ooyala.playback.ios.utils.WebDriverFactory;
+import static org.assertj.core.api.Assertions.*;
+
 
 import io.appium.java_client.ios.IOSDriver;
 
@@ -29,7 +31,7 @@ import io.appium.java_client.ios.IOSDriver;
 
 
 @SuppressWarnings({"unchecked", "rawtypes"})
-public abstract class SampleAppBasePage {
+public class SampleAppBasePage {
 
 	final static Logger logger = Logger.getLogger(SampleAppBasePage.class);
 	
@@ -90,6 +92,7 @@ public abstract class SampleAppBasePage {
     		clickElement(QA_MODE_SWITCH);
     	
     	Assert.assertTrue(isQAModeEnabled(), "QA Mode is not enabled. Hence failing test");
+
     	return this;
     }
     
