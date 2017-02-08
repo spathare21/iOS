@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -134,8 +135,10 @@ public class SampleAppBasePage {
      * this method is to tap the player to make play/pause button visible.
      */
     public SampleAppBasePage tapScreenIfRequired() {
-    	if (!isElementPresent(TOOL_BAR))
+    	if (!isElementPresent(TOOL_BAR)) {
     		tapScreen();
+    		logger.info("Screen tapped");
+    	}
     	return this;
     }
     
@@ -147,13 +150,13 @@ public class SampleAppBasePage {
     
     public SampleAppBasePage playVideo() {
     	tapScreenIfRequired();
-    	driver.findElement(PLAY_PAUSE_BUTTON).click();
+    	waitAndFindElement(PLAY_PAUSE_BUTTON).click();
     	return this;
     }
     
     public SampleAppBasePage pauseVideo() {
     	tapScreenIfRequired();
-    	driver.findElement(PLAY_PAUSE_BUTTON).click();
+    	waitAndFindElement(PLAY_PAUSE_BUTTON).click();
     	return this;
     }
     
@@ -219,30 +222,36 @@ public class SampleAppBasePage {
     }
 
     
-    public SampleAppBasePage seekVideoBack() {
+    public SampleAppBasePage seekVideoBack() throws InterruptedException {
     	int startx = getSliderPosition();
     	Element seekbar =  getSeekBarPosition();
         logger.info("Seeking back -------------------------  ");
+        tapScreenIfRequired();
         driver.swipe((startx + 1), seekbar.getYposition(), (startx + 1) - 25, seekbar.getYposition() + seekbar.getYposition(), 3);
         return this;
     }
     
-    public SampleAppBasePage seekVideoForward() {
+    public SampleAppBasePage seekVideoForward() throws InterruptedException {
     	int startx = getSliderPosition();
     	Element seekbar =  getSeekBarPosition();
         logger.info("Seeking forward -------------------------  ");
-        driver.swipe((startx + 1), seekbar.getYposition(), (startx + 1) + 50, seekbar.getYposition() + seekbar.getYposition(), 3);
+        tapScreenIfRequired();
+        driver.swipe((startx + 1), seekbar.getYposition(), (startx + 1) + (seekbar.getWidth() - 25), seekbar.getYposition() + seekbar.getYposition(), 3);
         return this;
     }
 
-    public Element getSeekBarPosition() {
+    public Element getSeekBarPosition() throws InterruptedException {
+    	Thread.sleep(3000);
     	tapScreenIfRequired();
-    	WebElement seekbarElement = driver.findElement(SEEK_BAR);
+    	Point seekbarElementPos = driver.findElement(SEEK_BAR).getLocation();
     	Element seekbar = new Element();
-    	seekbar.setStartXPosition(seekbarElement.getLocation().getX());
-    	seekbar.setYposition(seekbarElement.getLocation().getY());
-    	seekbar.setWidth(seekbarElement.getSize().getWidth());
+    	seekbar.setStartXPosition(seekbarElementPos.getX());
+    	seekbar.setYposition(seekbarElementPos.getY());
+    	tapScreenIfRequired();
+    	seekbar.setWidth(driver.findElement(SEEK_BAR).getSize().getWidth());
     	seekbar.setEndXPosition(seekbar.getWidth() + seekbar.getStartXPosition());
+    	logger.info("SeekBarPosition : StartXPosition > " + seekbar.getStartXPosition() + ", "
+    			     + " EndXPosition > " + seekbar.getEndXPosition() + ", Width > " + seekbar.getWidth() + " Yposition > " + seekbar.getYposition());
     	return seekbar;
 																				
     }
@@ -250,6 +259,22 @@ public class SampleAppBasePage {
     public int getSliderPosition() {
     	tapScreenIfRequired();
     	return driver.findElement(SLIDER).getLocation().getX();
+    }
+    
+    public WebElement waitAndFindElement(By locator) {
+    	waitForPresence(locator);
+    	logger.info("Wait for element succeeded");
+    	return driver.findElement(locator);
+    }
+    
+    public SampleAppBasePage letVideoPlayForSec(int sec) throws InterruptedException {
+    	int count = 1;
+    	while(count < sec) {
+    		Thread.sleep(1000);
+    		count++;
+    	}
+    	
+    	return this;
     }
     
 	@SuppressWarnings("unused")
