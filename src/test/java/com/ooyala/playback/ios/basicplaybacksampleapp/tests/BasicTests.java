@@ -10,7 +10,6 @@ import com.ooyala.playback.ios.IOSEvents;
 import com.ooyala.playback.ios.SampleAppProperties;
 import com.ooyala.playback.ios.pages.BasicPlaybackSampleAppPage;
 import com.ooyala.playback.ios.utils.WebDriverFactory;
-import com.sun.jna.platform.win32.Advapi32Util.EventLogType;
 
 
 public class BasicTests extends IOSBaseTest {
@@ -40,15 +39,102 @@ public class BasicTests extends IOSBaseTest {
     public  void HLS() throws Exception {
     	BasicPlaybackSampleAppPage basicPlaybackSampleAppPage = new BasicPlaybackSampleAppPage();
     	basicPlaybackSampleAppPage
-    							.selectHLS()
+    							.selectVideo(BasicPlaybackSampleAppPage.HLS)
     							.waitForNotificationAreaToLoad()
     							.handleLoadingSpinner()
     							.verifyEvent(IOSEvents.PLAYBACK_STARTED, "HLS video has started to play", 25000)
     							.pauseVideo()
     							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "HLS video has been paused", 25000)
+    							.seekVideo()
     							.playVideo()
     							.verifyEvent(IOSEvents.PLAYBACK_RESUMED, "HLS Video has resumed to playing state from paused state", 25000)
     							.verifyEvent(IOSEvents.PLAYBACK_COMPLETED, "HLS video has completed playing", 90000);
+    	
+    }
+    
+    @Test
+    public  void MP4() throws Exception {
+    	BasicPlaybackSampleAppPage basicPlaybackSampleAppPage = new BasicPlaybackSampleAppPage();
+    	basicPlaybackSampleAppPage
+    							.selectVideo(BasicPlaybackSampleAppPage.MP4)
+    							.waitForNotificationAreaToLoad()
+    							.handleLoadingSpinner()
+    							.verifyEvent(IOSEvents.PLAYBACK_STARTED, "MP4 video has started to play", 25000)
+    							.pauseVideo()
+    							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "MP4 video has been paused", 25000)
+    							.playVideo()
+    							.verifyEvent(IOSEvents.PLAYBACK_RESUMED, "MP4 Video has resumed to playing state from paused state", 25000)
+    							.verifyEvent(IOSEvents.PLAYBACK_COMPLETED, "MP4 video has completed playing", 90000);
+    	
+    }
+    
+    @Test
+    public  void AspectRatio() throws Exception {
+    	BasicPlaybackSampleAppPage basicPlaybackSampleAppPage = new BasicPlaybackSampleAppPage();
+    	basicPlaybackSampleAppPage
+    							.selectVideo(BasicPlaybackSampleAppPage.ASPECT_RATIO)
+    							.waitForNotificationAreaToLoad()
+    							.handleLoadingSpinner()
+    							.verifyEvent(IOSEvents.PLAYBACK_STARTED, "ASPECT_RATIO video has started to play", 25000)
+    							.pauseVideo()
+    							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "ASPECT_RATIO video has been paused", 25000)
+    							.playVideo()
+    							.verifyEvent(IOSEvents.PLAYBACK_RESUMED, "ASPECT_RATIO Video has resumed to playing state from paused state", 25000)
+    							.verifyEvent(IOSEvents.PLAYBACK_COMPLETED, "ASPECT_RATIO video has completed playing", 90000);
+    	
+    }
+    
+    /**
+     * PAUSE step is removed in this Testcase as the video length is to short
+     */
+    @Test
+    public  void VAST_AD_PreRoll() throws Exception {
+    	BasicPlaybackSampleAppPage basicPlaybackSampleAppPage = new BasicPlaybackSampleAppPage();
+    	basicPlaybackSampleAppPage
+    							.selectVideo(BasicPlaybackSampleAppPage.VAST_AD_PRE_ROLL)
+    							.waitForNotificationAreaToLoad()
+    							.handleLoadingSpinner()
+    							.verifyEvent(IOSEvents.AD_STARTED, "VAST_AD_PreRoll ad has started playing", 25000)
+    							.verifyEvent(IOSEvents.AD_COMPLETED, "VAST_AD_PreRoll ad has complated playing", 25000)
+    							.verifyEvent(IOSEvents.PLAYBACK_STARTED, "VAST_AD_PreRoll video has started to play", 25000)
+    							.verifyEvent(IOSEvents.PLAYBACK_RESUMED, "VAST_AD_PreRoll Video has resumed to playing state from paused state", 25000)
+    							.verifyEvent(IOSEvents.PLAYBACK_COMPLETED, "VAST_AD_PreRoll video has completed playing", 90000);
+    	
+    }
+    
+    @Test
+    public  void VAST_AD_MidRoll() throws Exception {
+    	BasicPlaybackSampleAppPage basicPlaybackSampleAppPage = new BasicPlaybackSampleAppPage();
+    	basicPlaybackSampleAppPage
+    							.selectVideo(BasicPlaybackSampleAppPage.VAST_AD_MID_ROLL)
+    							.waitForNotificationAreaToLoad()
+    							.handleLoadingSpinner()
+    							.verifyEvent(IOSEvents.PLAYBACK_STARTED, "VAST_AD_MidRoll video has started to play", 25000)
+    							.pauseVideo()
+    							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "VAST_AD_MidRoll video has been paused", 25000)
+    							.playVideo()
+    							.verifyEvent(IOSEvents.PLAYBACK_RESUMED, "VAST_AD_MidRoll Video has resumed to playing state from paused state", 25000)
+    							.verifyEvent(IOSEvents.AD_STARTED, "VAST_AD_MidRoll ad has started playing", 25000)
+    							.verifyEvent(IOSEvents.AD_COMPLETED, "VAST_AD_MidRoll ad has complated playing", 25000)
+    							.verifyEvent(IOSEvents.PLAYBACK_COMPLETED, "VAST_AD_MidRoll video has completed playing", 90000);
+    	
+    }
+    
+    @Test
+    public  void VAST_AD_PostRoll() throws Exception {
+    	BasicPlaybackSampleAppPage basicPlaybackSampleAppPage = new BasicPlaybackSampleAppPage();
+    	basicPlaybackSampleAppPage
+    							.selectVideo(BasicPlaybackSampleAppPage.VAST_AD_POST_ROLL)
+    							.waitForNotificationAreaToLoad()
+    							.handleLoadingSpinner()
+    							.verifyEvent(IOSEvents.PLAYBACK_STARTED, "VAST_AD_PostRoll video has started to play", 25000)
+    							.pauseVideo()
+    							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "VAST_AD_PostRoll video has been paused", 25000)
+    							.playVideo()
+    							.verifyEvent(IOSEvents.PLAYBACK_RESUMED, "VAST_AD_PostRoll Video has resumed to playing state from paused state", 25000)
+    							.verifyEvent(IOSEvents.AD_STARTED, "VAST_AD_PostRoll ad has started playing", 25000)
+    							.verifyEvent(IOSEvents.AD_COMPLETED, "VAST_AD_PostRoll ad has complated playing", 25000)
+    							.verifyEvent(IOSEvents.PLAYBACK_COMPLETED, "VAST_AD_PostRoll video has completed playing", 90000);
     	
     }
 

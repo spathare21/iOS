@@ -13,8 +13,6 @@ import com.ooyala.playback.ios.IOSEvents;
 import com.ooyala.playback.ios.exceptions.PageNotCurrentException;
 import com.ooyala.playback.ios.utils.TestUtils;
 import com.ooyala.playback.ios.utils.WebDriverFactory;
-import static org.assertj.core.api.Assertions.*;
-
 
 import io.appium.java_client.ios.IOSDriver;
 
@@ -41,6 +39,7 @@ public class SampleAppBasePage {
 
 	
 	
+
 	//Locators
 	private final By QA_MODE_SWITCH = By.xpath("//XCUIElementTypeSwitch[1]"); 
 	private final By NOTIFICATION_AREA = By.xpath("//XCUIElementTypeTextView[1]");
@@ -92,7 +91,6 @@ public class SampleAppBasePage {
     		clickElement(QA_MODE_SWITCH);
     	
     	Assert.assertTrue(isQAModeEnabled(), "QA Mode is not enabled. Hence failing test");
-
     	return this;
     }
     
@@ -213,5 +211,43 @@ public class SampleAppBasePage {
         }
     }
     
+    public SampleAppBasePage selectVideo(By video) {
+    	clickElement(video);
+    	return this;
+    }
+    
+    public SampleAppBasePage seekVideo() {
+    	seekVideo(0 ,0);
+    	return this;
+    }
+    
+    public SampleAppBasePage seekVideo(int widthOffSet1, int widthOffSet2) {
+    	int [] seekBarPos =  getSeekbarPosition();
+        System.out.println(" Seeking -------------------------  ");
+        driver.swipe(85, 342, 85+100, 342+342, 3);
+        return this;
+    }
+
+    public int[] getSeekbarPosition() {
+    	//List<WebElement> seekBarElements = driver.findElements(By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[3]"))
+    	WebElement seekBarField = driver.findElement(By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeOther[1]/XCUIElementTypeSlider[1]"));
+    	int[] seekBarPos = new int[2];
+    	seekBarPos[0] = seekBarField.getLocation().getX();  //Width
+    	seekBarPos[1] = seekBarField.getLocation().getY(); //height
+        System.out.println(" Dimensions bounds value is :-" + seekBarPos[0]);
+        System.out.println(" Dimensions bounds value is :-" + seekBarPos[1]);
+        System.out.println(" Dimensions bounds value is :-"+seekBarField.getSize().getHeight());
+        System.out.println(" Dimensions bounds value is :-"+seekBarField.getSize().getWidth());
+        return  seekBarPos;
+        
+    }
+    
+    public int getSlidingBarWidth() {
+    	return driver.findElement(By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[3]")).getSize().getWidth();
+    }
+    
+    public int getSliderPosition() {
+    	return driver.findElement(By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeOther[1]/XCUIElementTypeImage[1]")).getLocation().getX();
+    }
 
 }
