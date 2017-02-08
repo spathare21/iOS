@@ -46,6 +46,8 @@ public class SampleAppBasePage {
 	private final By LOADING_SPINNER = By.xpath("//XCUIElementTypeActivityIndicator[1]");
 	private final By TOOL_BAR = By.xpath("//XCUIElementTypeToolbar[1]");
 	private final By PLAY_PAUSE_BUTTON = By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeButton[1]");
+	private final By SEEK_BAR = By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[3]");
+	private final By SLIDER = By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeOther[1]/XCUIElementTypeImage[1]");
 	
 	/**
 	 * 
@@ -215,39 +217,91 @@ public class SampleAppBasePage {
     	clickElement(video);
     	return this;
     }
+
     
-    public SampleAppBasePage seekVideo() {
-    	seekVideo(0 ,0);
-    	return this;
+    public SampleAppBasePage seekVideoBack() {
+    	int startx = getSliderPosition();
+    	Element seekbar =  getSeekBarPosition();
+        logger.info("Seeking back -------------------------  ");
+        driver.swipe((startx + 1), seekbar.getYposition(), (startx + 1) - 25, seekbar.getYposition() + seekbar.getYposition(), 3);
+        return this;
     }
     
-    public SampleAppBasePage seekVideo(int widthOffSet1, int widthOffSet2) {
-    	int [] seekBarPos =  getSeekbarPosition();
-        System.out.println(" Seeking -------------------------  ");
-        driver.swipe(85, 342, 85+100, 342+342, 3);
+    public SampleAppBasePage seekVideoForward() {
+    	int startx = getSliderPosition();
+    	Element seekbar =  getSeekBarPosition();
+        logger.info("Seeking forward -------------------------  ");
+        driver.swipe((startx + 1), seekbar.getYposition(), (startx + 1) + 50, seekbar.getYposition() + seekbar.getYposition(), 3);
         return this;
     }
 
-    public int[] getSeekbarPosition() {
-    	//List<WebElement> seekBarElements = driver.findElements(By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[3]"))
-    	WebElement seekBarField = driver.findElement(By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeOther[1]/XCUIElementTypeSlider[1]"));
-    	int[] seekBarPos = new int[2];
-    	seekBarPos[0] = seekBarField.getLocation().getX();  //Width
-    	seekBarPos[1] = seekBarField.getLocation().getY(); //height
-        System.out.println(" Dimensions bounds value is :-" + seekBarPos[0]);
-        System.out.println(" Dimensions bounds value is :-" + seekBarPos[1]);
-        System.out.println(" Dimensions bounds value is :-"+seekBarField.getSize().getHeight());
-        System.out.println(" Dimensions bounds value is :-"+seekBarField.getSize().getWidth());
-        return  seekBarPos;
-        
-    }
-    
-    public int getSlidingBarWidth() {
-    	return driver.findElement(By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[3]")).getSize().getWidth();
+    public Element getSeekBarPosition() {
+    	tapScreenIfRequired();
+    	WebElement seekbarElement = driver.findElement(SEEK_BAR);
+    	Element seekbar = new Element();
+    	seekbar.setStartXPosition(seekbarElement.getLocation().getX());
+    	seekbar.setYposition(seekbarElement.getLocation().getY());
+    	seekbar.setWidth(seekbarElement.getSize().getWidth());
+    	seekbar.setEndXPosition(seekbar.getWidth() + seekbar.getStartXPosition());
+    	return seekbar;
+																				
     }
     
     public int getSliderPosition() {
-    	return driver.findElement(By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeOther[1]/XCUIElementTypeImage[1]")).getLocation().getX();
+    	tapScreenIfRequired();
+    	return driver.findElement(SLIDER).getLocation().getX();
+    }
+    
+	@SuppressWarnings("unused")
+    private class Element {
+    	private int startXPosition;
+    	private int endXPosition;
+		private int yPosition;
+		private int width;
+		int height;
+
+		public int getYposition() {
+			return yPosition;
+		}
+
+		public void setYposition(int yPosition) {
+			this.yPosition = yPosition;
+		}
+
+		public int getWidth() {
+			return width;
+		}
+
+		public void setWidth(int width) {
+			this.width = width;
+		}
+
+		public int getStartXPosition() {
+			return startXPosition;
+		}
+
+		public void setStartXPosition(int xPosition) {
+			this.startXPosition = xPosition;
+		}
+		
+
+		public int getEndXPosition() {
+			return endXPosition;
+		}
+
+		public void setEndXPosition(int xPosition) {
+			this.endXPosition = xPosition;
+		}
+
+		public int getHeight() {
+			return height;
+		}
+
+		public void setHeight(int height) {
+			this.height = height;
+		}
+    	
+    	
     }
 
 }

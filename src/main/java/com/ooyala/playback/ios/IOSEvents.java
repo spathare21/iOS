@@ -14,7 +14,10 @@ public enum IOSEvents {
 	PLAYBACK_COMPLETED("Notification Received: playCompleted"),
 	
 	AD_STARTED("Notification Received: adStarted"),
-	AD_COMPLETED("Notification Received: adCompleted");
+	AD_COMPLETED("Notification Received: adCompleted"),
+	
+	SEEK_STARTED("Notification Received: seekStarted"),
+	SEEK_COMPLETED("Notification Received: seekCompleted");
 	
 	
 	//TODO All other events
