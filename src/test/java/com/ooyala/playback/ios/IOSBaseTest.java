@@ -14,9 +14,12 @@ import org.openqa.selenium.logging.LogEntry;
 import org.testng.IHookCallBack;
 import org.testng.IHookable;
 import org.testng.ITestResult;
+import org.testng.annotations.BeforeMethod;
+
 import ru.yandex.qatools.allure.annotations.*;
 
 import java.io.*;
+import java.lang.reflect.Method;
 import java.time.Instant;
 import java.util.List;
 
@@ -111,6 +114,11 @@ public class IOSBaseTest implements IHookable {
         } catch (IOException ignored) {
             return null;
         }
+    }
+    
+    @BeforeMethod(alwaysRun=true)
+    public void beforeMethod(Method method) {
+    	logger.info(" >>>>>>>>> Executing Test case : " + method.getName() + ">>>>>>>>>>");
     }
 
 

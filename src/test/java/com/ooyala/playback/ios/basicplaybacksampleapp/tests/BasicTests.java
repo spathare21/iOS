@@ -1,5 +1,7 @@
 package com.ooyala.playback.ios.basicplaybacksampleapp.tests;
 
+import java.lang.reflect.Method;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
@@ -28,7 +30,7 @@ public class BasicTests extends IOSBaseTest {
     	
     }
     
-    @BeforeMethod
+    @BeforeMethod(alwaysRun=true)
     public void beforeMethod() {
     	WebDriverFactory.getIOSDriver().launchApp();
     	new BasicPlaybackSampleAppPage().enableQAMode();
@@ -46,7 +48,7 @@ public class BasicTests extends IOSBaseTest {
     							.letVideoPlayForSec(3)
     							.pauseVideo()
     							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "HLS video has been paused", 25000)
-    							.seekVideoBack()
+    							.seekVideoForward()
     							.verifyEvent(IOSEvents.SEEK_STARTED, "Seek video started", 10000)
     							.verifyEvent(IOSEvents.SEEK_COMPLETED, "Seek video completed", 10000)
     							.playVideo()
@@ -66,7 +68,7 @@ public class BasicTests extends IOSBaseTest {
     							.letVideoPlayForSec(3)
     							.pauseVideo()
     							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "MP4 video has been paused", 25000)
-    							.seekVideoBack()
+    							.seekVideoForward()
     							.verifyEvent(IOSEvents.SEEK_STARTED, "Seek video started", 10000)
     							.verifyEvent(IOSEvents.SEEK_COMPLETED, "Seek video completed", 10000)
     							.playVideo()
@@ -86,7 +88,7 @@ public class BasicTests extends IOSBaseTest {
     							.letVideoPlayForSec(3)
     							.pauseVideo()
     							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "ASPECT_RATIO video has been paused", 25000)
-    							.seekVideoBack()
+    							.seekVideoForward()
     							.verifyEvent(IOSEvents.SEEK_STARTED, "Seek video started", 10000)
     							.verifyEvent(IOSEvents.SEEK_COMPLETED, "Seek video completed", 10000)
     							.playVideo()
@@ -121,7 +123,8 @@ public class BasicTests extends IOSBaseTest {
     							.waitForNotificationAreaToLoad()
     							.handleLoadingSpinner()
     							.verifyEvent(IOSEvents.PLAYBACK_STARTED, "VAST_AD_MidRoll video has started to play", 25000)
-    							.letVideoPlayForSec(3)
+    							.verifyEvent(IOSEvents.AD_STARTED, "VAST_AD_MidRoll ad has started playing", 25000)    		
+    							.verifyEvent(IOSEvents.AD_COMPLETED, "VAST_AD_MidRoll ad has complated playing", 25000)
     							.pauseVideo()
     							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "VAST_AD_MidRoll video has been paused", 25000)
     							.seekVideoBack()
@@ -129,8 +132,6 @@ public class BasicTests extends IOSBaseTest {
     							.verifyEvent(IOSEvents.SEEK_COMPLETED, "Seek video completed", 10000)
     							.playVideo()
     							.verifyEvent(IOSEvents.PLAYBACK_RESUMED, "VAST_AD_MidRoll Video has resumed to playing state from paused state", 25000)
-    							.verifyEvent(IOSEvents.AD_STARTED, "VAST_AD_MidRoll ad has started playing", 25000)
-    							.verifyEvent(IOSEvents.AD_COMPLETED, "VAST_AD_MidRoll ad has complated playing", 25000)
     							.verifyEvent(IOSEvents.PLAYBACK_COMPLETED, "VAST_AD_MidRoll video has completed playing", 90000);
     	
     }
@@ -206,7 +207,7 @@ public class BasicTests extends IOSBaseTest {
     							.letVideoPlayForSec(3)
     							.pauseVideo()
     							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "OOYALA_AD_MidRoll video has been paused", 25000)
-    							.seekVideoBack()
+    							.seekVideoForward()
     							.verifyEvent(IOSEvents.SEEK_STARTED, "Seek video started", 10000)
     							.verifyEvent(IOSEvents.SEEK_COMPLETED, "Seek video completed", 10000)
     							.playVideo()
@@ -217,6 +218,10 @@ public class BasicTests extends IOSBaseTest {
     	
     }
     
+    /**
+     * PAUSE step is removed in this Testcase as the video length is to short
+     */
+   
     @Test
     public  void OOYALA_AD_PostRoll() throws Exception {
     	BasicPlaybackSampleAppPage basicPlaybackSampleAppPage = new BasicPlaybackSampleAppPage();
@@ -225,13 +230,6 @@ public class BasicTests extends IOSBaseTest {
     							.waitForNotificationAreaToLoad()
     							.handleLoadingSpinner()
     							.verifyEvent(IOSEvents.PLAYBACK_STARTED, "OOYALA_AD_PostRoll video has started to play", 25000)
-    							.letVideoPlayForSec(3)
-    							.pauseVideo()
-    							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "OOYALA_AD_PostRoll video has been paused", 25000)
-    							.seekVideoBack()
-    							.verifyEvent(IOSEvents.SEEK_STARTED, "Seek video started", 10000)
-    							.verifyEvent(IOSEvents.SEEK_COMPLETED, "Seek video completed", 10000)
-    							.playVideo()
     							.verifyEvent(IOSEvents.PLAYBACK_RESUMED, "OOYALA_AD_PostRoll Video has resumed to playing state from paused state", 25000)
     							.verifyEvent(IOSEvents.AD_STARTED, "OOYALA_AD_PostRoll ad has started playing", 25000)
     							.verifyEvent(IOSEvents.AD_COMPLETED, "OOYALA_AD_PostRoll ad has complated playing", 25000)

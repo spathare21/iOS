@@ -36,10 +36,7 @@ public class SampleAppBasePage {
 	
 	IOSDriver driver = WebDriverFactory.getIOSDriver();
     
-	int eventVerificationCount = 0;
-
-	
-	
+	int eventVerificationCount = 0;	
 
 	//Locators
 	private final By QA_MODE_SWITCH = By.xpath("//XCUIElementTypeSwitch[1]"); 
@@ -143,8 +140,10 @@ public class SampleAppBasePage {
     }
     
     public SampleAppBasePage tapScreen() {
-    	List<WebElement> elements = driver.findElements(By.xpath("//XCUIElementTypeOther"));
-    	elements.get(6).click();
+    	logger.info("find elementd");
+    	//BAD XPATH. have to modify this. FindElements approach takes lot of time (> 5sec).
+    	driver.findElement(By.xpath("//XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")).click();
+    	logger.info("cick");
     	return this;
     }
     
@@ -227,7 +226,7 @@ public class SampleAppBasePage {
     	Element seekbar =  getSeekBarPosition();
         logger.info("Seeking back -------------------------  ");
         tapScreenIfRequired();
-        driver.swipe((startx + 1), seekbar.getYposition(), (startx + 1) - 25, seekbar.getYposition() + seekbar.getYposition(), 3);
+        driver.swipe((startx + 1), seekbar.getYposition(), (startx + 1) - (seekbar.getStartXPosition() + 4), seekbar.getYposition() + seekbar.getYposition(), 3);
         return this;
     }
     
@@ -236,7 +235,7 @@ public class SampleAppBasePage {
     	Element seekbar =  getSeekBarPosition();
         logger.info("Seeking forward -------------------------  ");
         tapScreenIfRequired();
-        driver.swipe((startx + 1), seekbar.getYposition(), (startx + 1) + (seekbar.getWidth() - 25), seekbar.getYposition() + seekbar.getYposition(), 3);
+        driver.swipe((startx + 1), seekbar.getYposition(), (startx + 1) + (seekbar.getEndXPosition() - 180), seekbar.getYposition() + seekbar.getYposition(), 3);
         return this;
     }
 
@@ -268,7 +267,7 @@ public class SampleAppBasePage {
     }
     
     public SampleAppBasePage letVideoPlayForSec(int sec) throws InterruptedException {
-    	int count = 1;
+    	int count = 0;
     	while(count < sec) {
     		Thread.sleep(1000);
     		count++;
