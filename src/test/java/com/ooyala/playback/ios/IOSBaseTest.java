@@ -2,25 +2,21 @@ package com.ooyala.playback.ios;
 
 
 import com.ooyala.playback.ios.pages.SampleAppBasePage;
-import com.ooyala.playback.ios.utils.CommandLineUtils;
 import com.ooyala.playback.ios.utils.TestUtils;
 import com.ooyala.playback.ios.utils.WebDriverFactory;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.apache.log4j.net.SyslogAppender;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.logging.LogEntry;
 import org.testng.IHookCallBack;
 import org.testng.IHookable;
 import org.testng.ITestResult;
 import ru.yandex.qatools.allure.annotations.*;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Instant;
-import java.util.List;
-
-import static com.google.common.io.Files.toByteArray;
 
 /**
  *
@@ -33,8 +29,7 @@ public class IOSBaseTest implements IHookable {
     final static Logger logger = Logger.getLogger(IOSBaseTest.class);
 
     @Attachment(value = "{0}", type = "image/png")
-    public static byte[] screenshotattach(String testMethodName) throws Exception
-    {
+    public static byte[] screenshotattach(String testMethodName) throws Exception {
         try {
             String currentDir = System.getProperty("user.dir");
             String Screenshotpath = currentDir + "/res/snapshot/";
@@ -42,6 +37,7 @@ public class IOSBaseTest implements IHookable {
             String imgFile= Screenshotpath + testMethodName + Instant.now().toEpochMilli() + ".jpg";
             File imgf = new File(imgFile);
             FileUtils.copyFile(scrFile, new File(imgFile));
+            System.out.println("Screenshot captured");
             return toByteArray(imgf);
         }
         catch(Exception e)
@@ -57,7 +53,6 @@ public class IOSBaseTest implements IHookable {
         iHookCallBack.runTestMethod(iTestResult);
         try {
             screenshotattach(iTestResult.getMethod().getMethodName());
-            sdkVersion();
             String logpath = storeLogFile(iTestResult.getMethod().getMethodName(), TestUtils.parseNotificationEvents(new SampleAppBasePage().getNotificationEvents()));
             appendLogToAllure(logpath);
         } catch (Exception e) {
@@ -65,35 +60,24 @@ public class IOSBaseTest implements IHookable {
         }
     }
 
-    public static void sdkVersion() throws IOException {
-
-        List<LogEntry> logEntries = WebDriverFactory.getIOSDriver().manage().logs().get("logcat").getAll();
-        for (int i=0;i<logEntries.size();i++)
-        {
-            if(logEntries.get(i).toString().contains("Ooyala SDK Version:"))
-            {
-                logger.info(logEntries.get(i).toString());
-                String sdkVersion = logEntries.get(i).toString();
-                logger.info("SDK version is" +sdkVersion);
-                String[] version = sdkVersion.split(":");
-                if(version.length>6)
-                    sdkVersion = version[6];
-            }
-        }
-    }
-
-
     public static String storeLogFile(String filename, String lines[]) throws Exception {
-        String logFileName = filename + "_" + Instant.now().toEpochMilli();
+        String logFileName = filename + "_" + Instant.now().toEpochMilli()+".txt" ;
         String currentDir = System.getProperty("user.dir");
-        String logspath = currentDir + "/res/snapshot/"+logFileName;
+        String logspath = currentDir +"/res/snapshot/"+logFileName;
 
-        File file = new File(logFileName);
+        File file = new File(currentDir+"/res/snapshot/" + logFileName);
         try {
-            FileWriter fileWriter = new FileWriter(file);
-            for(int i=0; i<lines.length; i++) {
-                fileWriter.write(lines[i]);
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            if (!file.exists()) {
+                file.createNewFile();
             }
+            for(int i=0; i<lines.length; i++) {
+                byte[] contentInBytes = lines[i].getBytes();
+                fileOutputStream.write(contentInBytes );
+                fileOutputStream.write(System.getProperty("line.separator").getBytes());
+            }
+            fileOutputStream.flush();
+            fileOutputStream.close();
         }catch(IOException e){
             logger.error(e);
         }
@@ -113,6 +97,7 @@ public class IOSBaseTest implements IHookable {
         }
     }
 
-
-
+    private static byte[] toByteArray(File file) throws IOException {
+        return Files.readAllBytes(Paths.get(file.getPath()));
+    }
 }
