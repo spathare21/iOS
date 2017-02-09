@@ -140,10 +140,8 @@ public class SampleAppBasePage {
     }
     
     public SampleAppBasePage tapScreen() {
-    	logger.info("find elementd");
     	//BAD XPATH. have to modify this. FindElements approach takes lot of time (> 5sec).
     	driver.findElement(By.xpath("//XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")).click();
-    	logger.info("cick");
     	return this;
     }
     
@@ -226,7 +224,8 @@ public class SampleAppBasePage {
     	Element seekbar =  getSeekBarPosition();
         logger.info("Seeking back -------------------------  ");
         tapScreenIfRequired();
-        driver.swipe((startx + 1), seekbar.getYposition(), (startx + 1) - (seekbar.getStartXPosition() + 4), seekbar.getYposition() + seekbar.getYposition(), 3);
+        int seekBackLength = ((startx + 1) - seekbar.getStartXPosition()) / 2; // seek back till middle of the played time
+        driver.swipe((startx + 1), seekbar.getYposition(), ((startx + 1) - seekBackLength), seekbar.getYposition() + seekbar.getYposition(), 3);
         return this;
     }
     
@@ -235,7 +234,8 @@ public class SampleAppBasePage {
     	Element seekbar =  getSeekBarPosition();
         logger.info("Seeking forward -------------------------  ");
         tapScreenIfRequired();
-        driver.swipe((startx + 1), seekbar.getYposition(), (startx + 1) + (seekbar.getEndXPosition() - 180), seekbar.getYposition() + seekbar.getYposition(), 3);
+        int seekForwardLength = (seekbar.getEndXPosition() - (startx + 1)) - 30; //This will seek just before end of the the video
+        driver.swipe((startx + 1), seekbar.getYposition(), ((startx + 1) + (seekForwardLength)), seekbar.getYposition() + seekbar.getYposition(), 3);
         return this;
     }
 

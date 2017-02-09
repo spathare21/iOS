@@ -48,7 +48,7 @@ public class BasicTests extends IOSBaseTest {
     							.letVideoPlayForSec(3)
     							.pauseVideo()
     							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "HLS video has been paused", 25000)
-    							.seekVideoForward()
+    							.seekVideoBack()
     							.verifyEvent(IOSEvents.SEEK_STARTED, "Seek video started", 10000)
     							.verifyEvent(IOSEvents.SEEK_COMPLETED, "Seek video completed", 10000)
     							.playVideo()
@@ -68,7 +68,7 @@ public class BasicTests extends IOSBaseTest {
     							.letVideoPlayForSec(3)
     							.pauseVideo()
     							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "MP4 video has been paused", 25000)
-    							.seekVideoForward()
+    							.seekVideoBack()
     							.verifyEvent(IOSEvents.SEEK_STARTED, "Seek video started", 10000)
     							.verifyEvent(IOSEvents.SEEK_COMPLETED, "Seek video completed", 10000)
     							.playVideo()
@@ -88,7 +88,7 @@ public class BasicTests extends IOSBaseTest {
     							.letVideoPlayForSec(3)
     							.pauseVideo()
     							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "ASPECT_RATIO video has been paused", 25000)
-    							.seekVideoForward()
+    							.seekVideoBack()
     							.verifyEvent(IOSEvents.SEEK_STARTED, "Seek video started", 10000)
     							.verifyEvent(IOSEvents.SEEK_COMPLETED, "Seek video completed", 10000)
     							.playVideo()
@@ -207,7 +207,7 @@ public class BasicTests extends IOSBaseTest {
     							.letVideoPlayForSec(3)
     							.pauseVideo()
     							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "OOYALA_AD_MidRoll video has been paused", 25000)
-    							.seekVideoForward()
+    							.seekVideoBack()
     							.verifyEvent(IOSEvents.SEEK_STARTED, "Seek video started", 10000)
     							.verifyEvent(IOSEvents.SEEK_COMPLETED, "Seek video completed", 10000)
     							.playVideo()
@@ -256,6 +256,31 @@ public class BasicTests extends IOSBaseTest {
     							.verifyEvent(IOSEvents.PLAYBACK_COMPLETED, "Vertical video has completed playing", 90000);
     	
     }
+    
+    @Test
+    public  void MultiAdCombination() throws Exception {
+    	BasicPlaybackSampleAppPage basicPlaybackSampleAppPage = new BasicPlaybackSampleAppPage();
+    	basicPlaybackSampleAppPage
+    							.selectVideo(BasicPlaybackSampleAppPage.MULTI_AD_COMBINATION)
+    							.waitForNotificationAreaToLoad()
+    							.handleLoadingSpinner()
+    							.verifyEvent(IOSEvents.AD_STARTED, "MULTI_AD_COMBINATION ad has started playing", 25000)
+    							.verifyEvent(IOSEvents.AD_COMPLETED, "MULTI_AD_COMBINATION ad has complated playing", 25000)
+    							.verifyEvent(IOSEvents.PLAYBACK_STARTED, "MULTI_AD_COMBINATION video has started to play", 25000)
+    							.letVideoPlayForSec(3)
+    							.pauseVideo()
+    							.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "MULTI_AD_COMBINATION video has been paused", 25000)
+    							.seekVideoBack()
+    							.verifyEvent(IOSEvents.SEEK_STARTED, "Seek video started", 10000)
+    							.verifyEvent(IOSEvents.SEEK_COMPLETED, "Seek video completed", 10000)
+    							.playVideo()
+    							.verifyEvent(IOSEvents.PLAYBACK_RESUMED, "MULTI_AD_COMBINATION Video has resumed to playing state from paused state", 25000)
+    							.verifyEvent(IOSEvents.AD_STARTED, "MULTI_AD_COMBINATION ad has started playing", 25000)
+    							.verifyEvent(IOSEvents.AD_COMPLETED, "MULTI_AD_COMBINATION ad has complated playing", 25000)
+    							.verifyEvent(IOSEvents.PLAYBACK_COMPLETED, "MULTI_AD_COMBINATION video has completed playing", 90000);
+    	
+    }
+
     
  
 
