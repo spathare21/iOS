@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -35,10 +36,7 @@ public class SampleAppBasePage {
 	
 	IOSDriver driver = WebDriverFactory.getIOSDriver();
     
-	int eventVerificationCount = 0;
-
-	
-	
+	int eventVerificationCount = 0;	
 
 	//Locators
 	private final By QA_MODE_SWITCH = By.xpath("//XCUIElementTypeSwitch[1]"); 
@@ -46,6 +44,8 @@ public class SampleAppBasePage {
 	private final By LOADING_SPINNER = By.xpath("//XCUIElementTypeActivityIndicator[1]");
 	private final By TOOL_BAR = By.xpath("//XCUIElementTypeToolbar[1]");
 	private final By PLAY_PAUSE_BUTTON = By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeButton[1]");
+	private final By SEEK_BAR = By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[3]");
+	private final By SLIDER = By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeOther[1]/XCUIElementTypeImage[1]");
 	
 	/**
 	 * 
@@ -132,26 +132,28 @@ public class SampleAppBasePage {
      * this method is to tap the player to make play/pause button visible.
      */
     public SampleAppBasePage tapScreenIfRequired() {
-    	if (!isElementPresent(TOOL_BAR))
+    	if (!isElementPresent(TOOL_BAR)) {
     		tapScreen();
+    		logger.info("Screen tapped");
+    	}
     	return this;
     }
     
     public SampleAppBasePage tapScreen() {
-    	List<WebElement> elements = driver.findElements(By.xpath("//XCUIElementTypeOther"));
-    	elements.get(6).click();
+    	//BAD XPATH. have to modify this. FindElements approach takes lot of time (> 5sec).
+    	driver.findElement(By.xpath("//XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")).click();
     	return this;
     }
     
     public SampleAppBasePage playVideo() {
     	tapScreenIfRequired();
-    	driver.findElement(PLAY_PAUSE_BUTTON).click();
+    	waitAndFindElement(PLAY_PAUSE_BUTTON).click();
     	return this;
     }
     
     public SampleAppBasePage pauseVideo() {
     	tapScreenIfRequired();
-    	driver.findElement(PLAY_PAUSE_BUTTON).click();
+    	waitAndFindElement(PLAY_PAUSE_BUTTON).click();
     	return this;
     }
     
@@ -215,39 +217,115 @@ public class SampleAppBasePage {
     	clickElement(video);
     	return this;
     }
+
     
-    public SampleAppBasePage seekVideo() {
-    	seekVideo(0 ,0);
-    	return this;
+    public SampleAppBasePage seekVideoBack() throws InterruptedException {
+    	int startx = getSliderPosition();
+    	Element seekbar =  getSeekBarPosition();
+        logger.info("Seeking back -------------------------  ");
+        tapScreenIfRequired();
+        int seekBackLength = ((startx + 1) - seekbar.getStartXPosition()) / 2; // seek back till middle of the played time
+        driver.swipe((startx + 1), seekbar.getYposition(), ((startx + 1) - seekBackLength), seekbar.getYposition() + seekbar.getYposition(), 3);
+        return this;
     }
     
-    public SampleAppBasePage seekVideo(int widthOffSet1, int widthOffSet2) {
-    	int [] seekBarPos =  getSeekbarPosition();
-        System.out.println(" Seeking -------------------------  ");
-        driver.swipe(85, 342, 85+100, 342+342, 3);
+    public SampleAppBasePage seekVideoForward() throws InterruptedException {
+    	int startx = getSliderPosition();
+    	Element seekbar =  getSeekBarPosition();
+        logger.info("Seeking forward -------------------------  ");
+        tapScreenIfRequired();
+        int seekForwardLength = (seekbar.getEndXPosition() - (startx + 1)) - 30; //This will seek just before end of the the video
+        driver.swipe((startx + 1), seekbar.getYposition(), ((startx + 1) + (seekForwardLength)), seekbar.getYposition() + seekbar.getYposition(), 3);
         return this;
     }
 
-    public int[] getSeekbarPosition() {
-    	//List<WebElement> seekBarElements = driver.findElements(By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[3]"))
-    	WebElement seekBarField = driver.findElement(By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeOther[1]/XCUIElementTypeSlider[1]"));
-    	int[] seekBarPos = new int[2];
-    	seekBarPos[0] = seekBarField.getLocation().getX();  //Width
-    	seekBarPos[1] = seekBarField.getLocation().getY(); //height
-        System.out.println(" Dimensions bounds value is :-" + seekBarPos[0]);
-        System.out.println(" Dimensions bounds value is :-" + seekBarPos[1]);
-        System.out.println(" Dimensions bounds value is :-"+seekBarField.getSize().getHeight());
-        System.out.println(" Dimensions bounds value is :-"+seekBarField.getSize().getWidth());
-        return  seekBarPos;
-        
-    }
-    
-    public int getSlidingBarWidth() {
-    	return driver.findElement(By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther[3]")).getSize().getWidth();
+    public Element getSeekBarPosition() throws InterruptedException {
+    	Thread.sleep(3000);
+    	tapScreenIfRequired();
+    	Point seekbarElementPos = driver.findElement(SEEK_BAR).getLocation();
+    	Element seekbar = new Element();
+    	seekbar.setStartXPosition(seekbarElementPos.getX());
+    	seekbar.setYposition(seekbarElementPos.getY());
+    	tapScreenIfRequired();
+    	seekbar.setWidth(driver.findElement(SEEK_BAR).getSize().getWidth());
+    	seekbar.setEndXPosition(seekbar.getWidth() + seekbar.getStartXPosition());
+    	logger.info("SeekBarPosition : StartXPosition > " + seekbar.getStartXPosition() + ", "
+    			     + " EndXPosition > " + seekbar.getEndXPosition() + ", Width > " + seekbar.getWidth() + " Yposition > " + seekbar.getYposition());
+    	return seekbar;
+																				
     }
     
     public int getSliderPosition() {
-    	return driver.findElement(By.xpath("//XCUIElementTypeToolbar[1]/XCUIElementTypeOther[1]/XCUIElementTypeImage[1]")).getLocation().getX();
+    	tapScreenIfRequired();
+    	return driver.findElement(SLIDER).getLocation().getX();
+    }
+    
+    public WebElement waitAndFindElement(By locator) {
+    	waitForPresence(locator);
+    	logger.info("Wait for element succeeded");
+    	return driver.findElement(locator);
+    }
+    
+    public SampleAppBasePage letVideoPlayForSec(int sec) throws InterruptedException {
+    	int count = 0;
+    	while(count < sec) {
+    		Thread.sleep(1000);
+    		count++;
+    	}
+    	
+    	return this;
+    }
+    
+	@SuppressWarnings("unused")
+    private class Element {
+    	private int startXPosition;
+    	private int endXPosition;
+		private int yPosition;
+		private int width;
+		int height;
+
+		public int getYposition() {
+			return yPosition;
+		}
+
+		public void setYposition(int yPosition) {
+			this.yPosition = yPosition;
+		}
+
+		public int getWidth() {
+			return width;
+		}
+
+		public void setWidth(int width) {
+			this.width = width;
+		}
+
+		public int getStartXPosition() {
+			return startXPosition;
+		}
+
+		public void setStartXPosition(int xPosition) {
+			this.startXPosition = xPosition;
+		}
+		
+
+		public int getEndXPosition() {
+			return endXPosition;
+		}
+
+		public void setEndXPosition(int xPosition) {
+			this.endXPosition = xPosition;
+		}
+
+		public int getHeight() {
+			return height;
+		}
+
+		public void setHeight(int height) {
+			this.height = height;
+		}
+    	
+    	
     }
 
 }
