@@ -11,6 +11,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.testng.IHookCallBack;
 import org.testng.IHookable;
 import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
 import ru.yandex.qatools.allure.annotations.*;
@@ -103,6 +104,11 @@ public class IOSBaseTest implements IHookable {
     @BeforeMethod(alwaysRun=true)
     public void beforeMethod(Method method) {
     	logger.info(" >>>>>>>>> Executing Test case : " + method.getName() + ">>>>>>>>>>");
+    }
+    
+    @AfterMethod(alwaysRun=true)
+    public void afterMethod(Method method) {
+    	logger.info(" >>>>>>>>> Execution completed for Test case : " + method.getName() + ">>>>>>>>>>");
     }
 
     private static byte[] toByteArray(File file) throws IOException {

@@ -257,7 +257,9 @@ public class SampleAppBasePage {
     
     public int getSliderPosition() {
     	tapScreenIfRequired();
-    	return driver.findElement(SLIDER).getLocation().getX();
+    	int sliderXPosition = driver.findElement(SLIDER).getLocation().getX();
+    	logger.info("Slider X Position >> : " + sliderXPosition);
+    	return sliderXPosition;
     }
     
     public WebElement waitAndFindElement(By locator) {
