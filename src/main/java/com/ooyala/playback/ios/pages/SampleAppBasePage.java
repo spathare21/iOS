@@ -255,7 +255,8 @@ public class SampleAppBasePage {
 																				
     }
     
-    public int getSliderPosition() {
+    public int getSliderPosition() throws InterruptedException {
+    	Thread.sleep(5000);
     	tapScreenIfRequired();
     	int sliderXPosition = driver.findElement(SLIDER).getLocation().getX();
     	logger.info("Slider X Position >> : " + sliderXPosition);
