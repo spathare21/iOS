@@ -142,6 +142,9 @@ public class SampleAppProperties {
 		setScreenMode(prop.getProperty("ScreenMode"));
 		setNewCommandTimeOut(Integer.parseInt(prop.getProperty("newCommandTimeout")));
 		
+		setPlatformVersion(prop.getProperty("platformVersion"));
+    	setDeviceName(prop.getProperty("deviceName"));
+		
 	}
 
 

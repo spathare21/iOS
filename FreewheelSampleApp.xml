@@ -1,11 +1,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="BasicPlaybackSampleApp Test suite" >
+<suite name="FreewheelSampleApp Test suite" >
 
-    <test name="BasicPlaybackSampleApp iphone" preserve-order="true">
-        <parameter name="platformVersion" value="10.1" />
-        <parameter name="deviceName" value="iPhone 6s" />
-
+    <test name="FreewheelSampleApp" preserve-order="true">
+        
         <classes>
             <class name="com.ooyala.playback.ios.freewheelsampleapp.tests.BasicTests">
             

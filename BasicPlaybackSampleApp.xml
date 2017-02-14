@@ -2,12 +2,15 @@
 
 <suite name="BasicPlaybackSampleApp Test suite" >
 
-    <test name="BasicPlaybackSampleApp iphone">
-        <parameter name="platformVersion" value="10.1" />
-        <parameter name="deviceName" value="iPhone 6s" />
-
+    <test name="BasicPlaybackSampleApp" preserve-order="true">
+        
         <classes>
-            <class name="com.ooyala.playback.ios.basicplaybacksampleapp.tests.BasicPlaybackSampleAppTests" />
+            <class name="com.ooyala.playback.ios.basicplaybacksampleapp.tests.BasicTests">
+            
+            	<methods>
+            		<include name = "AspectRatio"/>
+            	</methods>
+            </class>
         </classes>
     </test>
 

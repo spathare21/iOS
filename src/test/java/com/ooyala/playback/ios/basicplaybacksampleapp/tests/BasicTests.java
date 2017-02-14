@@ -1,10 +1,7 @@
 package com.ooyala.playback.ios.basicplaybacksampleapp.tests;
 
-import java.lang.reflect.Method;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.ooyala.playback.ios.IOSBaseTest;
@@ -19,12 +16,10 @@ public class BasicTests extends IOSBaseTest {
 	
 	SampleAppProperties appProperties = null;
 	
-    @Parameters({"platformVersion", "deviceName"})
+   
     @BeforeClass 
-    public void beforeClass( String platformVersion,  String deviceName) throws Exception {
+    public void beforeClass() throws Exception {
     	appProperties = new SampleAppProperties();
-    	appProperties.setPlatformVersion(platformVersion);
-    	appProperties.setDeviceName(deviceName);
     	appProperties.loadSampleAppProperties("BasicplaybackSampleApp.properties");
     	WebDriverFactory.createIOSDriver(appProperties);
     	
