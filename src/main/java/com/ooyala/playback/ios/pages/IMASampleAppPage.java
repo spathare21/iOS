@@ -21,9 +21,17 @@ public class IMASampleAppPage extends SampleAppBasePage {
 	public final static By PODDED_PREROLL = By.name("Podded Preroll");
 	public final static By AD_RULES_PREROLL = By.name("Ad-Rules Preroll");
 	
+	private final By SKIP_AD = MobileBy.AccessibilityId("Skip Ad");
+	
 	
 	public IMASampleAppPage() {
 		assertCurrentPage(CLIENTSIDE_CONFIGURED_IMA_ADS);
+	}
+	
+	public IMASampleAppPage verifySkipAdPresence() {
+		logger.info("Waiting for 'SKIP AD' presence...");
+		waitForPresence(SKIP_AD);
+		return this;
 	}
 	
 
