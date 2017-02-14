@@ -17,8 +17,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <testng.version>6.9.10</testng.version>
         <selenium.version>3.0.1</selenium.version>
-        <surefire.version>2.11</surefire.version>
-        <maven.compiler.version>3.1</maven.compiler.version>
+        <surefire.version>2.19.1</surefire.version>
+        <maven.compiler.version>3.6.1</maven.compiler.version>
         <java-client>4.1.2</java-client>
         <aspectj.version>1.8.5</aspectj.version>
         <allure.version>2.5</allure.version>
@@ -40,7 +40,7 @@
 		    <groupId>org.seleniumhq.selenium</groupId>
 		    <artifactId>selenium-api</artifactId>
 		    <version>${selenium.version}</version>
-		    <scope>test</scope>
+		    <scope>compile</scope>
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-remote-driver -->
@@ -82,6 +82,11 @@
         </dependency>
         <dependency>
             <groupId>ru.yandex.qatools.allure</groupId>
+            <artifactId>allure-testng-adaptor</artifactId>
+            <version>1.5.0.RC2</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.yandex.qatools.allure</groupId>
             <artifactId>allure-java-annotations</artifactId>
             <version>1.5.0.RC2</version>
             <scope>test</scope>
@@ -106,18 +111,22 @@
     <build>
         <plugins>
             <plugin>
+            
+            	<groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.version}</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                    <scope>compile</scope>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.version}</version>
-                <goals><goal>test</goal></goals>
+               
                 <configuration>
                     <!-- This is to skip tests during normal maven execution
                     (e.g. mvn package) and run them in integration-test -->
@@ -142,8 +151,8 @@
             </plugin>
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-clean-plugin</artifactId>
-            <version>2.4.1</version>
+  			<artifactId>maven-clean-plugin</artifactId>
+  			<version>3.0.0</version>
             <configuration>
                 <filesets>
                     <fileset>
@@ -180,6 +189,19 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            
+            <!--Needed only to show reports locally. Run jetty:run and
+	        open localhost:8080 to show the report-->
+	        <plugin>
+	            <groupId>org.eclipse.jetty</groupId>
+	            <artifactId>jetty-maven-plugin</artifactId>
+	            <version>9.4.0.M1</version>
+	            <configuration>
+	                    <webAppSourceDirectory>${project.build.directory}/site/allure-maven-plugin</webAppSourceDirectory>
+	                <stopKey>stop</stopKey>
+	                <stopPort>1234</stopPort>
+	            </configuration>
+	        </plugin>
 
         </plugins>
     </build>
