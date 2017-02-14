@@ -139,6 +139,15 @@ public class SampleAppBasePage {
     	return this;
     }
     
+     public SampleAppBasePage waitAndTapScreen(int sec) {
+    	waitForSec(sec);
+    	if (!isElementPresent(TOOL_BAR)) {
+    		tapScreen();
+    		logger.info("Screen tapped");
+    	}
+    	return this;
+    }
+    
     public SampleAppBasePage tapScreen() {
     	//BAD XPATH. have to modify this. FindElements approach takes lot of time (> 5sec).
     	driver.findElement(By.xpath("//XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")).click();
@@ -147,13 +156,27 @@ public class SampleAppBasePage {
     
     public SampleAppBasePage playVideo() {
     	tapScreenIfRequired();
-    	waitAndFindElement(PLAY_PAUSE_BUTTON).click();
+    	try {
+    		waitAndFindElement(PLAY_PAUSE_BUTTON).click();
+    	} catch (Exception e) {
+			logger.info("Play button not found. Tapping screen and retrying..");
+			tapScreenIfRequired();
+			waitAndFindElement(PLAY_PAUSE_BUTTON).click();
+		}
+    	
     	return this;
     }
     
     public SampleAppBasePage pauseVideo() {
     	tapScreenIfRequired();
-    	waitAndFindElement(PLAY_PAUSE_BUTTON).click();
+    	try {
+    		waitAndFindElement(PLAY_PAUSE_BUTTON).click();
+    	} catch (Exception e) {
+			logger.info("Play button not found. Tapping screen and retrying..");
+			tapScreenIfRequired();
+			waitAndFindElement(PLAY_PAUSE_BUTTON).click();
+		}
+    	
     	return this;
     }
     
@@ -168,7 +191,7 @@ public class SampleAppBasePage {
 	        	driver.findElement(LOADING_SPINNER);
 	            if (i < timeOut){
 	                logger.info("Handling Loading Spinner .... ");
-	                Thread.sleep(1000);
+	                waitForSec(1);
 	                i++;
 	            } else {
 	            	logger.error("Loading spinner occured more than " + i + " seconds");
@@ -240,12 +263,12 @@ public class SampleAppBasePage {
     }
 
     public Element getSeekBarPosition() throws InterruptedException {
-    	Thread.sleep(3000);
-    	tapScreenIfRequired();
+    	waitAndTapScreen(3);
     	Point seekbarElementPos = driver.findElement(SEEK_BAR).getLocation();
     	Element seekbar = new Element();
     	seekbar.setStartXPosition(seekbarElementPos.getX());
     	seekbar.setYposition(seekbarElementPos.getY());
+    	waitForSec(3);
     	tapScreenIfRequired();
     	seekbar.setWidth(driver.findElement(SEEK_BAR).getSize().getWidth());
     	seekbar.setEndXPosition(seekbar.getWidth() + seekbar.getStartXPosition());
@@ -256,8 +279,7 @@ public class SampleAppBasePage {
     }
     
     public int getSliderPosition() throws InterruptedException {
-    	Thread.sleep(5000);
-    	tapScreenIfRequired();
+    	waitAndTapScreen(5);
     	int sliderXPosition = driver.findElement(SLIDER).getLocation().getX();
     	logger.info("Slider X Position >> : " + sliderXPosition);
     	return sliderXPosition;
@@ -272,11 +294,20 @@ public class SampleAppBasePage {
     public SampleAppBasePage letVideoPlayForSec(int sec) throws InterruptedException {
     	int count = 0;
     	while(count < sec) {
-    		Thread.sleep(1000);
+    		waitForSec(1);
     		count++;
     	}
     	
     	return this;
+    }
+    
+    public void waitForSec(int sec) {
+    	try {
+			Thread.sleep(sec * 1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
 	@SuppressWarnings("unused")
