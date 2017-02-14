@@ -116,7 +116,131 @@ public class BasicTests extends IOSBaseTest {
     }
     
     
+    @Test
+    public  void Podded_Pre_Mid_Post() throws Exception {
+    	IMASampleAppPage imaSampleAppPage = new IMASampleAppPage();
+    	imaSampleAppPage
+						.selectVideo(IMASampleAppPage.PODDED_PRE_MID_POST)
+						.waitForNotificationAreaToLoad()
+						.handleLoadingSpinner()
+						
+						.verifyEvent(IOSEvents.AD_STARTED, "Podded_Pre_Mid_Post ad has started to play", 25000)
+    					.verifyEvent(IOSEvents.AD_COMPLETED, "Podded_Pre_Mid_Post ad has competed", 25000)
+    					.verifyEvent(IOSEvents.AD_STARTED, "Podded_Pre_Mid_Post ad has started to play", 25000)
+    					.verifyEvent(IOSEvents.AD_COMPLETED, "Podded_Pre_Mid_Post ad has competed", 25000)
+    					.verifyEvent(IOSEvents.AD_STARTED, "Podded_Pre_Mid_Post ad has started to play", 25000)
+    					.verifyEvent(IOSEvents.AD_COMPLETED, "Podded_Pre_Mid_Post ad has competed", 25000)
+						
+    					.verifyEvent(IOSEvents.PLAYBACK_STARTED, "Podded_Pre_Mid_Post video has started to play", 25000)
+						
+    					.verifyEvent(IOSEvents.AD_STARTED, "Podded_Pre_Mid_Post ad has started to play", 25000)
+    					.verifyEvent(IOSEvents.AD_COMPLETED, "Podded_Pre_Mid_Post ad has competed", 25000)
+    					.verifyEvent(IOSEvents.AD_STARTED, "Podded_Pre_Mid_Post ad has started to play", 25000)
+    					.verifyEvent(IOSEvents.AD_COMPLETED, "Podded_Pre_Mid_Post ad has competed", 25000)
+    					.verifyEvent(IOSEvents.AD_STARTED, "Podded_Pre_Mid_Post ad has started to play", 25000)
+    					.verifyEvent(IOSEvents.AD_COMPLETED, "Podded_Pre_Mid_Post ad has competed", 25000)
+						
+    					.verifyEvent(IOSEvents.PLAYBACK_RESUMED, "Podded_Pre_Mid_Post Video has resumed after ad", 25000)
+						.letVideoPlayForSec(4)
+						.pauseVideo()
+						.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "Podded_Pre_Mid_Post video has been paused", 25000)
+						.seekVideoBack()
+						.verifyEvent(IOSEvents.SEEK_STARTED, "Seek video started", 10000)
+						.verifyEvent(IOSEvents.SEEK_COMPLETED, "Seek video completed", 10000)
+						.playVideo()
+						.verifyEvent(IOSEvents.PLAYBACK_RESUMED, "Podded_Pre_Mid_Post Video has resumed to playing state from paused state", 25000)
+						
+						.verifyEvent(IOSEvents.AD_STARTED, "Podded_Pre_Mid_Post ad has started to play", 40000)
+    					.verifyEvent(IOSEvents.AD_COMPLETED, "Podded_Pre_Mid_Post ad has competed", 40000)
+    					.verifyEvent(IOSEvents.AD_STARTED, "Podded_Pre_Mid_Post ad has started to play", 40000)
+    					.verifyEvent(IOSEvents.AD_COMPLETED, "Podded_Pre_Mid_Post ad has competed", 40000)
+    					.verifyEvent(IOSEvents.AD_STARTED, "Podded_Pre_Mid_Post ad has started to play", 40000)
+    					.verifyEvent(IOSEvents.AD_COMPLETED, "Podded_Pre_Mid_Post ad has competed", 40000)
+						
+						.verifyEvent(IOSEvents.PLAYBACK_COMPLETED, "Podded_Pre_Mid_Post video has completed playing", 90000);
+    	
+    }
 
+    
+    @Test
+    public  void Podded_PreRoll() throws Exception {
+    	IMASampleAppPage imaSampleAppPage = new IMASampleAppPage();
+    	imaSampleAppPage
+						.selectVideo(IMASampleAppPage.PODDED_PREROLL)
+						.waitForNotificationAreaToLoad()
+						.handleLoadingSpinner()
+						
+						.verifyEvent(IOSEvents.AD_STARTED, "Podded_PreRoll ad has started to play", 25000)
+    					.verifyEvent(IOSEvents.AD_COMPLETED, "Podded_PreRoll ad has competed", 25000)
+    					.verifyEvent(IOSEvents.AD_STARTED, "Podded_PreRoll ad has started to play", 25000)
+    					.verifyEvent(IOSEvents.AD_COMPLETED, "Podded_PreRoll ad has competed", 25000)
+    					
+    					.verifyEvent(IOSEvents.PLAYBACK_STARTED, "Podded_PreRoll video has started to play", 25000)
+						.letVideoPlayForSec(4)
+						.pauseVideo()
+						.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "Podded_PreRoll video has been paused", 25000)
+						.seekVideoBack()
+						.verifyEvent(IOSEvents.SEEK_STARTED, "Seek video started", 10000)
+						.verifyEvent(IOSEvents.SEEK_COMPLETED, "Seek video completed", 10000)
+						.playVideo()
+						.verifyEvent(IOSEvents.PLAYBACK_RESUMED, "Podded_PreRoll Video has resumed to playing state from paused state", 25000)
+						.verifyEvent(IOSEvents.PLAYBACK_COMPLETED, "Podded_PreRoll video has completed playing", 90000);
+    	
+    }
+
+    @Test
+    public  void Podded_MidRoll() throws Exception {
+    	IMASampleAppPage imaSampleAppPage = new IMASampleAppPage();
+    	imaSampleAppPage
+						.selectVideo(IMASampleAppPage.PODDED_MIDROLL)
+						.waitForNotificationAreaToLoad()
+						.handleLoadingSpinner()
+						
+    					.verifyEvent(IOSEvents.PLAYBACK_STARTED, "Podded_MidRoll video has started to play", 25000)
+						
+    					.verifyEvent(IOSEvents.AD_STARTED, "Podded_MidRoll ad has started to play", 25000)
+    					.verifyEvent(IOSEvents.AD_COMPLETED, "Podded_MidRoll ad has competed", 25000)
+    					.verifyEvent(IOSEvents.AD_STARTED, "Podded_MidRoll ad has started to play", 25000)
+    					.verifyEvent(IOSEvents.AD_COMPLETED, "Podded_MidRoll ad has competed", 25000)
+    					
+    					.verifyEvent(IOSEvents.PLAYBACK_RESUMED, "Podded_MidRoll Video has resumed to playing state from paused state", 25000)
+    					.letVideoPlayForSec(4)
+						.pauseVideo()
+						.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "Podded_MidRoll video has been paused", 25000)
+						.seekVideoBack()
+						.verifyEvent(IOSEvents.SEEK_STARTED, "Seek video started", 10000)
+						.verifyEvent(IOSEvents.SEEK_COMPLETED, "Seek video completed", 10000)
+						.playVideo()
+						.verifyEvent(IOSEvents.PLAYBACK_RESUMED, "Podded_MidRoll Video has resumed to playing state from paused state", 25000)
+						.verifyEvent(IOSEvents.PLAYBACK_COMPLETED, "Podded_MidRoll video has completed playing", 90000);
+    	
+    }
+    
+    @Test
+    public  void Podded_PostRoll() throws Exception {
+    	IMASampleAppPage imaSampleAppPage = new IMASampleAppPage();
+    	imaSampleAppPage
+						.selectVideo(IMASampleAppPage.PODDED_POSTROLL)
+						.waitForNotificationAreaToLoad()
+						.handleLoadingSpinner()
+						.verifyEvent(IOSEvents.PLAYBACK_STARTED, "Podded_PostRoll video has started to play", 25000)
+						.letVideoPlayForSec(4)
+						.pauseVideo()
+						.verifyEvent(IOSEvents.PLAYBACK_PAUSED, "Podded_PostRoll video has been paused", 25000)
+						.seekVideoBack()
+						.verifyEvent(IOSEvents.SEEK_STARTED, "Seek video started", 10000)
+						.verifyEvent(IOSEvents.SEEK_COMPLETED, "Seek video completed", 10000)
+						.playVideo()
+						.verifyEvent(IOSEvents.PLAYBACK_RESUMED, "Podded_PostRoll Video has resumed to playing state from paused state", 25000)
+						
+						.verifyEvent(IOSEvents.AD_STARTED, "Podded_PostRoll ad has started to play", 40000)
+    					.verifyEvent(IOSEvents.AD_COMPLETED, "Podded_PostRoll ad has competed", 40000)
+    					.verifyEvent(IOSEvents.AD_STARTED, "Podded_PostRoll ad has started to play", 40000)
+    					.verifyEvent(IOSEvents.AD_COMPLETED, "Podded_PostRoll ad has competed", 40000)
+    				
+						.verifyEvent(IOSEvents.PLAYBACK_COMPLETED, "Podded_PostRoll video has completed playing", 90000);
+    	
+    }
 
 
 
