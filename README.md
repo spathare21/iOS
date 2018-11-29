@@ -42,3 +42,4 @@ a. Move to iOS-automation folder and run this following command :-
         mvn clean test -DsuiteXmlFile="Enter XML file which you want "
 
 *Info will be added soon*
+# iOS
